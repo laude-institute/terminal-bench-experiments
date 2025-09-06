@@ -3,6 +3,7 @@ import shutil
 import subprocess
 from decimal import Decimal
 from pathlib import Path
+from typing import Annotated
 
 from dotenv import load_dotenv
 from rich.console import Console
@@ -18,7 +19,7 @@ from sandboxes.models.registry import Dataset, RegistryTaskId
 from sandboxes.models.task.task import Task
 from sandboxes.registry.client import RegistryClient
 from supabase import create_client
-from typer import Typer
+from typer import Option, Typer
 
 load_dotenv()
 
@@ -72,11 +73,25 @@ def generate_schemas():
 
 @db_app.command()
 def upload_dataset(
-    name: str,
-    version: str,
-    dataset_path: Path | None = None,
-    registry_path: Path | None = None,
-    registry_url: str | None = None,
+    name: Annotated[str, Option("-n", "--name", help="Name of the dataset to upload")],
+    version: Annotated[
+        str, Option("-v", "--version", help="Version of the dataset to upload")
+    ],
+    dataset_path: Annotated[
+        Path | None,
+        Option(
+            "-p",
+            "--path",
+            help="Path to local dataset directory (alternative to registry)",
+        ),
+    ] = None,
+    registry_path: Annotated[
+        Path | None,
+        Option("-r", "--registry-path", help="Path to local registry directory"),
+    ] = None,
+    registry_url: Annotated[
+        str | None, Option("-u", "--registry-url", help="URL of remote registry")
+    ] = None,
 ):
     try:
         from db.schema_public_latest import (
@@ -118,6 +133,7 @@ def upload_dataset(
                 )
             else:
                 registry_uri = "none"
+
             progress.update(main_task, advance=1)
 
             dataset: Dataset | None = None
@@ -198,7 +214,7 @@ def upload_dataset(
                             if dataset and dataset.description
                             else None
                         ),
-                    ).model_dump(mode="json", exclude_none=True)
+                    ).model_dump(mode="json", by_alias=True, exclude_none=True)
                 ).execute()
                 progress.update(main_task, advance=1)
                 console.print("[green]✓ Dataset metadata uploaded")
@@ -232,7 +248,7 @@ def upload_dataset(
                             path=str(downloaded_dataset_item.id.path),
                             git_url=downloaded_dataset_item.id.git_url,
                             git_commit_id=downloaded_dataset_item.id.git_commit_id,
-                        ).model_dump(mode="json", exclude_none=True)
+                        ).model_dump(mode="json", by_alias=True, exclude_none=True)
                     )
                     dataset_task_inserts.append(
                         DatasetTaskInsert(
@@ -240,7 +256,7 @@ def upload_dataset(
                             dataset_version=version,
                             dataset_registry_uri=registry_uri,
                             task_checksum=task.checksum,
-                        ).model_dump(mode="json", exclude_none=True)
+                        ).model_dump(mode="json", by_alias=True, exclude_none=True)
                     )
                 except Exception as e:
                     failed_tasks.append((downloaded_dataset_item.id.name, str(e)))
