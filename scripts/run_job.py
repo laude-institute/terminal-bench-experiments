@@ -1,7 +1,11 @@
 import asyncio
 import os
+import subprocess
+import sys
 from decimal import Decimal
+from pathlib import Path
 
+import sandboxes
 import yaml
 from litellm import model_cost
 from sandboxes.job import Job
@@ -10,8 +14,11 @@ from sandboxes.models.trial.result import TrialResult
 from sandboxes.orchestrators.base import OrchestratorEvent
 from supabase import create_client
 
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
 from db.schema_public_latest import (
     AgentInsert,
+    JobInsert,
     ModelInsert,
     TrialInsert,
     TrialModelInsert,
@@ -29,7 +36,7 @@ def insert_trial_into_db(result: TrialResult):
         version=result.agent_info.version,
     )
 
-    client.table("agent").insert(
+    client.table("agent").upsert(
         agent_insert.model_dump(mode="json", by_alias=True, exclude_none=True)
     ).execute()
 
@@ -102,10 +109,12 @@ def insert_trial_into_db(result: TrialResult):
                 name=name,
                 provider=provider,
                 cents_per_million_input_tokens=(
-                    input_cost_per_token * 1e8 if input_cost_per_token else None
+                    round(input_cost_per_token * 1e8) if input_cost_per_token else None
                 ),
                 cents_per_million_output_tokens=(
-                    output_cost_per_token * 1e8 if output_cost_per_token else None
+                    round(output_cost_per_token * 1e8)
+                    if output_cost_per_token
+                    else None
                 ),
             ).model_dump(mode="json", by_alias=True, exclude_none=True)
         ).execute()
@@ -125,6 +134,17 @@ def insert_trial_into_db(result: TrialResult):
         ).execute()
 
 
+def insert_job_into_db(job_insert: JobInsert):
+    client = create_client(
+        supabase_url=os.environ["SUPABASE_URL"],
+        supabase_key=os.environ["SUPABASE_SECRET_KEY"],
+    )
+
+    client.table("job").upsert(
+        job_insert.model_dump(mode="json", by_alias=True, exclude_none=True)
+    ).execute()
+
+
 if __name__ == "__main__":
     with open("configs/job.yaml") as f:
         config_dict = yaml.safe_load(f)
@@ -133,9 +153,44 @@ if __name__ == "__main__":
 
     job = Job(config=config)
 
+    job_insert = JobInsert(
+        id=job._id,
+        config=config.model_dump(mode="json"),
+        job_name=config.job_name,
+        n_trials=len(job._trial_configs),
+        username=os.environ.get("USER", "unknown"),
+        git_commit_id=(
+            subprocess.check_output(
+                ["git", "rev-parse", "HEAD"],
+                cwd=Path(sandboxes.__file__).parent,
+            )
+            .decode("utf-8")
+            .strip()
+        ),
+        package_version=sandboxes.__version__,
+    )
+
+    insert_job_into_db(job_insert)
+
     job._orchestrator.add_hook(
         event=OrchestratorEvent.TRIAL_COMPLETED,
         hook=lambda result: insert_trial_into_db(result),
     )
 
-    asyncio.run(job.run())
+    result = asyncio.run(job.run())
+
+    job_insert.started_at = result.started_at
+    job_insert.ended_at = result.finished_at
+    job_insert.metrics = (
+        [
+            metric.model_dump(mode="json", by_alias=True, exclude_none=True)
+            for metric in result.metrics
+        ]
+        if result.metrics
+        else None
+    )
+    job_insert.stats = result.stats.model_dump(
+        mode="json", by_alias=True, exclude_none=True
+    )
+
+    insert_job_into_db(job_insert)
