@@ -234,6 +234,11 @@ def upload_dataset(
 
             for downloaded_dataset_item in downloaded_dataset_items:
                 try:
+                    task_path = (
+                        downloaded_dataset_item.id.path.expanduser().resolve()
+                        if downloaded_dataset_item.id.git_url is None
+                        else None
+                    )
                     task = Task(downloaded_dataset_item.downloaded_path)
                     task_inserts.append(
                         TaskInsert(
@@ -245,7 +250,7 @@ def upload_dataset(
                             verifier_timeout_sec=Decimal(
                                 task.config.verifier.timeout_sec
                             ),
-                            path=str(downloaded_dataset_item.id.path),
+                            path=str(task_path),
                             git_url=downloaded_dataset_item.id.git_url,
                             git_commit_id=downloaded_dataset_item.id.git_commit_id,
                         ).model_dump(mode="json", by_alias=True, exclude_none=True)

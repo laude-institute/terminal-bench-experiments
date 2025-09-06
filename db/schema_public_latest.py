@@ -237,11 +237,11 @@ class JobInsert(CustomModelInsert):
     config: dict | Json
     job_name: str
     n_trials: int
-    started_at: datetime.datetime
     username: str
 
     # Optional fields
     created_at: datetime.datetime | None = Field(default=None)
+    started_at: datetime.datetime | None = Field(default=None)
     ended_at: datetime.datetime | None = Field(default=None)
     git_commit_id: str | None = Field(default=None)
     metrics: dict | Json | None = Field(default=None)
