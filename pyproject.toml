@@ -12,6 +12,7 @@ dependencies = [
     "matplotlib>=3.10.6",
     "numpy>=2.3.2",
     "pandas>=2.3.2",
+    "prettytable==3.5.0",
     "psycopg2-binary>=2.9.10",
     "sandboxes",
     "supabase-pydantic>=0.24.2",
