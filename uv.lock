@@ -994,7 +994,7 @@ wheels = [
 
 [[package]]
 name = "litellm"
-version = "1.76.2"
+version = "1.76.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
@@ -1010,9 +1010,9 @@ dependencies = [
     { name = "tiktoken" },
     { name = "tokenizers" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/75/a3/f7c00c660972eed1ba5ed53771ac9b4235e7fb1dc410e91d35aff2778ae7/litellm-1.76.2.tar.gz", hash = "sha256:fc7af111fa0f06943d8dbebed73f88000f9902f0d0ee0882c57d0bd5c1a37ecb", size = 10189238, upload-time = "2025-09-04T00:25:09.472Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/72/46/57b6539365616452bb6f4401487448ce62e62755738fce55d8222d7a557e/litellm-1.76.3.tar.gz", hash = "sha256:fc81219c59b17b26cc81276ce32582f3715612877ab11c1ea2c26e4853ac67e8", size = 10210403, upload-time = "2025-09-07T01:59:19.55Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/79/f4/980cc81c21424026dcb48a541654fd6f4286891825a3d0dd51f02b65cbc3/litellm-1.76.2-py3-none-any.whl", hash = "sha256:a9a2ef64a598b5b4ae245f1de6afc400856477cd6f708ff633d95e2275605a45", size = 8973847, upload-time = "2025-09-04T00:25:05.353Z" },
+    { url = "https://files.pythonhosted.org/packages/d0/d9/5f8ed27241b487f51f04573b8ba06d4460ebed9f792ff5cc148649fbf862/litellm-1.76.3-py3-none-any.whl", hash = "sha256:d62e3ff2a80ec5e551c6d7a0fe199ffe718ecb6cbaa43fc9250dd8d7c0944352", size = 9000797, upload-time = "2025-09-07T01:59:16.261Z" },
 ]
 
 [[package]]
@@ -1898,7 +1898,7 @@ wheels = [
 [[package]]
 name = "sandboxes"
 version = "0.1.0"
-source = { directory = "../sandboxes" }
+source = { editable = "../sandboxes" }
 dependencies = [
     { name = "common-expression-language" },
     { name = "daytona" },
@@ -2116,6 +2116,15 @@ wheels = [
 ]
 
 [[package]]
+name = "tabulate"
+version = "0.9.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/ec/fe/802052aecb21e3797b8f7902564ab6ea0d60ff8ca23952079064155d1ae1/tabulate-0.9.0.tar.gz", hash = "sha256:0095b12bf5966de529c0feb1fa08671671b3368eec77d7ef7ab114be2c068b3c", size = 81090, upload-time = "2022-10-06T17:21:48.54Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/40/44/4a5f08c96eb108af5cb50b41f76142f0afa346dfa99d5296fe7202a11854/tabulate-0.9.0-py3-none-any.whl", hash = "sha256:024ca478df22e9340661486f85298cff5f6dcdba14f3813e8830015b9ed1948f", size = 35252, upload-time = "2022-10-06T17:21:44.262Z" },
+]
+
+[[package]]
 name = "tenacity"
 version = "9.1.2"
 source = { registry = "https://pypi.org/simple" }
@@ -2138,6 +2147,7 @@ dependencies = [
     { name = "psycopg2-binary" },
     { name = "sandboxes" },
     { name = "supabase-pydantic" },
+    { name = "tabulate" },
     { name = "typer" },
 ]
 
@@ -2150,8 +2160,9 @@ requires-dist = [
     { name = "numpy", specifier = ">=2.3.2" },
     { name = "pandas", specifier = ">=2.3.2" },
     { name = "psycopg2-binary", specifier = ">=2.9.10" },
-    { name = "sandboxes", directory = "../sandboxes" },
+    { name = "sandboxes", editable = "../sandboxes" },
     { name = "supabase-pydantic", specifier = ">=0.24.2" },
+    { name = "tabulate", specifier = ">=0.9.0" },
     { name = "typer", specifier = ">=0.17.4" },
 ]
 

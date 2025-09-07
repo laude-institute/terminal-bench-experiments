@@ -1,18 +1,46 @@
 jobs_dir: jobs
-n_attempts: 1
+n_attempts: 4
 timeout_multiplier: 1.0
 orchestrator:
   type: local
-  n_concurrent_trials: 100
-  quiet: false
+  n_concurrent_trials: 400
+  quiet: true
 environment:
   type: daytona
   force_build: true
   delete: true
 agents:
+  # - name: terminus-2
+  #   model_name: anthropic/claude-sonnet-4-20250514
+  # - name: terminus-2
+  #   model_name: anthropic/claude-opus-4-1-20250805
+  # - name: terminus-2
+  #   model_name: openai/gpt-5
   - name: terminus-2
-    model_name: openai/gpt-5
-    kwargs:
-      temperature: 1.0
+    model_name: openai/gpt-5-mini
+  - name: terminus-2
+    model_name: openai/gpt-5-nano
+  - name: terminus-2
+    model_name: xai/grok-4-0709
+  - name: terminus-2
+    model_name: xai/grok-code-fast-1
+  - name: terminus-2
+    model_name: gemini/gemini-2.5-pro
+  - name: terminus-2
+    model_name: gemini/gemini-2.5-flash
+  - name: terminus-2
+    model_name: together_ai/Qwen/Qwen3-Coder-480B-A35B-Instruct-FP8
+  - name: terminus-2
+    model_name: together_ai/openai/gpt-oss-120b
+  - name: terminus-2
+    model_name: together_ai/OpenAI/gpt-oss-20B
+  # - name: terminus-2
+  #   model_name: together_ai/moonshotai/Kimi-K2-Instruct-0905
+  - name: terminus-2
+    model_name: together_ai/meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8
+  - name: terminus-2
+    model_name: together_ai/zai-org/GLM-4.5-Air-FP8
+  - name: terminus-2
+    model_name: together_ai/deepseek-ai/DeepSeek-V3.1
 datasets:
   - path: ../sandboxes/working-tasks
