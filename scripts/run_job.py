@@ -91,7 +91,7 @@ def insert_trial_into_db(result: TrialResult):
         name = result.agent_info.model_info.name
         provider = result.agent_info.model_info.provider
 
-        key = f"{name}/{provider}"
+        key = f"{provider}/{name}"
         token_costs = model_cost.get(key) or model_cost.get(name)
 
         input_cost_per_token = (
