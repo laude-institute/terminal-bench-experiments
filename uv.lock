@@ -1441,14 +1441,14 @@ wheels = [
 
 [[package]]
 name = "prettytable"
-version = "3.16.0"
+version = "3.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "wcwidth" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/99/b1/85e18ac92afd08c533603e3393977b6bc1443043115a47bb094f3b98f94f/prettytable-3.16.0.tar.gz", hash = "sha256:3c64b31719d961bf69c9a7e03d0c1e477320906a98da63952bc6698d6164ff57", size = 66276, upload-time = "2025-03-24T19:39:04.008Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/51/d8/f4739a1971029c00fdb97c9ea4abbfb20ea041f6aa7613343f12a468e217/prettytable-3.5.0.tar.gz", hash = "sha256:52f682ba4efe29dccb38ff0fe5bac8a23007d0780ff92a8b85af64bc4fc74d72", size = 45879, upload-time = "2022-11-06T09:54:01.559Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/02/c7/5613524e606ea1688b3bdbf48aa64bafb6d0a4ac3750274c43b6158a390f/prettytable-3.16.0-py3-none-any.whl", hash = "sha256:b5eccfabb82222f5aa46b798ff02a8452cf530a352c31bddfa29be41242863aa", size = 33863, upload-time = "2025-03-24T19:39:02.359Z" },
+    { url = "https://files.pythonhosted.org/packages/fa/4c/9b2bbb92a14a09ed929afa40282c088d8e50f79303eb3873fbeba1d96e89/prettytable-3.5.0-py3-none-any.whl", hash = "sha256:fe391c3b545800028edf5dbb6a5360893feb398367fcc1cf8d7a5b29ce5c59a1", size = 26941, upload-time = "2022-10-28T21:21:21.825Z" },
 ]
 
 [[package]]
@@ -2144,6 +2144,7 @@ dependencies = [
     { name = "matplotlib" },
     { name = "numpy" },
     { name = "pandas" },
+    { name = "prettytable" },
     { name = "psycopg2-binary" },
     { name = "sandboxes" },
     { name = "supabase-pydantic" },
@@ -2159,6 +2160,7 @@ requires-dist = [
     { name = "matplotlib", specifier = ">=3.10.6" },
     { name = "numpy", specifier = ">=2.3.2" },
     { name = "pandas", specifier = ">=2.3.2" },
+    { name = "prettytable", specifier = "==3.5.0" },
     { name = "psycopg2-binary", specifier = ">=2.9.10" },
     { name = "sandboxes", editable = "../sandboxes" },
     { name = "supabase-pydantic", specifier = ">=0.24.2" },
