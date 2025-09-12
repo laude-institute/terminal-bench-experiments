@@ -15,6 +15,7 @@ dependencies = [
     "prettytable==3.5.0",
     "psycopg2-binary>=2.9.10",
     "sandboxes",
+    "scipy>=1.16.1",
     "supabase-pydantic>=0.24.2",
     "tabulate>=0.9.0",
     "typer>=0.17.4",
