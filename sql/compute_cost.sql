@@ -29,6 +29,8 @@ agent_model_trials AS (
         JOIN trial_model AS tm ON t.id = tm.trial_id
         JOIN model AS m ON tm.model_name = m.name
         AND tm.model_provider = m.provider
+    where exception_info->>'exception_type' is null
+        or exception_info->>'exception_type' IN ('AgentTimeoutError')
 ),
 agent_model_task_scores AS (
     SELECT amt.agent_name,
