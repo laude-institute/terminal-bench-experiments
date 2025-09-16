@@ -1,0 +1,39 @@
+job_name: qwen-code-initial
+jobs_dir: jobs
+n_attempts: 5
+timeout_multiplier: 1.0
+orchestrator:
+  type: local
+  n_concurrent_trials: 200
+  quiet: true
+environment:
+  type: daytona
+  force_build: false
+  delete: true
+agents:
+  - name: qwen-code
+    model_name: together_ai/Qwen/Qwen3-Coder-480B-A35B-Instruct-FP8
+datasets:
+  - path: ../sandboxes/tasks/sandboxes-tasks
+    exclude_task_names:
+      - chem-rf
+      - hf-lora-adapter
+      - leelachess0-pytorch-conversion
+      - mcmc-sampling-stan
+      - oom
+      - privilege-escalation
+      - shell-deobfuscation
+      - speech-to-text
+      - unprivileged-headless-pyrender
+      - build-linux-kernel-qemu
+      - caffe-cifar-10
+      - install-windows-xp
+      - kv-store-grpc
+      - lean4-proof
+      - mailman
+      - predicate-pushdown-bench
+      - protocol-analysis-rs
+      - query-optimize
+      - rstan-to-pystan
+      - torch-pipeline-parallelism
+      - word2vec-from-scratch

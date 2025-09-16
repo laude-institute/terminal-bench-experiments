@@ -5,8 +5,13 @@ from pathlib import Path
 import yaml
 from dotenv import load_dotenv
 from sandboxes.models.environment_type import EnvironmentType
-from sandboxes.models.job.config import JobConfig
-from sandboxes.models.trial.config import TrialConfig
+from sandboxes.models.job.config import (
+    JobConfig,
+    OrchestratorConfig,
+    OrchestratorType,
+    RetryConfig,
+)
+from sandboxes.models.trial.config import EnvironmentConfig, TrialConfig
 from supabase import create_client
 
 load_dotenv()
@@ -88,6 +93,26 @@ def get_remaining_trial_configs(
 def create_job_config(trial_configs: list[TrialConfig]) -> JobConfig:
     return JobConfig(
         trial_configs=trial_configs,
+        orchestrator=OrchestratorConfig(
+            type=OrchestratorType.LOCAL,
+            n_concurrent_trials=200,
+            retry=RetryConfig(
+                max_retries=5,
+                exclude_exceptions={"AgentTimeoutError"},
+                max_wait_sec=60.0,
+                min_wait_sec=10.0,
+                wait_multiplier=2.0,
+            ),
+            quiet=True,
+        ),
+        environment=EnvironmentConfig(
+            type=EnvironmentType.DAYTONA,
+            force_build=False,
+            delete=True,
+        ),
+        agents=[],
+        datasets=[],
+        tasks=[],
     )
 
 
@@ -95,13 +120,6 @@ def main():
     grouped_trials = group_trials()
     remaining_trial_configs = get_remaining_trial_configs(grouped_trials)
     job_config = create_job_config(remaining_trial_configs)
-
-    job_config.orchestrator.n_concurrent_trials = 400
-    job_config.orchestrator.quiet = True
-    job_config.environment.type = EnvironmentType.DAYTONA
-    job_config.environment.force_build = False
-    job_config.environment.delete = True
-    job_config.agents = []
 
     output_path = Path(f"configs/{job_config.job_name}.yaml")
 
