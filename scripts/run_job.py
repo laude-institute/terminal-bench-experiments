@@ -106,92 +106,92 @@ def insert_trial_into_db(result: TrialResult):
         supabase_key=os.environ["SUPABASE_SECRET_KEY"],
     )
 
-    agent_insert = AgentInsert(
-        name=result.agent_info.name,
-        version=result.agent_info.version,
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=2, max=10),
     )
-
-    client.table("agent").upsert(
-        agent_insert.model_dump(mode="json", by_alias=True, exclude_none=True)
-    ).execute()
-
-    # TODO(alexgshaw): This is a dangerous hack that we need to fix asap.
-    response = (
-        client.table("dataset_task")
-        .select("*, task!inner(name)")
-        .eq("dataset_name", "terminal-bench")
-        .eq("dataset_version", "2.0")
-        .eq("task.name", result.task_name)
-        .single()
-        .execute()
-    )
-
-    trial_insert = TrialInsert(
-        id=result.id,
-        agent_name=result.agent_info.name,
-        agent_version=result.agent_info.version,
-        config=result.config.model_dump(mode="json"),
-        task_checksum=response.data["task_checksum"],
-        trial_name=result.trial_name,
-        trial_uri=trial_uri,
-        agent_execution_started_at=(
-            result.agent_execution.started_at if result.agent_execution else None
-        ),
-        agent_execution_ended_at=(
-            result.agent_execution.finished_at if result.agent_execution else None
-        ),
-        agent_setup_started_at=(
-            result.agent_setup.started_at if result.agent_setup else None
-        ),
-        agent_setup_ended_at=(
-            result.agent_setup.finished_at if result.agent_setup else None
-        ),
-        environment_setup_started_at=(
-            result.environment_setup.started_at if result.environment_setup else None
-        ),
-        environment_setup_ended_at=(
-            result.environment_setup.finished_at if result.environment_setup else None
-        ),
-        verifier_started_at=result.verifier.started_at if result.verifier else None,
-        verifier_ended_at=result.verifier.finished_at if result.verifier else None,
-        exception_info=(
-            result.exception_info.model_dump(mode="json")
-            if result.exception_info
-            else None
-        ),
-        job_id=result.config.job_id,
-        reward=(
-            Decimal(result.verifier_result.reward)
-            if result.verifier_result and result.verifier_result.reward is not None
-            else None
-        ),
-        started_at=result.started_at,
-        ended_at=result.finished_at,
-        agent_metadata=result.agent_result.metadata if result.agent_result else None,
-    )
-
-    client.table("trial").insert(
-        trial_insert.model_dump(mode="json", by_alias=True, exclude_none=True)
-    ).execute()
-
-    if result.agent_info.model_info:
-        name = result.agent_info.model_info.name
-        provider = result.agent_info.model_info.provider
-
-        key = f"{provider}/{name}"
-        token_costs = model_cost.get(key) or model_cost.get(name)
-
-        input_cost_per_token = (
-            token_costs.get("input_cost_per_token") if token_costs else None
+    def insert_agent():
+        agent_insert = AgentInsert(
+            name=result.agent_info.name,
+            version=result.agent_info.version,
         )
-        output_cost_per_token = (
-            token_costs.get("output_cost_per_token") if token_costs else None
+        return client.table("agent").upsert(
+            agent_insert.model_dump(mode="json", by_alias=True, exclude_none=True)
+        ).execute()
+
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=2, max=10),
+    )
+    def get_dataset_task():
+        return (
+            client.table("dataset_task")
+            .select("*, task!inner(name)")
+            .eq("dataset_name", "terminal-bench")
+            .eq("dataset_version", "2.0")
+            .eq("task.name", result.task_name)
+            .single()
+            .execute()
         )
 
-        if input_cost_per_token is None or output_cost_per_token is None:
-            print(f"Could not find token costs for model: {key} or {name}")
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=2, max=10),
+    )
+    def insert_trial(task_checksum):
+        trial_insert = TrialInsert(
+            id=result.id,
+            agent_name=result.agent_info.name,
+            agent_version=result.agent_info.version,
+            config=result.config.model_dump(mode="json"),
+            task_checksum=task_checksum,
+            trial_name=result.trial_name,
+            trial_uri=trial_uri,
+            agent_execution_started_at=(
+                result.agent_execution.started_at if result.agent_execution else None
+            ),
+            agent_execution_ended_at=(
+                result.agent_execution.finished_at if result.agent_execution else None
+            ),
+            agent_setup_started_at=(
+                result.agent_setup.started_at if result.agent_setup else None
+            ),
+            agent_setup_ended_at=(
+                result.agent_setup.finished_at if result.agent_setup else None
+            ),
+            environment_setup_started_at=(
+                result.environment_setup.started_at if result.environment_setup else None
+            ),
+            environment_setup_ended_at=(
+                result.environment_setup.finished_at if result.environment_setup else None
+            ),
+            verifier_started_at=result.verifier.started_at if result.verifier else None,
+            verifier_ended_at=result.verifier.finished_at if result.verifier else None,
+            exception_info=(
+                result.exception_info.model_dump(mode="json")
+                if result.exception_info
+                else None
+            ),
+            job_id=result.config.job_id,
+            reward=(
+                Decimal(result.verifier_result.reward)
+                if result.verifier_result and result.verifier_result.reward is not None
+                else None
+            ),
+            started_at=result.started_at,
+            ended_at=result.finished_at,
+            agent_metadata=result.agent_result.metadata if result.agent_result else None,
+        )
+        return client.table("trial").insert(
+            trial_insert.model_dump(mode="json", by_alias=True, exclude_none=True)
+        ).execute()
 
-        client.table("model").upsert(
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=2, max=10),
+    )
+    def insert_model(name, provider, input_cost_per_token, output_cost_per_token):
+        return client.table("model").upsert(
             ModelInsert(
                 name=name,
                 provider=provider,
@@ -206,7 +206,12 @@ def insert_trial_into_db(result: TrialResult):
             ).model_dump(mode="json", by_alias=True, exclude_none=True)
         ).execute()
 
-        client.table("trial_model").insert(
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=2, max=10),
+    )
+    def insert_trial_model(name, provider):
+        return client.table("trial_model").insert(
             TrialModelInsert(
                 trial_id=result.id,
                 model_name=name,  # type: ignore
@@ -220,6 +225,35 @@ def insert_trial_into_db(result: TrialResult):
             ).model_dump(mode="json", by_alias=True, exclude_none=True)
         ).execute()
 
+    try:
+        insert_agent()
+        response = get_dataset_task()
+        insert_trial(response.data["task_checksum"])
+
+        if result.agent_info.model_info:
+            name = result.agent_info.model_info.name
+            provider = result.agent_info.model_info.provider
+
+            key = f"{provider}/{name}"
+            token_costs = model_cost.get(key) or model_cost.get(name)
+
+            input_cost_per_token = (
+                token_costs.get("input_cost_per_token") if token_costs else None
+            )
+            output_cost_per_token = (
+                token_costs.get("output_cost_per_token") if token_costs else None
+            )
+
+            if input_cost_per_token is None or output_cost_per_token is None:
+                print(f"Could not find token costs for model: {key} or {name}")
+
+            insert_model(name, provider, input_cost_per_token, output_cost_per_token)
+            insert_trial_model(name, provider)
+
+    except Exception as e:
+        print(f"Failed to insert trial {result.trial_name} into database after 3 retries: {e}")
+        return
+
 
 def insert_job_into_db(job_insert: JobInsert):
     client = create_client(
@@ -227,9 +261,20 @@ def insert_job_into_db(job_insert: JobInsert):
         supabase_key=os.environ["SUPABASE_SECRET_KEY"],
     )
 
-    client.table("job").upsert(
-        job_insert.model_dump(mode="json", by_alias=True, exclude_none=True)
-    ).execute()
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=2, max=10),
+    )
+    def insert_job():
+        return client.table("job").upsert(
+            job_insert.model_dump(mode="json", by_alias=True, exclude_none=True)
+        ).execute()
+
+    try:
+        insert_job()
+    except Exception as e:
+        print(f"Failed to insert job {getattr(job_insert, 'job_name', 'unknown')} into database after 3 retries: {e}")
+        return
 
 
 def main():
