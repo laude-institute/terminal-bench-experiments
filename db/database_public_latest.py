@@ -152,7 +152,6 @@ class Job(Base):
     created_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True))
     job_name: Mapped[str] = mapped_column(Text)
     n_trials: Mapped[int] = mapped_column(Integer)
-    started_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True))
     username: Mapped[str] = mapped_column(Text)
     ended_at: Mapped[datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
@@ -160,6 +159,9 @@ class Job(Base):
     git_commit_id: Mapped[str | None] = mapped_column(Text, nullable=True)
     metrics: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
     package_version: Mapped[str | None] = mapped_column(Text, nullable=True)
+    started_at: Mapped[datetime | None] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
+    )
     stats: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
 
     # Relationships
@@ -224,6 +226,7 @@ class Task(Base):
     verifier_timeout_sec: Mapped[Decimal] = mapped_column(Numeric)
     git_commit_id: Mapped[str | None] = mapped_column(Text, nullable=True)
     git_url: Mapped[str | None] = mapped_column(Text, nullable=True)
+    metadata: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
     source: Mapped[str | None] = mapped_column(Text, unique=True, nullable=True)
 
     # Relationships
@@ -260,7 +263,6 @@ class Trial(Base):
     created_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True))
     task_checksum: Mapped[str] = mapped_column(Text, ForeignKey("task.checksum"))
     trial_name: Mapped[str] = mapped_column(Text)
-    trial_uri: Mapped[str] = mapped_column(Text)
     agent_execution_ended_at: Mapped[datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
@@ -290,6 +292,7 @@ class Trial(Base):
     started_at: Mapped[datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
+    trial_uri: Mapped[str | None] = mapped_column(Text, nullable=True)
     verifier_ended_at: Mapped[datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
@@ -439,7 +442,7 @@ class JobInsert(Base):
     # Auto-generated and identity fields are excluded.
     # Fields with defaults are optional.
     # Primary key field(s): id
-    # Required fields: id, job_name, username, started_at, n_trials, config
+    # Required fields: id, job_name, username, n_trials, config
 
     # Primary Keys
     id: Mapped[UUID4] = mapped_column(UUID(as_uuid=True))
@@ -451,7 +454,6 @@ class JobInsert(Base):
     )
     job_name: Mapped[str] = mapped_column(Text)
     n_trials: Mapped[int] = mapped_column(Integer)
-    started_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True))
     username: Mapped[str] = mapped_column(Text)
     ended_at: Mapped[datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
@@ -459,6 +461,9 @@ class JobInsert(Base):
     git_commit_id: Mapped[str | None] = mapped_column(Text, nullable=True)
     metrics: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
     package_version: Mapped[str | None] = mapped_column(Text, nullable=True)
+    started_at: Mapped[datetime | None] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
+    )
     stats: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
 
     # Relationships
@@ -519,6 +524,7 @@ class TaskInsert(Base):
     verifier_timeout_sec: Mapped[Decimal] = mapped_column(Numeric)
     git_commit_id: Mapped[str | None] = mapped_column(Text, nullable=True)
     git_url: Mapped[str | None] = mapped_column(Text, nullable=True)
+    metadata: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
     source: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     # Relationships
@@ -535,7 +541,7 @@ class TrialInsert(Base):
     # Auto-generated and identity fields are excluded.
     # Fields with defaults are optional.
     # Primary key field(s): id
-    # Required fields: id, trial_name, trial_uri, task_checksum, agent_name, agent_version, config
+    # Required fields: id, trial_name, task_checksum, agent_name, agent_version, config
 
     # Primary Keys
     id: Mapped[UUID4] = mapped_column(UUID(as_uuid=True))
@@ -549,7 +555,6 @@ class TrialInsert(Base):
     )
     task_checksum: Mapped[str] = mapped_column(Text)
     trial_name: Mapped[str] = mapped_column(Text)
-    trial_uri: Mapped[str] = mapped_column(Text)
     agent_execution_ended_at: Mapped[datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
@@ -577,6 +582,7 @@ class TrialInsert(Base):
     started_at: Mapped[datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
+    trial_uri: Mapped[str | None] = mapped_column(Text, nullable=True)
     verifier_ended_at: Mapped[datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
@@ -713,9 +719,6 @@ class JobUpdate(Base):
     )
     job_name: Mapped[str | None] = mapped_column(Text, nullable=True)
     n_trials: Mapped[int | None] = mapped_column(Integer, nullable=True)
-    started_at: Mapped[datetime | None] = mapped_column(
-        TIMESTAMP(timezone=True), nullable=True
-    )
     username: Mapped[str | None] = mapped_column(Text, nullable=True)
     ended_at: Mapped[datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
@@ -723,6 +726,9 @@ class JobUpdate(Base):
     git_commit_id: Mapped[str | None] = mapped_column(Text, nullable=True)
     metrics: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
     package_version: Mapped[str | None] = mapped_column(Text, nullable=True)
+    started_at: Mapped[datetime | None] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
+    )
     stats: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
 
     # Relationships
@@ -779,6 +785,7 @@ class TaskUpdate(Base):
     verifier_timeout_sec: Mapped[Decimal | None] = mapped_column(Numeric, nullable=True)
     git_commit_id: Mapped[str | None] = mapped_column(Text, nullable=True)
     git_url: Mapped[str | None] = mapped_column(Text, nullable=True)
+    metadata: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
     source: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     # Relationships
@@ -807,7 +814,6 @@ class TrialUpdate(Base):
     )
     task_checksum: Mapped[str | None] = mapped_column(Text, nullable=True)
     trial_name: Mapped[str | None] = mapped_column(Text, nullable=True)
-    trial_uri: Mapped[str | None] = mapped_column(Text, nullable=True)
     agent_execution_ended_at: Mapped[datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
@@ -835,6 +841,7 @@ class TrialUpdate(Base):
     started_at: Mapped[datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
+    trial_uri: Mapped[str | None] = mapped_column(Text, nullable=True)
     verifier_ended_at: Mapped[datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )

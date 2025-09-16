@@ -4,6 +4,7 @@ import subprocess
 import sys
 from decimal import Decimal
 from pathlib import Path
+from urllib.parse import urlparse
 
 import sandboxes
 import yaml
@@ -13,6 +14,7 @@ from sandboxes.models.job.config import JobConfig
 from sandboxes.models.trial.result import TrialResult
 from sandboxes.orchestrators.base import OrchestratorEvent
 from supabase import create_client
+from tenacity import retry, stop_after_attempt, wait_exponential
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
@@ -25,7 +27,78 @@ from db.schema_public_latest import (
 )
 
 
+def upload_trial_to_storage(result: TrialResult) -> str | None:
+    """
+    Upload trial directory to Supabase storage and return public URL.
+
+    Returns:
+        Public URL of the trial directory in storage, or None if upload failed.
+    """
+    trial_path = Path(urlparse(result.trial_uri).path)
+
+    if not trial_path.exists():
+        print(f"Trial directory not found: {trial_path}")
+        return None
+
+    client = create_client(
+        supabase_url=os.environ["SUPABASE_URL"],
+        supabase_key=os.environ["SUPABASE_SECRET_KEY"],
+    )
+
+    bucket_name = "trials"
+    trial_id = str(result.id)
+
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=2, max=10),
+        reraise=True,
+    )
+    def upload_file(file_path: Path, storage_path: str):
+        """Upload a single file with retry logic."""
+        with open(file_path, "rb") as f:
+            response = client.storage.from_(bucket_name).upload(
+                file=f, path=storage_path, file_options={"upsert": "true"}
+            )
+        return response
+
+    upload_success = True
+    files_uploaded = 0
+
+    for file_path in trial_path.rglob("*"):
+        if file_path.is_file():
+            relative_path = file_path.relative_to(trial_path)
+            storage_path = f"{trial_id}/{relative_path}"
+
+            try:
+                upload_file(file_path, storage_path)
+                files_uploaded += 1
+            except Exception as e:
+                print(f"Failed to upload {file_path}: {e}")
+                if relative_path.name in ["result.json", "config.json"]:
+                    upload_success = False
+
+    if not upload_success:
+        print(f"Critical files failed to upload for trial {trial_id}")
+        return None
+
+    if files_uploaded == 0:
+        print(f"No files found to upload for trial {trial_id}")
+        return None
+
+    public_url = client.storage.from_(bucket_name).get_public_url(trial_id)
+
+    return public_url
+
+
 def insert_trial_into_db(result: TrialResult):
+    storage_url = upload_trial_to_storage(result)
+
+    trial_uri = storage_url
+    if storage_url:
+        pass
+    else:
+        print("Upload failed - trial_uri will be null")
+
     client = create_client(
         supabase_url=os.environ["SUPABASE_URL"],
         supabase_key=os.environ["SUPABASE_SECRET_KEY"],
@@ -47,7 +120,7 @@ def insert_trial_into_db(result: TrialResult):
         config=result.config.model_dump(mode="json"),
         task_checksum=result.task_checksum,
         trial_name=result.trial_name,
-        trial_uri=result.trial_uri,
+        trial_uri=trial_uri,
         agent_execution_started_at=(
             result.agent_execution.started_at if result.agent_execution else None
         ),
@@ -157,7 +230,7 @@ if __name__ == "__main__":
         id=job._id,
         config=config.model_dump(mode="json"),
         job_name=config.job_name,
-        n_trials=len(job._trial_configs),
+        n_trials=len(job),
         username=os.environ.get("USER", "unknown"),
         git_commit_id=(
             subprocess.check_output(
@@ -170,7 +243,8 @@ if __name__ == "__main__":
         package_version=sandboxes.__version__,
     )
 
-    insert_job_into_db(job_insert)
+    if not job.is_resuming:
+        insert_job_into_db(job_insert)
 
     job._orchestrator.add_hook(
         event=OrchestratorEvent.TRIAL_COMPLETED,
