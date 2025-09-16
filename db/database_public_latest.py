@@ -269,6 +269,7 @@ class Trial(Base):
     agent_execution_started_at: Mapped[datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
+    agent_metadata: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
     agent_setup_ended_at: Mapped[datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
@@ -561,6 +562,7 @@ class TrialInsert(Base):
     agent_execution_started_at: Mapped[datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
+    agent_metadata: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
     agent_setup_ended_at: Mapped[datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
@@ -820,6 +822,7 @@ class TrialUpdate(Base):
     agent_execution_started_at: Mapped[datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
+    agent_metadata: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
     agent_setup_ended_at: Mapped[datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )

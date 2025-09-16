@@ -132,6 +132,7 @@ class TrialBaseSchema(CustomModel):
     # Columns
     agent_execution_ended_at: datetime.datetime | None = Field(default=None)
     agent_execution_started_at: datetime.datetime | None = Field(default=None)
+    agent_metadata: dict | Json | None = Field(default=None)
     agent_name: str
     agent_setup_ended_at: datetime.datetime | None = Field(default=None)
     agent_setup_started_at: datetime.datetime | None = Field(default=None)
@@ -308,6 +309,7 @@ class TrialInsert(CustomModelInsert):
     # Field properties:
     # agent_execution_ended_at: nullable
     # agent_execution_started_at: nullable
+    # agent_metadata: nullable
     # agent_setup_ended_at: nullable
     # agent_setup_started_at: nullable
     # created_at: has default value
@@ -332,6 +334,7 @@ class TrialInsert(CustomModelInsert):
     # Optional fields
     agent_execution_ended_at: datetime.datetime | None = Field(default=None)
     agent_execution_started_at: datetime.datetime | None = Field(default=None)
+    agent_metadata: dict | Json | None = Field(default=None)
     agent_setup_ended_at: datetime.datetime | None = Field(default=None)
     agent_setup_started_at: datetime.datetime | None = Field(default=None)
     created_at: datetime.datetime | None = Field(default=None)
@@ -503,6 +506,7 @@ class TrialUpdate(CustomModelUpdate):
     # Field properties:
     # agent_execution_ended_at: nullable
     # agent_execution_started_at: nullable
+    # agent_metadata: nullable
     # agent_setup_ended_at: nullable
     # agent_setup_started_at: nullable
     # created_at: has default value
@@ -520,6 +524,7 @@ class TrialUpdate(CustomModelUpdate):
     # Optional fields
     agent_execution_ended_at: datetime.datetime | None = Field(default=None)
     agent_execution_started_at: datetime.datetime | None = Field(default=None)
+    agent_metadata: dict | Json | None = Field(default=None)
     agent_name: str | None = Field(default=None)
     agent_setup_ended_at: datetime.datetime | None = Field(default=None)
     agent_setup_started_at: datetime.datetime | None = Field(default=None)

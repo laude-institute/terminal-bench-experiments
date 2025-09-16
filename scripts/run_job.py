@@ -1,4 +1,6 @@
+import argparse
 import asyncio
+import json
 import os
 import subprocess
 import sys
@@ -113,12 +115,23 @@ def insert_trial_into_db(result: TrialResult):
         agent_insert.model_dump(mode="json", by_alias=True, exclude_none=True)
     ).execute()
 
+    # TODO(alexgshaw): This is a dangerous hack that we need to fix asap.
+    response = (
+        client.table("dataset_task")
+        .select("*, task!inner(name)")
+        .eq("dataset_name", "terminal-bench")
+        .eq("dataset_version", "2.0")
+        .eq("task.name", result.task_name)
+        .single()
+        .execute()
+    )
+
     trial_insert = TrialInsert(
         id=result.id,
         agent_name=result.agent_info.name,
         agent_version=result.agent_info.version,
         config=result.config.model_dump(mode="json"),
-        task_checksum=result.task_checksum,
+        task_checksum=response.data["task_checksum"],
         trial_name=result.trial_name,
         trial_uri=trial_uri,
         agent_execution_started_at=(
@@ -154,6 +167,7 @@ def insert_trial_into_db(result: TrialResult):
         ),
         started_at=result.started_at,
         ended_at=result.finished_at,
+        agent_metadata=result.agent_result.metadata if result.agent_result else None,
     )
 
     client.table("trial").insert(
@@ -218,9 +232,26 @@ def insert_job_into_db(job_insert: JobInsert):
     ).execute()
 
 
-if __name__ == "__main__":
-    with open("configs/job.yaml") as f:
-        config_dict = yaml.safe_load(f)
+def main():
+    parser = argparse.ArgumentParser(
+        description="Run a job with configurable job config"
+    )
+    parser.add_argument(
+        "-c",
+        "--config",
+        type=Path,
+        default="configs/job.yaml",
+        help="Path to the job configuration file (default: configs/job.yaml)",
+    )
+
+    args = parser.parse_args()
+
+    config_path = args.config
+    config_text = config_path.read_text()
+    if config_path.suffix.lower() == ".json":
+        config_dict = json.loads(config_text)
+    else:
+        config_dict = yaml.safe_load(config_text)
 
     config = JobConfig.model_validate(config_dict)
 
@@ -268,3 +299,7 @@ if __name__ == "__main__":
     )
 
     insert_job_into_db(job_insert)
+
+
+if __name__ == "__main__":
+    main()

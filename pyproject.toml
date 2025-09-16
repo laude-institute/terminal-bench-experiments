@@ -32,3 +32,9 @@ build-backend = "uv_build"
 
 [tool.uv.sources]
 sandboxes = { path = "../sandboxes", editable = true }
+
+[dependency-groups]
+dev = [
+    "ruff>=0.13.0",
+    "ty>=0.0.1a20",
+]
