@@ -2,7 +2,6 @@ import asyncio
 import os
 import subprocess
 import sys
-from collections import defaultdict
 from decimal import Decimal
 from pathlib import Path
 
@@ -87,6 +86,7 @@ def insert_trial_into_db(result: TrialResult):
         ),
         started_at=result.started_at,
         ended_at=result.finished_at,
+        agent_metadata=result.agent_result.metadata if result.agent_result else None,
     )
 
     client.table("trial").insert(
@@ -152,8 +152,8 @@ def insert_job_into_db(job_insert: JobInsert):
     ).execute()
 
 
-def get_failed_trials():
-    """Get all failed trials from the database."""
+def get_all_agent_model_task_combinations():
+    """Get all agent-model-task combinations for running 5 trials each."""
     client = create_client(
         supabase_url=os.environ["SUPABASE_URL"],
         supabase_key=os.environ["SUPABASE_SECRET_KEY"],
@@ -168,8 +168,8 @@ def get_failed_trials():
         .execute()
     )
 
-    # First, collect all trials by agent-model-task combination
-    all_combinations = defaultdict(list)
+    # Collect all unique agent-model-task combinations
+    all_combinations = {}
 
     for dataset_task in trials.data:
         task = dataset_task.get("task")
@@ -190,43 +190,35 @@ def get_failed_trials():
             for trial_model in trial_models:
                 model_name = trial_model.get("model_name", "N/A")
                 key = (agent_name, model_name, task_name)
-                all_combinations[key].append(trial)
 
-    # Now filter to only include combinations that have no successful runs
-    failed_combinations = defaultdict(list)
+                # Store one representative trial config for each combination
+                # Only store if we haven't seen this combination before, or if this trial
+                # is not a timeout/null exception (prefer non-timeout trials as templates)
+                if key not in all_combinations:
+                    # Always store the first trial we see for this combination
+                    all_combinations[key] = trial
+                else:
+                    # If we already have a trial for this combination, prefer non-timeout trials
+                    existing_trial = all_combinations[key]
+                    existing_exception = existing_trial.get("exception_info")
+                    existing_is_timeout_or_null = (
+                        existing_exception is None
+                        or existing_exception.get("exception_type")
+                        == "AgentTimeoutError"
+                    )
 
-    for key, trial_list in all_combinations.items():
-        # Check if this combination has any successful runs
-        has_successful_run = False
+                    current_exception = trial.get("exception_info")
+                    current_is_timeout_or_null = (
+                        current_exception is None
+                        or current_exception.get("exception_type")
+                        == "AgentTimeoutError"
+                    )
 
-        for trial in trial_list:
-            exception_info = trial.get("exception_info")
+                    # Replace existing trial if current one is not timeout/null and existing one is
+                    if existing_is_timeout_or_null and not current_is_timeout_or_null:
+                        all_combinations[key] = trial
 
-            # A trial is successful if exception_info is null or exception_type is AgentTimeoutError
-            if exception_info is None:
-                has_successful_run = True
-                break
-            else:
-                exception_type = exception_info.get("exception_type")
-                if exception_type == "AgentTimeoutError":
-                    has_successful_run = True
-                    break
-
-        # Only add failed trials if there are no successful runs for this combination
-        if not has_successful_run:
-            # Find the first failed trial (one that's not successful)
-            for trial in trial_list:
-                exception_info = trial.get("exception_info")
-                is_successful = (
-                    exception_info is None
-                    or exception_info.get("exception_type") == "AgentTimeoutError"
-                )
-
-                if not is_successful:
-                    failed_combinations[key].append(trial)
-                    break  # Only add one trial per combination
-
-    return failed_combinations
+    return all_combinations
 
 
 def parse_trial_config(trial):
@@ -234,39 +226,42 @@ def parse_trial_config(trial):
 
 
 def main():
-    """Main function to run failed trials."""
-    print("Fetching failed trials from database...")
-    failed_combinations = get_failed_trials()
+    """Main function to run 5 trials for all agent-model-task combinations."""
+    print("Fetching all agent-model-task combinations from database...")
+    all_combinations = get_all_agent_model_task_combinations()
 
-    if not failed_combinations:
-        print("No failed trials found.")
+    if not all_combinations:
+        print("No agent-model-task combinations found.")
         return
 
-    print(f"Found {len(failed_combinations)} failed agent-model-task combinations")
+    print(f"Found {len(all_combinations)} unique agent-model-task combinations")
 
-    # Get unique trial configs (one per combination)
+    # Create 5 trial configs for each combination
     trial_configs: list[TrialConfig] = []
-    for (agent_name, model_name, task_name), trial_list in failed_combinations.items():
-        if trial_list:
-            # Get the first trial config from the list
-            first_trial = trial_list[0]
-            try:
-                trial_config = parse_trial_config(first_trial)
-                trial_configs.append(trial_config)
-                print(
-                    f"Added trial config for: {agent_name} + {model_name} + {task_name}"
-                )
-            except Exception as e:
-                print(
-                    f"Error parsing trial config for {agent_name} + {model_name} + {task_name}: {e}"
-                )
-                continue
+    for (agent_name, model_name, task_name), trial in all_combinations.items():
+        try:
+            base_trial_config = parse_trial_config(trial)
+
+            # Create 5 trials for this combination
+            for _ in range(5):
+                trial_configs.append(base_trial_config)
+
+            print(
+                f"Added 5 trial configs for: {agent_name} + {model_name} + {task_name}"
+            )
+        except Exception as e:
+            print(
+                f"Error parsing trial config for {agent_name} + {model_name} + {task_name}: {e}"
+            )
+            continue
 
     if not trial_configs:
         print("No valid trial configs could be parsed.")
         return
 
-    print(f"Created {len(trial_configs)} trial configs to rerun")
+    print(
+        f"Created {len(trial_configs)} total trial configs to run ({len(all_combinations)} combinations × 5 trials each)"
+    )
 
     for trial_config in trial_configs:
         trial_config.agent.kwargs["max_episodes"] = 200
