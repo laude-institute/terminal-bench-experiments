@@ -5,6 +5,7 @@ from decimal import Decimal
 from pathlib import Path
 from typing import Annotated
 
+import yaml
 from dotenv import load_dotenv
 from rich.console import Console
 from rich.progress import (
@@ -15,6 +16,7 @@ from rich.progress import (
     TextColumn,
 )
 from sandboxes.models.dataset_item import DownloadedDatasetItem
+from sandboxes.models.job.config import LocalDatasetConfig
 from sandboxes.models.registry import Dataset, RegistryTaskId
 from sandboxes.models.task.task import Task
 from sandboxes.registry.client import RegistryClient
@@ -92,6 +94,14 @@ def upload_dataset(
     registry_url: Annotated[
         str | None, Option("-u", "--registry-url", help="URL of remote registry")
     ] = None,
+    config_file: Annotated[
+        Path | None,
+        Option(
+            "-c",
+            "--config",
+            help="Path to job config YAML file containing dataset configuration",
+        ),
+    ] = None,
 ):
     try:
         from db.schema_public_latest import (
@@ -105,6 +115,45 @@ def upload_dataset(
             "generate-schemas` to generate the schema."
         )
         raise
+
+    dataset_config = None
+    # Handle config file if provided
+    if config_file is not None:
+        if not config_file.exists():
+            console.print(f"[red]Config file not found: {config_file}")
+            raise FileNotFoundError(f"Config file not found: {config_file}")
+
+        with open(config_file) as f:
+            config_dict = yaml.safe_load(f)
+
+        # Extract dataset configuration from job config
+        datasets_config = config_dict.get("datasets", [])
+        if not datasets_config:
+            console.print("[red]No datasets found in config file")
+            raise ValueError("No datasets found in config file")
+
+        # Use the first dataset if multiple are defined
+        first_dataset = datasets_config[0]
+
+        # Create dataset config object to use get_task_configs()
+        if "path" in first_dataset:
+            config_dataset_path = Path(first_dataset["path"])
+            # Resolve relative paths from config file location
+            if not config_dataset_path.is_absolute():
+                config_dataset_path = (
+                    config_file.parent / config_dataset_path
+                ).resolve()
+
+            dataset_config = LocalDatasetConfig(
+                path=config_dataset_path,
+                task_names=first_dataset.get("task_names"),
+                exclude_task_names=first_dataset.get("exclude_task_names"),
+            )
+
+            # Override dataset_path if not already provided
+            if dataset_path is None:
+                dataset_path = config_dataset_path
+                console.print(f"[cyan]Using dataset path from config: {dataset_path}")
 
     with Progress(
         SpinnerColumn(),
@@ -173,14 +222,27 @@ def upload_dataset(
                 progress.update(
                     main_task, description="[yellow]Loading local dataset items..."
                 )
-                downloaded_dataset_items = [
-                    DownloadedDatasetItem(
-                        id=RegistryTaskId(name=task_path.name, path=task_path),
-                        downloaded_path=task_path,
-                    )
-                    for task_path in dataset_path.iterdir()
-                    if task_path.is_dir()
-                ]
+                # Use get_task_configs() if we have a dataset config from the config file
+                if dataset_config is not None:
+                    task_configs = dataset_config.get_task_configs()
+                    downloaded_dataset_items = [
+                        DownloadedDatasetItem(
+                            id=RegistryTaskId(
+                                name=task_config.path.name, path=task_config.path
+                            ),
+                            downloaded_path=task_config.path,
+                        )
+                        for task_config in task_configs
+                    ]
+                else:
+                    downloaded_dataset_items = [
+                        DownloadedDatasetItem(
+                            id=RegistryTaskId(name=task_path.name, path=task_path),
+                            downloaded_path=task_path,
+                        )
+                        for task_path in dataset_path.iterdir()
+                        if task_path.is_dir()
+                    ]
 
             progress.update(main_task, advance=1)
             console.print(
@@ -253,6 +315,7 @@ def upload_dataset(
                             path=str(task_path),
                             git_url=downloaded_dataset_item.id.git_url,
                             git_commit_id=downloaded_dataset_item.id.git_commit_id,
+                            metadata=task.config.metadata,
                         ).model_dump(mode="json", by_alias=True, exclude_none=True)
                     )
                     dataset_task_inserts.append(
@@ -283,7 +346,7 @@ def upload_dataset(
             )
             try:
                 if task_inserts:
-                    client.table("task").upsert(task_inserts).execute()
+                    response = client.table("task").upsert(task_inserts).execute()
                     client.table("dataset_task").upsert(dataset_task_inserts).execute()
                 progress.update(main_task, advance=1)
             except Exception as e:

@@ -85,7 +85,7 @@ class JobBaseSchema(CustomModel):
     metrics: dict | Json | None = Field(default=None)
     n_trials: int
     package_version: str | None = Field(default=None)
-    started_at: datetime.datetime
+    started_at: datetime.datetime | None = Field(default=None)
     stats: dict | Json | None = Field(default=None)
     username: str
 
@@ -116,6 +116,7 @@ class TaskBaseSchema(CustomModel):
     git_commit_id: str | None = Field(default=None)
     git_url: str | None = Field(default=None)
     instruction: str
+    metadata: dict | Json | None = Field(default=None)
     name: str
     path: str
     source: str | None = Field(default=None)
@@ -146,7 +147,7 @@ class TrialBaseSchema(CustomModel):
     started_at: datetime.datetime | None = Field(default=None)
     task_checksum: str
     trial_name: str
-    trial_uri: str
+    trial_uri: str | None = Field(default=None)
     verifier_ended_at: datetime.datetime | None = Field(default=None)
     verifier_started_at: datetime.datetime | None = Field(default=None)
 
@@ -231,6 +232,7 @@ class JobInsert(CustomModelInsert):
     # git_commit_id: nullable
     # metrics: nullable
     # package_version: nullable
+    # started_at: nullable
     # stats: nullable
 
     # Required fields
@@ -241,11 +243,11 @@ class JobInsert(CustomModelInsert):
 
     # Optional fields
     created_at: datetime.datetime | None = Field(default=None)
-    started_at: datetime.datetime | None = Field(default=None)
     ended_at: datetime.datetime | None = Field(default=None)
     git_commit_id: str | None = Field(default=None)
     metrics: dict | Json | None = Field(default=None)
     package_version: str | None = Field(default=None)
+    started_at: datetime.datetime | None = Field(default=None)
     stats: dict | Json | None = Field(default=None)
 
 
@@ -279,6 +281,7 @@ class TaskInsert(CustomModelInsert):
     # created_at: has default value
     # git_commit_id: nullable
     # git_url: nullable
+    # metadata: nullable
     # source: nullable
 
     # Required fields
@@ -292,6 +295,7 @@ class TaskInsert(CustomModelInsert):
     created_at: datetime.datetime | None = Field(default=None)
     git_commit_id: str | None = Field(default=None)
     git_url: str | None = Field(default=None)
+    metadata: dict | Json | None = Field(default=None)
     source: str | None = Field(default=None)
 
 
@@ -314,6 +318,7 @@ class TrialInsert(CustomModelInsert):
     # job_id: nullable
     # reward: nullable
     # started_at: nullable
+    # trial_uri: nullable
     # verifier_ended_at: nullable
     # verifier_started_at: nullable
 
@@ -323,7 +328,6 @@ class TrialInsert(CustomModelInsert):
     config: dict | Json
     task_checksum: str
     trial_name: str
-    trial_uri: str
 
     # Optional fields
     agent_execution_ended_at: datetime.datetime | None = Field(default=None)
@@ -338,6 +342,7 @@ class TrialInsert(CustomModelInsert):
     job_id: UUID4 | None = Field(default=None)
     reward: Decimal | None = Field(default=None)
     started_at: datetime.datetime | None = Field(default=None)
+    trial_uri: str | None = Field(default=None)
     verifier_ended_at: datetime.datetime | None = Field(default=None)
     verifier_started_at: datetime.datetime | None = Field(default=None)
 
@@ -426,6 +431,7 @@ class JobUpdate(CustomModelUpdate):
     # git_commit_id: nullable
     # metrics: nullable
     # package_version: nullable
+    # started_at: nullable
     # stats: nullable
 
     # Optional fields
@@ -472,6 +478,7 @@ class TaskUpdate(CustomModelUpdate):
     # created_at: has default value
     # git_commit_id: nullable
     # git_url: nullable
+    # metadata: nullable
     # source: nullable
 
     # Optional fields
@@ -480,6 +487,7 @@ class TaskUpdate(CustomModelUpdate):
     git_commit_id: str | None = Field(default=None)
     git_url: str | None = Field(default=None)
     instruction: str | None = Field(default=None)
+    metadata: dict | Json | None = Field(default=None)
     name: str | None = Field(default=None)
     path: str | None = Field(default=None)
     source: str | None = Field(default=None)
@@ -505,6 +513,7 @@ class TrialUpdate(CustomModelUpdate):
     # job_id: nullable
     # reward: nullable
     # started_at: nullable
+    # trial_uri: nullable
     # verifier_ended_at: nullable
     # verifier_started_at: nullable
 

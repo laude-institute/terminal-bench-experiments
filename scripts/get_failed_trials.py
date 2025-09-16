@@ -17,7 +17,7 @@ def main():
     trials = (
         client.table("dataset_task")
         .select("*, task(*, trial(*, trial_model(*)))")
-        .eq("dataset_name", "tbc-pre-release")
+        .eq("dataset_name", "terminal-bench")
         .eq("dataset_version", "2.0")
         .neq("task.trial.agent_name", "oracle")
         .execute()
