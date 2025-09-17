@@ -22,15 +22,18 @@ client = create_client(
 )
 
 N_REQUIRED_VALID_TRIALS = 5
+AGENT_NAME = "terminus-2"
+DATASET_NAME = "terminal-bench"
+DATASET_VERSION = "2.0"
 
 
 def group_trials() -> dict[tuple[str, str, str], list[dict]]:
     response = (
         client.table("dataset_task")
         .select("*,task(*,trial(*,trial_model(*)))")
-        .eq("dataset_name", "terminal-bench")
-        .eq("dataset_version", "2.0")
-        .eq("task.trial.agent_name", "terminus-2")
+        .eq("dataset_name", DATASET_NAME)
+        .eq("dataset_version", DATASET_VERSION)
+        .eq("task.trial.agent_name", AGENT_NAME)
         .execute()
     )
 
@@ -121,7 +124,7 @@ def main():
     remaining_trial_configs = get_remaining_trial_configs(grouped_trials)
     job_config = create_job_config(remaining_trial_configs)
 
-    output_path = Path(f"configs/{job_config.job_name}.yaml")
+    output_path = Path("configs") / AGENT_NAME / f"{job_config.job_name}.yaml"
 
     output_path.write_text(
         yaml.safe_dump(job_config.model_dump(mode="json"), sort_keys=False)
