@@ -1,47 +1,47 @@
-job_name: swe-agent-mini-initial
+job_name: mini-swe-agent-initial
 jobs_dir: jobs
-n_attempts: 5
+n_attempts: 1
 timeout_multiplier: 1.0
 orchestrator:
   type: local
-  n_concurrent_trials: 200
-  quiet: true
+  n_concurrent_trials: 8
+  quiet: false
 environment:
-  type: daytona
+  type: docker
   force_build: false
   delete: true
 agents:
-  - name: swe-agent-mini
+  - name: mini-swe-agent
     model_name: anthropic/claude-sonnet-4-20250514
-  - name: swe-agent-mini
+  - name: mini-swe-agent
     model_name: anthropic/claude-opus-4-1-20250805
-  - name: swe-agent-mini
+  - name: mini-swe-agent
     model_name: openai/gpt-5
-  - name: swe-agent-mini
+  - name: mini-swe-agent
     model_name: openai/gpt-5-mini
-  - name: swe-agent-mini
+  - name: mini-swe-agent
     model_name: openai/gpt-5-nano
-  - name: swe-agent-mini
+  - name: mini-swe-agent
     model_name: xai/grok-4-0709
-  - name: swe-agent-mini
+  - name: mini-swe-agent
     model_name: xai/grok-code-fast-1
-  - name: swe-agent-mini
+  - name: mini-swe-agent
     model_name: gemini/gemini-2.5-pro
-  - name: swe-agent-mini
+  - name: mini-swe-agent
     model_name: gemini/gemini-2.5-flash
-  - name: swe-agent-mini
+  - name: mini-swe-agent
     model_name: together_ai/Qwen/Qwen3-Coder-480B-A35B-Instruct-FP8
-  - name: swe-agent-mini
+  - name: mini-swe-agent
     model_name: together_ai/openai/gpt-oss-120b
-  - name: swe-agent-mini
+  - name: mini-swe-agent
     model_name: together_ai/OpenAI/gpt-oss-20B
-  - name: swe-agent-mini
+  - name: mini-swe-agent
     model_name: together_ai/moonshotai/Kimi-K2-Instruct-0905
-  - name: swe-agent-mini
+  - name: mini-swe-agent
     model_name: together_ai/meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8
-  - name: swe-agent-mini
+  - name: mini-swe-agent
     model_name: together_ai/zai-org/GLM-4.5-Air-FP8
-  - name: swe-agent-mini
+  - name: mini-swe-agent
     model_name: together_ai/deepseek-ai/DeepSeek-V3.1
 datasets:
   - path: ../sandboxes/tasks/sandboxes-tasks
