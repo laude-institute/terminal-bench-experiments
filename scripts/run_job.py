@@ -188,9 +188,9 @@ def insert_trial_into_db(result: TrialResult):
             ),
             started_at=result.started_at,
             ended_at=result.finished_at,
-            agent_metadata=result.agent_result.metadata
-            if result.agent_result
-            else None,
+            agent_metadata=(
+                result.agent_result.metadata if result.agent_result else None
+            ),
         )
         return (
             client.table("trial")
