@@ -1,11 +1,11 @@
-job_name: reliability-daytona-32
+job_name: reliability-daytona-200
 jobs_dir: jobs
 n_attempts: 1
 timeout_multiplier: 1.0
 orchestrator:
   type: local
-  n_concurrent_trials: 32
-  quiet: false
+  n_concurrent_trials: 200
+  quiet: true
   retry:
     max_retries: 5
     include_exceptions: null
