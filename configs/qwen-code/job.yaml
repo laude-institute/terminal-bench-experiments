@@ -6,6 +6,14 @@ orchestrator:
   type: local
   n_concurrent_trials: 200
   quiet: true
+  retry:
+    max_retries: 5
+    include_exceptions: null
+    exclude_exceptions:
+    - AgentTimeoutError
+    wait_multiplier: 2.0
+    min_wait_sec: 10.0
+    max_wait_sec: 60.0
 environment:
   type: daytona
   force_build: false

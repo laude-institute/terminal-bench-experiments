@@ -9,7 +9,7 @@ load_dotenv()
 if __name__ == "__main__":
     client = create_client(
         supabase_url=os.environ["SUPABASE_URL"],
-        supabase_key=os.environ["SUPABASE_SECRET_KEY"],
+        supabase_key=os.environ["SUPABASE_PUBLISHABLE_KEY"],
     )
 
     response = (
