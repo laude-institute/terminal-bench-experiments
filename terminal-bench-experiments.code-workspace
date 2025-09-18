@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "./jobs"
+		},
+		{
+			"path": "../sandboxes/tasks/sandboxes-tasks"
 		}
 	],
 	"settings": {
