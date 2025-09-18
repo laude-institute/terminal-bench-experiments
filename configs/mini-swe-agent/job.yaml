@@ -1,13 +1,21 @@
-job_name: mini-swe-agent-initial
+job_name: mini-swe-agent-daytona-4x16
 jobs_dir: jobs
-n_attempts: 1
+n_attempts: 4
 timeout_multiplier: 1.0
 orchestrator:
   type: local
-  n_concurrent_trials: 8
+  n_concurrent_trials: 100
   quiet: false
+  retry:
+    max_retries: 5
+    include_exceptions: null
+    exclude_exceptions:
+    - AgentTimeoutError
+    wait_multiplier: 2.0
+    min_wait_sec: 10.0
+    max_wait_sec: 60.0
 environment:
-  type: docker
+  type: daytona
   force_build: false
   delete: true
 agents:

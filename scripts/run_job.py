@@ -115,9 +115,13 @@ def insert_trial_into_db(result: TrialResult):
             name=result.agent_info.name,
             version=result.agent_info.version,
         )
-        return client.table("agent").upsert(
-            agent_insert.model_dump(mode="json", by_alias=True, exclude_none=True)
-        ).execute()
+        return (
+            client.table("agent")
+            .upsert(
+                agent_insert.model_dump(mode="json", by_alias=True, exclude_none=True)
+            )
+            .execute()
+        )
 
     @retry(
         stop=stop_after_attempt(3),
@@ -160,10 +164,14 @@ def insert_trial_into_db(result: TrialResult):
                 result.agent_setup.finished_at if result.agent_setup else None
             ),
             environment_setup_started_at=(
-                result.environment_setup.started_at if result.environment_setup else None
+                result.environment_setup.started_at
+                if result.environment_setup
+                else None
             ),
             environment_setup_ended_at=(
-                result.environment_setup.finished_at if result.environment_setup else None
+                result.environment_setup.finished_at
+                if result.environment_setup
+                else None
             ),
             verifier_started_at=result.verifier.started_at if result.verifier else None,
             verifier_ended_at=result.verifier.finished_at if result.verifier else None,
@@ -180,50 +188,70 @@ def insert_trial_into_db(result: TrialResult):
             ),
             started_at=result.started_at,
             ended_at=result.finished_at,
-            agent_metadata=result.agent_result.metadata if result.agent_result else None,
+            agent_metadata=result.agent_result.metadata
+            if result.agent_result
+            else None,
         )
-        return client.table("trial").insert(
-            trial_insert.model_dump(mode="json", by_alias=True, exclude_none=True)
-        ).execute()
+        return (
+            client.table("trial")
+            .insert(
+                trial_insert.model_dump(mode="json", by_alias=True, exclude_none=True)
+            )
+            .execute()
+        )
 
     @retry(
         stop=stop_after_attempt(3),
         wait=wait_exponential(multiplier=1, min=2, max=10),
     )
     def insert_model(name, provider, input_cost_per_token, output_cost_per_token):
-        return client.table("model").upsert(
-            ModelInsert(
-                name=name,
-                provider=provider,
-                cents_per_million_input_tokens=(
-                    round(input_cost_per_token * 1e8) if input_cost_per_token else None
-                ),
-                cents_per_million_output_tokens=(
-                    round(output_cost_per_token * 1e8)
-                    if output_cost_per_token
-                    else None
-                ),
-            ).model_dump(mode="json", by_alias=True, exclude_none=True)
-        ).execute()
+        return (
+            client.table("model")
+            .upsert(
+                ModelInsert(
+                    name=name,
+                    provider=provider,
+                    cents_per_million_input_tokens=(
+                        round(input_cost_per_token * 1e8)
+                        if input_cost_per_token
+                        else None
+                    ),
+                    cents_per_million_output_tokens=(
+                        round(output_cost_per_token * 1e8)
+                        if output_cost_per_token
+                        else None
+                    ),
+                ).model_dump(mode="json", by_alias=True, exclude_none=True)
+            )
+            .execute()
+        )
 
     @retry(
         stop=stop_after_attempt(3),
         wait=wait_exponential(multiplier=1, min=2, max=10),
     )
     def insert_trial_model(name, provider):
-        return client.table("trial_model").insert(
-            TrialModelInsert(
-                trial_id=result.id,
-                model_name=name,  # type: ignore
-                model_provider=provider,  # type: ignore
-                n_input_tokens=(
-                    result.agent_result.n_input_tokens if result.agent_result else None
-                ),
-                n_output_tokens=(
-                    result.agent_result.n_output_tokens if result.agent_result else None
-                ),
-            ).model_dump(mode="json", by_alias=True, exclude_none=True)
-        ).execute()
+        return (
+            client.table("trial_model")
+            .insert(
+                TrialModelInsert(
+                    trial_id=result.id,
+                    model_name=name,  # type: ignore
+                    model_provider=provider,  # type: ignore
+                    n_input_tokens=(
+                        result.agent_result.n_input_tokens
+                        if result.agent_result
+                        else None
+                    ),
+                    n_output_tokens=(
+                        result.agent_result.n_output_tokens
+                        if result.agent_result
+                        else None
+                    ),
+                ).model_dump(mode="json", by_alias=True, exclude_none=True)
+            )
+            .execute()
+        )
 
     try:
         insert_agent()
@@ -251,7 +279,9 @@ def insert_trial_into_db(result: TrialResult):
             insert_trial_model(name, provider)
 
     except Exception as e:
-        print(f"Failed to insert trial {result.trial_name} into database after 3 retries: {e}")
+        print(
+            f"Failed to insert trial {result.trial_name} into database after 3 retries: {e}"
+        )
         return
 
 
@@ -266,14 +296,20 @@ def insert_job_into_db(job_insert: JobInsert):
         wait=wait_exponential(multiplier=1, min=2, max=10),
     )
     def insert_job():
-        return client.table("job").upsert(
-            job_insert.model_dump(mode="json", by_alias=True, exclude_none=True)
-        ).execute()
+        return (
+            client.table("job")
+            .upsert(
+                job_insert.model_dump(mode="json", by_alias=True, exclude_none=True)
+            )
+            .execute()
+        )
 
     try:
         insert_job()
     except Exception as e:
-        print(f"Failed to insert job {getattr(job_insert, 'job_name', 'unknown')} into database after 3 retries: {e}")
+        print(
+            f"Failed to insert job {getattr(job_insert, 'job_name', 'unknown')} into database after 3 retries: {e}"
+        )
         return
 
 

@@ -21,19 +21,39 @@ client = create_client(
     supabase_key=os.environ["SUPABASE_SECRET_KEY"],
 )
 
-N_REQUIRED_VALID_TRIALS = 5
+N_REQUIRED_VALID_TRIALS = 1
 AGENT_NAME = "terminus-2"
 DATASET_NAME = "terminal-bench"
 DATASET_VERSION = "2.0"
+JOB_NAME = "terminus-2-rerun"
 
 
 def group_trials() -> dict[tuple[str, str, str], list[dict]]:
     response = (
         client.table("dataset_task")
-        .select("*,task(*,trial(*,trial_model(*)))")
+        .select(
+            """
+            task!inner(
+                name,
+                trial(
+                    id,
+                    exception_info,
+                    config,
+                    agent_name,
+                    trial_model(
+                        model_name
+                    ),
+                    job!inner(
+                        job_name
+                    )
+                )
+            )
+            """
+        )
         .eq("dataset_name", DATASET_NAME)
         .eq("dataset_version", DATASET_VERSION)
         .eq("task.trial.agent_name", AGENT_NAME)
+        .eq("task.trial.job.job_name", JOB_NAME)
         .execute()
     )
 
@@ -84,7 +104,7 @@ def get_remaining_trial_configs(
             )
         )
 
-        if n_valid_trials < 5:
+        if n_valid_trials < N_REQUIRED_VALID_TRIALS:
             remaining_trial_configs.extend(
                 [TrialConfig.model_validate(trials[0]["config"])]
                 * (N_REQUIRED_VALID_TRIALS - n_valid_trials)
