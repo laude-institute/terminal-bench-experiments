@@ -1,0 +1,443 @@
+job_name: 2025-09-17__04-36-17
+jobs_dir: jobs
+n_attempts: 1
+timeout_multiplier: 1.0
+orchestrator:
+  type: local
+  n_concurrent_trials: 200
+  quiet: false
+  retry:
+    max_retries: 5
+    include_exceptions: null
+    exclude_exceptions:
+    - AgentTimeoutError
+    wait_multiplier: 2.0
+    min_wait_sec: 10.0
+    max_wait_sec: 60.0
+  kwargs: {}
+metrics: null
+environment:
+  type: daytona
+  force_build: true
+  delete: true
+  kwargs: {}
+verifier:
+  override_timeout_sec: null
+agents: []
+datasets: []
+tasks: []
+trial_configs:
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/port-compressor
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: port-compressor__yaNBADX
+  trials_dir: jobs/2025-09-15__01-26-06
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: together_ai/zai-org/GLM-4.5-Air-FP8
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: 04046ae8-112b-4a98-8867-b0c74c3a7879
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/port-compressor
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: port-compressor__ANna9Fh
+  trials_dir: jobs/2025-09-15__01-26-06
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: together_ai/moonshotai/Kimi-K2-Instruct-0905
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: 04046ae8-112b-4a98-8867-b0c74c3a7879
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/port-compressor
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: port-compressor__ANna9Fh
+  trials_dir: jobs/2025-09-15__01-26-06
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: together_ai/moonshotai/Kimi-K2-Instruct-0905
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: 04046ae8-112b-4a98-8867-b0c74c3a7879
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/port-compressor
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: port-compressor__ANna9Fh
+  trials_dir: jobs/2025-09-15__01-26-06
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: together_ai/moonshotai/Kimi-K2-Instruct-0905
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: 04046ae8-112b-4a98-8867-b0c74c3a7879
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/port-compressor
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: port-compressor__ANna9Fh
+  trials_dir: jobs/2025-09-15__01-26-06
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: together_ai/moonshotai/Kimi-K2-Instruct-0905
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: 04046ae8-112b-4a98-8867-b0c74c3a7879
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/port-compressor
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: port-compressor__PMbWcvS
+  trials_dir: jobs/2025-09-15__01-26-06
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: together_ai/OpenAI/gpt-oss-20B
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: 04046ae8-112b-4a98-8867-b0c74c3a7879
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/port-compressor
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: port-compressor__PMbWcvS
+  trials_dir: jobs/2025-09-15__01-26-06
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: together_ai/OpenAI/gpt-oss-20B
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: 04046ae8-112b-4a98-8867-b0c74c3a7879
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/port-compressor
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: port-compressor__2CoMjkE
+  trials_dir: jobs/2025-09-15__01-26-06
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: together_ai/openai/gpt-oss-120b
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: 04046ae8-112b-4a98-8867-b0c74c3a7879
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/port-compressor
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: port-compressor__2CoMjkE
+  trials_dir: jobs/2025-09-15__01-26-06
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: together_ai/openai/gpt-oss-120b
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: 04046ae8-112b-4a98-8867-b0c74c3a7879
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/port-compressor
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: port-compressor__2CoMjkE
+  trials_dir: jobs/2025-09-15__01-26-06
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: together_ai/openai/gpt-oss-120b
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: 04046ae8-112b-4a98-8867-b0c74c3a7879
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/port-compressor
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: port-compressor__2CoMjkE
+  trials_dir: jobs/2025-09-15__01-26-06
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: together_ai/openai/gpt-oss-120b
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: 04046ae8-112b-4a98-8867-b0c74c3a7879
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/port-compressor
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: port-compressor__2CoMjkE
+  trials_dir: jobs/2025-09-15__01-26-06
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: together_ai/openai/gpt-oss-120b
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: 04046ae8-112b-4a98-8867-b0c74c3a7879
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/build-initramfs-qemu
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: build-initramfs-qemu__3q2j7T9
+  trials_dir: jobs/2025-09-15__01-26-06
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: xai/grok-code-fast-1
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: 04046ae8-112b-4a98-8867-b0c74c3a7879
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/build-initramfs-qemu
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: build-initramfs-qemu__3q2j7T9
+  trials_dir: jobs/2025-09-15__01-26-06
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: xai/grok-code-fast-1
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: 04046ae8-112b-4a98-8867-b0c74c3a7879
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/build-initramfs-qemu
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: build-initramfs-qemu__7vroPbT
+  trials_dir: jobs/2025-09-15__01-26-06
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: openai/gpt-5
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: 04046ae8-112b-4a98-8867-b0c74c3a7879
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/build-initramfs-qemu
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: build-initramfs-qemu__7vroPbT
+  trials_dir: jobs/2025-09-15__01-26-06
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: openai/gpt-5
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: 04046ae8-112b-4a98-8867-b0c74c3a7879
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/build-initramfs-qemu
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: build-initramfs-qemu__7vroPbT
+  trials_dir: jobs/2025-09-15__01-26-06
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: openai/gpt-5
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: 04046ae8-112b-4a98-8867-b0c74c3a7879
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/build-initramfs-qemu
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: build-initramfs-qemu__gmUsJwX
+  trials_dir: jobs/2025-09-15__01-26-06
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: openai/gpt-5-mini
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: 04046ae8-112b-4a98-8867-b0c74c3a7879
