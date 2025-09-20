@@ -1,0 +1,190 @@
+job_name: 2025-09-17__17-43-52
+jobs_dir: jobs
+n_attempts: 1
+timeout_multiplier: 1.0
+orchestrator:
+  type: local
+  n_concurrent_trials: 200
+  quiet: false
+  retry:
+    max_retries: 5
+    include_exceptions: null
+    exclude_exceptions:
+    - AgentTimeoutError
+    wait_multiplier: 2.0
+    min_wait_sec: 10.0
+    max_wait_sec: 60.0
+  kwargs: {}
+metrics: null
+environment:
+  type: daytona
+  force_build: false
+  delete: true
+  kwargs: {}
+verifier:
+  override_timeout_sec: null
+agents: []
+datasets: []
+tasks: []
+trial_configs:
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/build-initramfs-qemu
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: build-initramfs-qemu__XAC6UVJ
+  trials_dir: jobs/terminus-2-rerun
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: xai/grok-code-fast-1
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: true
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: f90a88aa-44c1-4855-a526-cc87526102eb
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/build-initramfs-qemu
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: build-initramfs-qemu__7HyHYG3
+  trials_dir: jobs/terminus-2-rerun
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: anthropic/claude-sonnet-4-20250514
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: true
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: f90a88aa-44c1-4855-a526-cc87526102eb
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/build-initramfs-qemu
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: build-initramfs-qemu__YpgMuFv
+  trials_dir: jobs/terminus-2-rerun
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: openai/gpt-5
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: true
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: f90a88aa-44c1-4855-a526-cc87526102eb
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/build-initramfs-qemu
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: build-initramfs-qemu__TaLt2rp
+  trials_dir: jobs/terminus-2-rerun
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: xai/grok-4-0709
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: true
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: f90a88aa-44c1-4855-a526-cc87526102eb
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/port-compressor
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: port-compressor__Tmm8ATh
+  trials_dir: jobs/terminus-2-rerun
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: together_ai/openai/gpt-oss-120b
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: true
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: f90a88aa-44c1-4855-a526-cc87526102eb
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/port-compressor
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: port-compressor__uitYQNs
+  trials_dir: jobs/terminus-2-rerun
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: together_ai/OpenAI/gpt-oss-20B
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: true
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: f90a88aa-44c1-4855-a526-cc87526102eb
+- task:
+    path: ../sandboxes/tasks/sandboxes-tasks/largest-eigenval
+    git_url: null
+    git_commit_id: null
+    overwrite: false
+    download_dir: null
+  trial_name: largest-eigenval__ARSw9gp
+  trials_dir: jobs/terminus-2-rerun
+  timeout_multiplier: 1.0
+  agent:
+    name: terminus-2
+    import_path: null
+    model_name: together_ai/OpenAI/gpt-oss-20B
+    override_timeout_sec: null
+    kwargs: {}
+  environment:
+    type: daytona
+    force_build: true
+    delete: true
+    kwargs: {}
+  verifier:
+    override_timeout_sec: null
+  job_id: f90a88aa-44c1-4855-a526-cc87526102eb

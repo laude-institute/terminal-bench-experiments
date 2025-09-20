@@ -1,0 +1,41 @@
+job_name: mini-swe-agent-crack-7z-hash
+jobs_dir: jobs
+n_attempts: 1
+timeout_multiplier: 1.0
+orchestrator:
+  type: local
+  n_concurrent_trials: 4
+  quiet: false
+  retry:
+    max_retries: 5
+    include_exceptions: null
+    exclude_exceptions:
+    - AgentTimeoutError
+    wait_multiplier: 2.0
+    min_wait_sec: 10.0
+    max_wait_sec: 60.0
+environment:
+  type: docker
+  force_build: false
+  delete: true
+agents:
+  - name: mini-swe-agent
+    model_name: anthropic/claude-sonnet-4-20250514
+  - name: mini-swe-agent
+    model_name: anthropic/claude-opus-4-1-20250805
+  - name: mini-swe-agent
+    model_name: openai/gpt-5
+  - name: mini-swe-agent
+    model_name: openai/gpt-5-mini
+  - name: mini-swe-agent
+    model_name: xai/grok-4-0709
+  - name: mini-swe-agent
+    model_name: xai/grok-code-fast-1
+  - name: mini-swe-agent
+    model_name: gemini/gemini-2.5-pro
+  - name: mini-swe-agent
+    model_name: gemini/gemini-2.5-flash
+datasets:
+  - path: ../sandboxes/tasks/sandboxes-tasks
+    task_names:
+     - crack-7z-hash
