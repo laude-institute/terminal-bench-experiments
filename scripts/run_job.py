@@ -2,6 +2,7 @@ import argparse
 import asyncio
 import json
 import os
+import shutil
 import subprocess
 import sys
 from decimal import Decimal
@@ -13,6 +14,7 @@ import yaml
 from litellm import model_cost
 from sandboxes.job import Job
 from sandboxes.models.job.config import JobConfig
+from sandboxes.models.trial.paths import TrialPaths
 from sandboxes.models.trial.result import TrialResult
 from sandboxes.orchestrators.base import OrchestratorEvent
 from supabase import create_client
@@ -324,6 +326,12 @@ def main():
         default="configs/job.yaml",
         help="Path to the job configuration file (default: configs/job.yaml)",
     )
+    parser.add_argument(
+        "-f",
+        "--filter-error-types",
+        action="append",
+        help="Filter error types",
+    )
 
     args = parser.parse_args()
 
@@ -335,6 +343,43 @@ def main():
         config_dict = yaml.safe_load(config_text)
 
     config = JobConfig.model_validate(config_dict)
+
+    job_path = config.jobs_dir / config.job_name
+
+    if (job_path / "config.json").exists() and args.filter_error_types:
+        existing_config = JobConfig.model_validate_json(
+            (job_path / "config.json").read_text()
+        )
+
+        if existing_config != config:
+            raise ValueError(
+                f"Job directory {job_path} already exists and cannot be "
+                "resumed with a different config."
+            )
+
+        filter_error_types_set = set(args.filter_error_types)
+        for trial_dir in job_path.iterdir():
+            if not trial_dir.is_dir():
+                continue
+
+            trial_paths = TrialPaths(trial_dir)
+
+            if not trial_paths.result_path.exists():
+                continue
+
+            trial_result = TrialResult.model_validate_json(
+                trial_paths.result_path.read_text()
+            )
+            if (
+                trial_result.exception_info is not None
+                and trial_result.exception_info.exception_type in filter_error_types_set
+            ):
+                print(
+                    f"Removing trial directory with {
+                        trial_result.exception_info.exception_type
+                    }: {trial_dir.name}"
+                )
+                shutil.rmtree(trial_dir)
 
     job = Job(config=config)
 
