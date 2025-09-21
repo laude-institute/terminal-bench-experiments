@@ -11,6 +11,7 @@ orchestrator:
     include_exceptions: null
     exclude_exceptions:
     - AgentTimeoutError
+    - VerifierTimeoutError
     wait_multiplier: 2.0
     min_wait_sec: 10.0
     max_wait_sec: 60.0

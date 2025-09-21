@@ -1,0 +1,453 @@
+[
+    {
+        "name": "terminal-bench",
+        "version": "2.0",
+        "description": "Terminal-Bench 2.0 which consists of 74 hand-crafted expert-validated medium and hard tasks.",
+        "tasks": [
+            {
+                "name": "adaptive-rejection-sampler",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "adaptive-rejection-sampler"
+            },
+            {
+                "name": "bn-fit-modify",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "bn-fit-modify"
+            },
+            {
+                "name": "break-filter-js-from-html",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "break-filter-js-from-html"
+            },
+            {
+                "name": "build-cython-ext",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "build-cython-ext"
+            },
+            {
+                "name": "build-initramfs-qemu",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "build-initramfs-qemu"
+            },
+            {
+                "name": "build-pmars",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "build-pmars"
+            },
+            {
+                "name": "build-pov-ray",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "build-pov-ray"
+            },
+            {
+                "name": "cancel-async-tasks",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "cancel-async-tasks"
+            },
+            {
+                "name": "chess-best-move",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "chess-best-move"
+            },
+            {
+                "name": "circuit-fibsqrt",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "circuit-fibsqrt"
+            },
+            {
+                "name": "cobol-modernization",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "cobol-modernization"
+            },
+            {
+                "name": "code-from-image",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "code-from-image"
+            },
+            {
+                "name": "configure-git-webserver",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "configure-git-webserver"
+            },
+            {
+                "name": "constraints-scheduling",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "constraints-scheduling"
+            },
+            {
+                "name": "count-dataset-tokens",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "count-dataset-tokens"
+            },
+            {
+                "name": "crack-7z-hash",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "crack-7z-hash"
+            },
+            {
+                "name": "db-wal-recovery",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "db-wal-recovery"
+            },
+            {
+                "name": "distribution-search",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "distribution-search"
+            },
+            {
+                "name": "dna-assembly",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "dna-assembly"
+            },
+            {
+                "name": "dna-insert",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "dna-insert"
+            },
+            {
+                "name": "extract-elf",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "extract-elf"
+            },
+            {
+                "name": "feal-differential-cryptanalysis",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "feal-differential-cryptanalysis"
+            },
+            {
+                "name": "feal-linear-cryptanalysis",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "feal-linear-cryptanalysis"
+            },
+            {
+                "name": "filter-js-from-html",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "filter-js-from-html"
+            },
+            {
+                "name": "financial-document-processor",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "financial-document-processor"
+            },
+            {
+                "name": "fix-code-vulnerability",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "fix-code-vulnerability"
+            },
+            {
+                "name": "fix-git",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "fix-git"
+            },
+            {
+                "name": "fix-ocaml-gc",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "fix-ocaml-gc"
+            },
+            {
+                "name": "form-filling",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "form-filling"
+            },
+            {
+                "name": "git-leak-recovery",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "git-leak-recovery"
+            },
+            {
+                "name": "gpt2-codegolf",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "gpt2-codegolf"
+            },
+            {
+                "name": "hf-model-inference",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "hf-model-inference"
+            },
+            {
+                "name": "install-klee-minimal",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "install-klee-minimal"
+            },
+            {
+                "name": "install-windows-3.11",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "install-windows-3.11"
+            },
+            {
+                "name": "large-scale-text-editing",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "large-scale-text-editing"
+            },
+            {
+                "name": "largest-eigenval",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "largest-eigenval"
+            },
+            {
+                "name": "log-summary-date-ranges",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "log-summary-date-ranges"
+            },
+            {
+                "name": "make-doom-for-mips",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "make-doom-for-mips"
+            },
+            {
+                "name": "make-mips-interpreter",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "make-mips-interpreter"
+            },
+            {
+                "name": "merge-diff-arc-agi-task",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "merge-diff-arc-agi-task"
+            },
+            {
+                "name": "model-extraction-relu-logits",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "model-extraction-relu-logits"
+            },
+            {
+                "name": "mteb-leaderboard",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "mteb-leaderboard"
+            },
+            {
+                "name": "mteb-retrieve",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "mteb-retrieve"
+            },
+            {
+                "name": "nginx-request-logging",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "nginx-request-logging"
+            },
+            {
+                "name": "openssl-selfsigned-cert",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "openssl-selfsigned-cert"
+            },
+            {
+                "name": "password-recovery",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "password-recovery"
+            },
+            {
+                "name": "path-tracing",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "path-tracing"
+            },
+            {
+                "name": "path-tracing-reverse",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "path-tracing-reverse"
+            },
+            {
+                "name": "polyglot-c-py",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "polyglot-c-py"
+            },
+            {
+                "name": "polyglot-rust-c",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "polyglot-rust-c"
+            },
+            {
+                "name": "port-compressor",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "port-compressor"
+            },
+            {
+                "name": "prove-plus-comm",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "prove-plus-comm"
+            },
+            {
+                "name": "pypi-server",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "pypi-server"
+            },
+            {
+                "name": "pytorch-model-cli",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "pytorch-model-cli"
+            },
+            {
+                "name": "pytorch-model-recovery",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "pytorch-model-recovery"
+            },
+            {
+                "name": "qemu-alpine-ssh",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "qemu-alpine-ssh"
+            },
+            {
+                "name": "qemu-startup",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "qemu-startup"
+            },
+            {
+                "name": "regex-log",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "regex-log"
+            },
+            {
+                "name": "reshard-c4-data",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "reshard-c4-data"
+            },
+            {
+                "name": "reverse-engineering",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "reverse-engineering"
+            },
+            {
+                "name": "run-pdp11-code",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "run-pdp11-code"
+            },
+            {
+                "name": "sanitize-git-repo",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "sanitize-git-repo"
+            },
+            {
+                "name": "schemelike-metacircular-eval",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "schemelike-metacircular-eval"
+            },
+            {
+                "name": "sparql-university",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "sparql-university"
+            },
+            {
+                "name": "sqlite-db-truncate",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "sqlite-db-truncate"
+            },
+            {
+                "name": "sqlite-with-gcov",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "sqlite-with-gcov"
+            },
+            {
+                "name": "torch-tensor-parallelism",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "torch-tensor-parallelism"
+            },
+            {
+                "name": "train-fasttext",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "train-fasttext"
+            },
+            {
+                "name": "tune-mjcf",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "tune-mjcf"
+            },
+            {
+                "name": "video-processing",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "video-processing"
+            },
+            {
+                "name": "vulnerable-secret",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "vulnerable-secret"
+            },
+            {
+                "name": "wasm-pipeline",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "wasm-pipeline"
+            },
+            {
+                "name": "winning-avg-corewars",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "winning-avg-corewars"
+            },
+            {
+                "name": "write-compressor",
+                "git_url": "https://huggingface.co/datasets/laude-institute/sandboxes-tasks.git",
+                "git_commit_id": "909cd983eade656830bef90edfad6eb308959f6d",
+                "path": "write-compressor"
+            }
+        ]
+    }
+]

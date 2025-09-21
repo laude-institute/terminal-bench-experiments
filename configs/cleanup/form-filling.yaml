@@ -1,0 +1,48 @@
+job_name: form-filling-all
+jobs_dir: jobs
+n_attempts: 1
+timeout_multiplier: 1.0
+orchestrator:
+  type: local
+  n_concurrent_trials: 8
+  quiet: false
+  retry:
+    max_retries: 5
+    include_exceptions: null
+    exclude_exceptions:
+    - AgentTimeoutError
+    - VerifierTimeoutError
+    wait_multiplier: 2.0
+    min_wait_sec: 10.0
+    max_wait_sec: 60.0
+environment:
+  type: docker
+  force_build: false
+  delete: true
+agents:
+  - name: claude-code
+    model_name: claude-opus-4-1-20250805
+  - name: mini-swe-agent
+    model_name: claude-sonnet-4-20250514
+  - name: mini-swe-agent
+    model_name: gemini-2.5-flash
+  - name: mini-swe-agent
+    model_name: gemini-2.5-pro
+  - name: mini-swe-agent
+    model_name: gpt-5
+  - name: mini-swe-agent
+    model_name: gpt-5-mini
+  - name: mini-swe-agent
+    model_name: grok-4-0709
+  - name: openhands
+    model_name: claude-opus-4-1-20250805
+  - name: openhands
+    model_name: gpt-5
+  - name: openhands
+    model_name: gpt-5-mini
+  - name: openhands
+    model_name: moonshotai/Kimi-K2-Instruct-0905
+datasets:
+  - path: ../sandboxes/tasks/sandboxes-tasks
+    task_names:
+      - form-filling
