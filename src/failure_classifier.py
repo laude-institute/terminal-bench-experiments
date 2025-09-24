@@ -91,9 +91,9 @@ class FailureAnalyzerJudge(FailureProcessor):
             config: Configuration dictionary with keys like 'llm_provider', 'model_name', etc.
         """
         super().__init__(config)
-        self.llm_provider = self.config.get("llm_provider", "anthropic")
-        self.model_name = None  # Will be set based on provider
-        self.failure_prompt_type = self.config.get("failure_prompt_type", "base")
+        self.model_name = self.config.get("model_name", None)  # Will be set based on provider
+        self.llm_provider = self.config.get("llm_provider", self._get_model_provider())
+        self.failure_prompt_type = self.config.get("failure_prompt_type", "mast")
         
         if self.llm_provider == "anthropic":
             self.client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
@@ -109,6 +109,15 @@ class FailureAnalyzerJudge(FailureProcessor):
         else:
             raise ValueError(f"Unsupported LLM provider: {self.llm_provider}")
 
+    def _get_model_provider(self) -> str:
+        """Get the model provider."""
+        if self.model_name in ["gpt-4o", "gpt-4o-mini", "gpt-5", "gpt-5-nano"]:
+            return "openai"
+        elif self.model_name in ["claude-3-haiku-20240307", "claude-3-5-sonnet-20241022", "claude-opus-4-1-20250805"]:
+            return "anthropic"
+        else:
+            raise ValueError(f"Unsupported model: {self.model_name}")
+    
     def _get_response(self, prompt : str) -> Dict[str, any]:
         """Get the response JSON from the LLM."""
         if self.llm_provider == "anthropic":
@@ -122,7 +131,8 @@ class FailureAnalyzerJudge(FailureProcessor):
             response = self.client.chat.completions.create(
                 model=self.model_name,
                 temperature=1.0,
-                messages=[{"role": "user", "content": prompt}]
+                messages=[{"role": "user", "content": prompt}],
+                timeout=300  # 5 minute timeout for GPT-5
             )
             return response.choices[0].message.content
         elif self.llm_provider == "local":
@@ -234,7 +244,7 @@ class FailureEmbedder(FailureProcessor):
             return response.data[0].embedding
                 
         except Exception as e:
-            print(f"Error generating embedding: {e}")
+            print(f"Error generating embedding: {e}", flush=True)
             # Return zero vector on error
             return [0.0] * 1536  # Default size for text-embedding-3-small
     
@@ -275,11 +285,14 @@ FAILURE_CLASSIFIERS = {
 }
 
 
-
-def get_config(classifier_type: str, failure_prompt_type: str="base"):
+def get_config(classifier_type: str, failure_prompt_type: str="mast", model_name: str=None):
     """Get the configuration for a classifier."""
     if classifier_type == "judge":
-        return {"llm_provider": "openai", "failure_prompt_type": failure_prompt_type}
+        config = {
+            "model_name": model_name, 
+            "failure_prompt_type": failure_prompt_type
+        }
+        return config
     elif classifier_type == "embedder":
         return {"embedding_distance": "cosine",
         "model_name": "text-embedding-3-small"}
@@ -293,18 +306,19 @@ if __name__ == "__main__":
     parser = TraceParser(BASE_DIR / "traces")
     
     trial_id = "0d4d39d9-e67d-4610-8785-bab0ddbb2d81"
-
+    failure_classifier = "judge"
+    model_name="gpt-4o"
     # Read the trace
     trace = parser.parse_trace(trial_id)
     trace_text = trace.to_text(include_metadata=False)
 
 
-    classifier = FAILURE_CLASSIFIERS["judge"](config=get_config("judge", "mast"))
+    classifier = FAILURE_CLASSIFIERS[failure_classifier](config=get_config("judge", "mast", model_name))
     # Print classification prompt:
     prompt = classifier._prepare_text(trace_text, trace.get_task_name())
 
-    print(prompt)
+    print(prompt, flush=True)
     failure_modes = classifier.process_trace(trace_text, trace.get_task_name())
 
-    print(failure_modes)
+    print(failure_modes, flush=True)
     # Classify the trace
