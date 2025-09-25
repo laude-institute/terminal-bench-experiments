@@ -1,4 +1,4 @@
-job_name: form-filling-all
+job_name: form-filling
 jobs_dir: jobs
 n_attempts: 1
 timeout_multiplier: 1.0
@@ -21,27 +21,27 @@ environment:
   delete: true
 agents:
   - name: claude-code
-    model_name: claude-opus-4-1-20250805
+    model_name: anthropic/claude-opus-4-1-20250805
   - name: mini-swe-agent
-    model_name: claude-sonnet-4-20250514
+    model_name: anthropic/claude-sonnet-4-20250514
   - name: mini-swe-agent
-    model_name: gemini-2.5-flash
+    model_name: gemini/gemini-2.5-flash
   - name: mini-swe-agent
-    model_name: gemini-2.5-pro
+    model_name: gemini/gemini-2.5-pro
   - name: mini-swe-agent
-    model_name: gpt-5
+    model_name: openai/gpt-5
   - name: mini-swe-agent
-    model_name: gpt-5-mini
+    model_name: openai/gpt-5-mini
   - name: mini-swe-agent
-    model_name: grok-4-0709
+    model_name: xai/grok-4-0709
   - name: openhands
-    model_name: claude-opus-4-1-20250805
+    model_name: anthropic/claude-opus-4-1-20250805
   - name: openhands
-    model_name: gpt-5
+    model_name: openai/gpt-5
   - name: openhands
-    model_name: gpt-5-mini
+    model_name: openai/gpt-5-mini
   - name: openhands
-    model_name: moonshotai/Kimi-K2-Instruct-0905
+    model_name: together_ai/moonshotai/Kimi-K2-Instruct-0905
 datasets:
   - path: ../sandboxes/tasks/sandboxes-tasks
     task_names:
