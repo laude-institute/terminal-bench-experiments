@@ -13,8 +13,8 @@
 			"path": "jobs"
 		},
 		{
-			"name": "sandboxes-tasks",
-			"path": "../sandboxes/tasks/sandboxes-tasks"
+			"name": "tb-2",
+			"path": "../sandboxes/tasks/tb-2"
 		}
 	],
 	"settings": {

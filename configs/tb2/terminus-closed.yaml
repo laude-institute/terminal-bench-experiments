@@ -7,7 +7,7 @@ orchestrator:
   n_concurrent_trials: 100
   quiet: false
   retry:
-    max_retries: 5
+    max_retries: 3
     exclude_exceptions:
       - AgentTimeoutError
       - VerifierTimeoutError
@@ -68,4 +68,4 @@ datasets:
       name: harbor
       url: https://raw.githubusercontent.com/laude-institute/harbor/main/registry.json
     name: terminal-bench
-    version: 2.0
+    version: "2.0"
