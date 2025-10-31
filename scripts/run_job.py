@@ -5,18 +5,20 @@ import os
 import shutil
 import subprocess
 import sys
+import tarfile
+import tempfile
 from decimal import Decimal
 from pathlib import Path
 from urllib.parse import urlparse
 
-import sandboxes
+import harbor
 import yaml
+from harbor.job import Job
+from harbor.models.job.config import JobConfig
+from harbor.models.trial.paths import TrialPaths
+from harbor.models.trial.result import TrialResult
+from harbor.orchestrators.base import OrchestratorEvent
 from litellm import model_cost
-from sandboxes.job import Job
-from sandboxes.models.job.config import JobConfig
-from sandboxes.models.trial.paths import TrialPaths
-from sandboxes.models.trial.result import TrialResult
-from sandboxes.orchestrators.base import OrchestratorEvent
 from supabase import create_client
 from tenacity import retry, stop_after_attempt, wait_exponential
 
@@ -33,10 +35,10 @@ from db.schema_public_latest import (
 
 def upload_trial_to_storage(result: TrialResult) -> str | None:
     """
-    Upload trial directory to Supabase storage and return public URL.
+    Upload trial directory as a tar.gz archive to Supabase storage and return public URL.
 
     Returns:
-        Public URL of the trial directory in storage, or None if upload failed.
+        Public URL of the trial archive in storage, or None if upload failed.
     """
     trial_path = Path(urlparse(result.trial_uri).path)
 
@@ -52,46 +54,52 @@ def upload_trial_to_storage(result: TrialResult) -> str | None:
     bucket_name = "trials"
     trial_id = str(result.id)
 
-    @retry(
-        stop=stop_after_attempt(3),
-        wait=wait_exponential(multiplier=1, min=2, max=10),
-        reraise=True,
-    )
-    def upload_file(file_path: Path, storage_path: str):
-        """Upload a single file with retry logic."""
-        with open(file_path, "rb") as f:
-            response = client.storage.from_(bucket_name).upload(
-                file=f, path=storage_path, file_options={"upsert": "true"}
-            )
-        return response
+    # Create a temporary tar.gz file
+    with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
+        tmp_path = Path(tmp_file.name)
 
-    upload_success = True
-    files_uploaded = 0
+    try:
+        # Create tar.gz archive of the trial directory
+        print(f"Creating tar.gz archive for trial {trial_id}...")
+        with tarfile.open(tmp_path, "w:gz") as tar:
+            tar.add(trial_path, arcname=trial_path.name)
 
-    for file_path in trial_path.rglob("*"):
-        if file_path.is_file():
-            relative_path = file_path.relative_to(trial_path)
-            storage_path = f"{trial_id}/{relative_path}"
+        archive_size = tmp_path.stat().st_size
+        print(f"Archive created: {archive_size / (1024 * 1024):.2f} MB")
 
-            try:
-                upload_file(file_path, storage_path)
-                files_uploaded += 1
-            except Exception as e:
-                print(f"Failed to upload {file_path}: {e}")
-                if relative_path.name in ["result.json", "config.json"]:
-                    upload_success = False
+        # Upload the archive with retry logic
+        @retry(
+            stop=stop_after_attempt(3),
+            wait=wait_exponential(multiplier=1, min=2, max=10),
+            reraise=True,
+        )
+        def upload_archive():
+            """Upload the tar.gz file with retry logic."""
+            with open(tmp_path, "rb") as f:
+                storage_path = f"{trial_id}.tar.gz"
+                response = client.storage.from_(bucket_name).upload(
+                    file=f, path=storage_path, file_options={"upsert": "true"}
+                )
+            return response
 
-    if not upload_success:
-        print(f"Critical files failed to upload for trial {trial_id}")
+        upload_archive()
+        print(f"Successfully uploaded {trial_id}.tar.gz")
+
+        # Get the public URL for the archive
+        public_url = client.storage.from_(bucket_name).get_public_url(
+            f"{trial_id}.tar.gz"
+        )
+
+        return public_url
+
+    except Exception as e:
+        print(f"Failed to upload trial archive {trial_id}.tar.gz: {e}")
         return None
 
-    if files_uploaded == 0:
-        print(f"No files found to upload for trial {trial_id}")
-        return None
-
-    public_url = client.storage.from_(bucket_name).get_public_url(trial_id)
-
-    return public_url
+    finally:
+        # Clean up temporary file
+        if tmp_path.exists():
+            tmp_path.unlink()
 
 
 def insert_trial_into_db(result: TrialResult):
@@ -144,13 +152,13 @@ def insert_trial_into_db(result: TrialResult):
         stop=stop_after_attempt(3),
         wait=wait_exponential(multiplier=1, min=2, max=10),
     )
-    def insert_trial(task_checksum):
+    def insert_trial():
         trial_insert = TrialInsert(
             id=result.id,
             agent_name=result.agent_info.name,
             agent_version=result.agent_info.version,
             config=result.config.model_dump(mode="json"),
-            task_checksum=task_checksum,
+            task_checksum=result.task_checksum,
             trial_name=result.trial_name,
             trial_uri=trial_uri,
             agent_execution_started_at=(
@@ -184,8 +192,8 @@ def insert_trial_into_db(result: TrialResult):
             ),
             job_id=result.config.job_id,
             reward=(
-                Decimal(result.verifier_result.reward)
-                if result.verifier_result and result.verifier_result.reward is not None
+                Decimal(result.verifier_result.rewards.get("reward", 0))
+                if result.verifier_result and result.verifier_result.rewards is not None
                 else None
             ),
             started_at=result.started_at,
@@ -257,8 +265,7 @@ def insert_trial_into_db(result: TrialResult):
 
     try:
         insert_agent()
-        response = get_dataset_task()
-        insert_trial(response.data["task_checksum"])
+        insert_trial()
 
         if result.agent_info.model_info:
             name = result.agent_info.model_info.name
@@ -392,12 +399,12 @@ def main():
         git_commit_id=(
             subprocess.check_output(
                 ["git", "rev-parse", "HEAD"],
-                cwd=Path(sandboxes.__file__).parent,
+                cwd=Path(harbor.__file__).parent,
             )
             .decode("utf-8")
             .strip()
         ),
-        package_version=sandboxes.__version__,
+        package_version=harbor.__version__,
     )
 
     if not job.is_resuming:
@@ -412,14 +419,6 @@ def main():
 
     job_insert.started_at = result.started_at
     job_insert.ended_at = result.finished_at
-    job_insert.metrics = (
-        [
-            metric.model_dump(mode="json", by_alias=True, exclude_none=True)
-            for metric in result.metrics
-        ]
-        if result.metrics
-        else None
-    )
     job_insert.stats = result.stats.model_dump(
         mode="json", by_alias=True, exclude_none=True
     )
