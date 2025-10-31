@@ -36,6 +36,7 @@ from db.schema_public_latest import (
 def upload_trial_to_storage(result: TrialResult) -> str | None:
     """
     Upload trial directory as a tar.gz archive to Supabase storage and return public URL.
+    Also uploads trajectory.json if it exists.
 
     Returns:
         Public URL of the trial archive in storage, or None if upload failed.
@@ -84,6 +85,31 @@ def upload_trial_to_storage(result: TrialResult) -> str | None:
 
         upload_archive()
         print(f"Successfully uploaded {trial_id}.tar.gz")
+
+        # Upload trajectory.json if it exists
+        trajectory_path = trial_path / "agent" / "trajectory.json"
+        if trajectory_path.exists():
+            print(f"Found trajectory.json for trial {trial_id}, uploading...")
+
+            @retry(
+                stop=stop_after_attempt(3),
+                wait=wait_exponential(multiplier=1, min=2, max=10),
+                reraise=True,
+            )
+            def upload_trajectory():
+                """Upload the trajectory.json file with retry logic."""
+                with open(trajectory_path, "rb") as f:
+                    storage_path = f"{trial_id}-traj.json"
+                    response = client.storage.from_(bucket_name).upload(
+                        file=f, path=storage_path, file_options={"upsert": "true"}
+                    )
+                return response
+
+            try:
+                upload_trajectory()
+                print(f"Successfully uploaded {trial_id}-traj.json")
+            except Exception as e:
+                print(f"Failed to upload trajectory.json for trial {trial_id}: {e}")
 
         # Get the public URL for the archive
         public_url = client.storage.from_(bucket_name).get_public_url(
