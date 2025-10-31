@@ -7,6 +7,11 @@ from typing import Annotated
 
 import yaml
 from dotenv import load_dotenv
+from harbor.models.dataset_item import DownloadedDatasetItem
+from harbor.models.job.config import LocalDatasetConfig
+from harbor.models.registry import Dataset, RegistryTaskId
+from harbor.models.task.task import Task
+from harbor.registry.client import RegistryClient
 from rich.console import Console
 from rich.progress import (
     BarColumn,
@@ -15,11 +20,6 @@ from rich.progress import (
     TaskProgressColumn,
     TextColumn,
 )
-from sandboxes.models.dataset_item import DownloadedDatasetItem
-from sandboxes.models.job.config import LocalDatasetConfig
-from sandboxes.models.registry import Dataset, RegistryTaskId
-from sandboxes.models.task.task import Task
-from sandboxes.registry.client import RegistryClient
 from supabase import create_client
 from typer import Option, Typer
 
@@ -299,7 +299,7 @@ def upload_dataset(
                     task_path = (
                         downloaded_dataset_item.id.path.expanduser().resolve()
                         if downloaded_dataset_item.id.git_url is None
-                        else None
+                        else downloaded_dataset_item.id.path
                     )
                     task = Task(downloaded_dataset_item.downloaded_path)
                     task_inserts.append(
