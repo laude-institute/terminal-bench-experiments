@@ -400,9 +400,18 @@ def main():
             if not trial_paths.result_path.exists():
                 continue
 
-            trial_result = TrialResult.model_validate_json(
-                trial_paths.result_path.read_text()
-            )
+            try:
+                trial_result = TrialResult.model_validate_json(
+                    trial_paths.result_path.read_text()
+                )
+            except Exception:
+                print(
+                    f"Failed to parse trial result {trial_dir.name}. Removing trial "
+                    "directory."
+                )
+                shutil.rmtree(trial_dir)
+                continue
+
             if (
                 trial_result.exception_info is not None
                 and trial_result.exception_info.exception_type in filter_error_types_set
