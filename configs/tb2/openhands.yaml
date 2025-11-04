@@ -1,0 +1,89 @@
+job_name: openhands
+jobs_dir: jobs
+n_attempts: 5
+timeout_multiplier: 1.0
+orchestrator:
+  type: local
+  n_concurrent_trials: 32
+  quiet: false
+  retry:
+    max_retries: 3
+    exclude_exceptions:
+      - BadRequestError
+      - RateLimitError
+      - AgentTimeoutError
+      - VerifierTimeoutError
+    wait_multiplier: 1.0
+    min_wait_sec: 1.0
+    max_wait_sec: 60.0
+environment:
+  type: daytona
+  force_build: false
+  delete: true
+agents:
+  - name: openhands
+    model_name: anthropic/claude-sonnet-4-5-20250929
+    kwargs:
+      version: "0.60.0"
+  - name: openhands
+    model_name: anthropic/claude-opus-4-1-20250805
+    kwargs:
+      version: "0.60.0"
+  - name: openhands
+    model_name: anthropic/claude-haiku-4-5-20251001
+    kwargs:
+      version: "0.60.0"
+  - name: openhands
+    model_name: openai/gpt-5-codex
+    kwargs:
+      version: "0.60.0"
+  - name: openhands
+    model_name: openai/gpt-5
+    kwargs:
+      version: "0.60.0"
+  - name: openhands
+    model_name: openai/gpt-5-mini
+    kwargs:
+      version: "0.60.0"
+  - name: openhands
+    model_name: openai/gpt-5-nano
+    kwargs:
+      version: "0.60.0"
+  - name: openhands
+    model_name: xai/grok-4-0709
+    kwargs:
+      version: "0.60.0"
+  - name: openhands
+    model_name: xai/grok-code-fast-1
+    kwargs:
+      version: "0.60.0"
+  - name: openhands
+    model_name: gemini/gemini-2.5-pro
+    kwargs:
+      version: "0.60.0"
+  - name: openhands
+    model_name: gemini/gemini-2.5-flash
+    kwargs:
+      version: "0.60.0"
+  - name: openhands
+    model_name: together_ai/Qwen/Qwen3-Coder-480B-A35B-Instruct-FP8
+    kwargs:
+      version: "0.60.0"
+  - name: openhands
+    model_name: together_ai/openai/gpt-oss-20b
+    kwargs:
+      version: "0.60.0"
+  - name: openhands
+    model_name: together_ai/openai/gpt-oss-120b
+    kwargs:
+      version: "0.60.0"
+  - name: openhands
+    model_name: together_ai/moonshotai/Kimi-K2-Instruct-0905
+    kwargs:
+      version: "0.60.0"
+datasets:
+  - registry:
+      name: harbor
+      url: https://raw.githubusercontent.com/laude-institute/harbor/main/registry.json
+    name: terminal-bench
+    version: "2.0"
