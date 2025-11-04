@@ -1,0 +1,37 @@
+job_name: terminus-open-fireworks
+jobs_dir: jobs
+n_attempts: 5
+timeout_multiplier: 1.0
+orchestrator:
+  type: local
+  n_concurrent_trials: 8
+  quiet: false
+  retry:
+    max_retries: 2
+    exclude_exceptions:
+      - BadRequestError
+      - RateLimitError
+      - AgentTimeoutError
+      - VerifierTimeoutError
+    wait_multiplier: 1.0
+    min_wait_sec: 1.0
+    max_wait_sec: 60.0
+environment:
+  type: daytona
+  force_build: false
+  delete: true
+agents:
+  - name: terminus-2
+    model_name: fireworks_ai/accounts/fireworks/models/glm-4p6
+    kwargs:
+      max_episodes: 200
+  - name: terminus-2
+    model_name: fireworks_ai/accounts/fireworks/models/minimax-m2
+    kwargs:
+      max_episodes: 200
+datasets:
+  - registry:
+      name: harbor
+      url: https://raw.githubusercontent.com/laude-institute/harbor/main/registry.json
+    name: terminal-bench
+    version: "2.0"
