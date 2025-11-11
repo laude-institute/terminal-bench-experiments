@@ -1,8 +1,9 @@
 import asyncio
 from pathlib import Path
 
-import yaml
 from daytona import AsyncDaytona, CreateSnapshotParams, Image, Resources
+from harbor.models.task.paths import TaskPaths
+from harbor.models.task.task import Task
 from rich.console import Console
 from rich.progress import (
     BarColumn,
@@ -13,17 +14,13 @@ from rich.progress import (
     TimeElapsedColumn,
     TimeRemainingColumn,
 )
-from sandboxes.models.job.config import JobConfig
-from sandboxes.models.task.task import Task
 
 console = Console()
 
 
-async def create_snapshot(
-    client: AsyncDaytona, task_config, progress, task_id, semaphore
-):
+async def create_snapshot(client: AsyncDaytona, path, progress, task_id, semaphore):
     async with semaphore:
-        task = Task(task_config.path)
+        task = Task(path)
 
         if not task.config.environment.docker_image:
             console.print(
@@ -38,9 +35,9 @@ async def create_snapshot(
             name=task.name,
             image=Image.base(task.config.environment.docker_image),
             resources=Resources(
-                cpu=2,
-                memory=4,
-                disk=10,
+                cpu=task.config.environment.cpus,
+                memory=int(task.config.environment.memory.strip("G")),
+                disk=int(task.config.environment.storage.strip("G")),
                 gpu=0,
             ),
         )
@@ -56,13 +53,12 @@ async def create_snapshot(
 
 
 async def main():
-    config = JobConfig.model_validate(
-        yaml.safe_load(Path("configs/job.yaml").read_text())
-    )
-
+    paths = [
+        path
+        for path in Path("../sandboxes/tasks/tb-2/sb").iterdir()
+        if TaskPaths(path).is_valid()
+    ]
     client = AsyncDaytona()
-
-    task_configs = list(config.datasets[0].get_task_configs())
 
     semaphore = asyncio.Semaphore(100)
 
@@ -75,14 +71,14 @@ async def main():
         TimeRemainingColumn(),
         console=console,
     ) as progress:
-        task_id = progress.add_task("Creating snapshots", total=len(task_configs))
+        task_id = progress.add_task("Creating snapshots", total=len(paths))
 
         async with asyncio.TaskGroup() as tg:
             tasks = [
                 tg.create_task(
-                    create_snapshot(client, task_config, progress, task_id, semaphore)
+                    create_snapshot(client, path, progress, task_id, semaphore)
                 )
-                for task_config in task_configs
+                for path in paths
             ]
 
         success_count = sum(1 for task in tasks if task.result() is True)

@@ -1,18 +1,18 @@
 from __future__ import annotations
 
-from datetime import datetime
+import datetime
 from decimal import Decimal
+from typing import Any
 
 from pydantic import UUID4, Json
 from sqlalchemy import (
-    TIMESTAMP,
     ForeignKey,
     Integer,
     Numeric,
     PrimaryKeyConstraint,
     Text,
 )
-from sqlalchemy.dialects.postgresql import JSONB, UUID
+from sqlalchemy.dialects.postgresql import JSONB, TIMESTAMP, UUID
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 # Declarative Base
@@ -43,8 +43,11 @@ class Agent(Base):
     version: Mapped[str] = mapped_column(Text, primary_key=True)
 
     # Columns
-    created_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True))
+    created_at: Mapped[datetime.datetime] = mapped_column(TIMESTAMP(timezone=True))
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    display_name: Mapped[str | None] = mapped_column(Text, nullable=True)
+    org_display_name: Mapped[str | None] = mapped_column(Text, nullable=True)
+    url: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     # Relationships
     trials: Mapped[list[Trial]] = relationship("Trial", back_populates="agents")
@@ -69,7 +72,7 @@ class Dataset(Base):
     version: Mapped[str] = mapped_column(Text, primary_key=True)
 
     # Columns
-    created_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True))
+    created_at: Mapped[datetime.datetime] = mapped_column(TIMESTAMP(timezone=True))
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     # Relationships
@@ -116,13 +119,13 @@ class DatasetTask(Base):
     )
 
     # Columns
-    created_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True))
+    created_at: Mapped[datetime.datetime] = mapped_column(TIMESTAMP(timezone=True))
 
     # Relationships
+    tasks: Mapped[list[Task]] = relationship("Task", back_populates="datasettasks")
     datasets: Mapped[list[Dataset]] = relationship(
         "Dataset", back_populates="datasettasks"
     )
-    tasks: Mapped[list[Task]] = relationship("Task", back_populates="datasettasks")
 
     # Table Args
     __table_args__ = (
@@ -148,21 +151,25 @@ class Job(Base):
     )
 
     # Columns
-    config: Mapped[dict | Json] = mapped_column(JSONB)
-    created_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True))
+    config: Mapped[dict | list[dict] | list[Any] | Json] = mapped_column(JSONB)
+    created_at: Mapped[datetime.datetime] = mapped_column(TIMESTAMP(timezone=True))
     job_name: Mapped[str] = mapped_column(Text)
     n_trials: Mapped[int] = mapped_column(Integer)
     username: Mapped[str] = mapped_column(Text)
-    ended_at: Mapped[datetime | None] = mapped_column(
+    ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     git_commit_id: Mapped[str | None] = mapped_column(Text, nullable=True)
-    metrics: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
+    metrics: Mapped[dict | list[dict] | list[Any] | Json | None] = mapped_column(
+        JSONB, nullable=True
+    )
     package_version: Mapped[str | None] = mapped_column(Text, nullable=True)
-    started_at: Mapped[datetime | None] = mapped_column(
+    started_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    stats: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
+    stats: Mapped[dict | list[dict] | list[Any] | Json | None] = mapped_column(
+        JSONB, nullable=True
+    )
 
     # Relationships
     trials: Mapped[list[Trial]] = relationship("Trial", back_populates="jobs")
@@ -183,7 +190,7 @@ class Model(Base):
     provider: Mapped[str] = mapped_column(Text, primary_key=True)
 
     # Columns
-    created_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True))
+    created_at: Mapped[datetime.datetime] = mapped_column(TIMESTAMP(timezone=True))
     cents_per_million_input_tokens: Mapped[int | None] = mapped_column(
         Integer, nullable=True
     )
@@ -191,6 +198,8 @@ class Model(Base):
         Integer, nullable=True
     )
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    display_name: Mapped[str | None] = mapped_column(Text, nullable=True)
+    org_display_name: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     # Relationships
     trialmodels: Mapped[list[TrialModel]] = relationship(
@@ -219,14 +228,16 @@ class Task(Base):
 
     # Columns
     agent_timeout_sec: Mapped[Decimal] = mapped_column(Numeric)
-    created_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True))
+    created_at: Mapped[datetime.datetime] = mapped_column(TIMESTAMP(timezone=True))
     instruction: Mapped[str] = mapped_column(Text)
     name: Mapped[str] = mapped_column(Text, unique=True)
     path: Mapped[str] = mapped_column(Text)
     verifier_timeout_sec: Mapped[Decimal] = mapped_column(Numeric)
     git_commit_id: Mapped[str | None] = mapped_column(Text, nullable=True)
     git_url: Mapped[str | None] = mapped_column(Text, nullable=True)
-    metadata: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
+    metadata: Mapped[dict | list[dict] | list[Any] | Json | None] = mapped_column(
+        JSONB, nullable=True
+    )
     source: Mapped[str | None] = mapped_column(Text, unique=True, nullable=True)
 
     # Relationships
@@ -259,45 +270,49 @@ class Trial(Base):
     agent_version: Mapped[str] = mapped_column(
         Text, ForeignKey("agent.name"), ForeignKey("agent.version")
     )
-    config: Mapped[dict | Json] = mapped_column(JSONB)
-    created_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True))
+    config: Mapped[dict | list[dict] | list[Any] | Json] = mapped_column(JSONB)
+    created_at: Mapped[datetime.datetime] = mapped_column(TIMESTAMP(timezone=True))
     task_checksum: Mapped[str] = mapped_column(Text, ForeignKey("task.checksum"))
     trial_name: Mapped[str] = mapped_column(Text)
-    agent_execution_ended_at: Mapped[datetime | None] = mapped_column(
+    agent_execution_ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    agent_execution_started_at: Mapped[datetime | None] = mapped_column(
+    agent_execution_started_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    agent_metadata: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
-    agent_setup_ended_at: Mapped[datetime | None] = mapped_column(
+    agent_metadata: Mapped[dict | list[dict] | list[Any] | Json | None] = mapped_column(
+        JSONB, nullable=True
+    )
+    agent_setup_ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    agent_setup_started_at: Mapped[datetime | None] = mapped_column(
+    agent_setup_started_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    ended_at: Mapped[datetime | None] = mapped_column(
+    ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    environment_setup_ended_at: Mapped[datetime | None] = mapped_column(
+    environment_setup_ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    environment_setup_started_at: Mapped[datetime | None] = mapped_column(
+    environment_setup_started_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    exception_info: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
+    exception_info: Mapped[dict | list[dict] | list[Any] | Json | None] = mapped_column(
+        JSONB, nullable=True
+    )
     job_id: Mapped[UUID4 | None] = mapped_column(
         UUID(as_uuid=True), ForeignKey("job.id"), nullable=True
     )
     reward: Mapped[Decimal | None] = mapped_column(Numeric, nullable=True)
-    started_at: Mapped[datetime | None] = mapped_column(
+    started_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     trial_uri: Mapped[str | None] = mapped_column(Text, nullable=True)
-    verifier_ended_at: Mapped[datetime | None] = mapped_column(
+    verifier_ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    verifier_started_at: Mapped[datetime | None] = mapped_column(
+    verifier_started_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
 
@@ -333,7 +348,8 @@ class TrialModel(Base):
     )
 
     # Columns
-    created_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True))
+    created_at: Mapped[datetime.datetime] = mapped_column(TIMESTAMP(timezone=True))
+    n_cache_tokens: Mapped[int | None] = mapped_column(Integer, nullable=True)
     n_input_tokens: Mapped[int | None] = mapped_column(Integer, nullable=True)
     n_output_tokens: Mapped[int | None] = mapped_column(Integer, nullable=True)
 
@@ -374,10 +390,13 @@ class AgentInsert(Base):
     version: Mapped[str] = mapped_column(Text)
 
     # Columns
-    created_at: Mapped[datetime | None] = mapped_column(
+    created_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    display_name: Mapped[str | None] = mapped_column(Text, nullable=True)
+    org_display_name: Mapped[str | None] = mapped_column(Text, nullable=True)
+    url: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     # Relationships
     trials: Mapped[list[Trial]] = relationship("Trial", back_populates="agents")
@@ -398,7 +417,7 @@ class DatasetInsert(Base):
     version: Mapped[str] = mapped_column(Text)
 
     # Columns
-    created_at: Mapped[datetime | None] = mapped_column(
+    created_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
@@ -425,15 +444,15 @@ class DatasetTaskInsert(Base):
     task_checksum: Mapped[str] = mapped_column(Text)
 
     # Columns
-    created_at: Mapped[datetime | None] = mapped_column(
+    created_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
 
     # Relationships
+    tasks: Mapped[list[Task]] = relationship("Task", back_populates="datasettasks")
     datasets: Mapped[list[Dataset]] = relationship(
         "Dataset", back_populates="datasettasks"
     )
-    tasks: Mapped[list[Task]] = relationship("Task", back_populates="datasettasks")
 
 
 class JobInsert(Base):
@@ -449,23 +468,27 @@ class JobInsert(Base):
     id: Mapped[UUID4] = mapped_column(UUID(as_uuid=True))
 
     # Columns
-    config: Mapped[dict | Json] = mapped_column(JSONB)
-    created_at: Mapped[datetime | None] = mapped_column(
+    config: Mapped[dict | list[dict] | list[Any] | Json] = mapped_column(JSONB)
+    created_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     job_name: Mapped[str] = mapped_column(Text)
     n_trials: Mapped[int] = mapped_column(Integer)
     username: Mapped[str] = mapped_column(Text)
-    ended_at: Mapped[datetime | None] = mapped_column(
+    ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     git_commit_id: Mapped[str | None] = mapped_column(Text, nullable=True)
-    metrics: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
+    metrics: Mapped[dict | list[dict] | list[Any] | Json | None] = mapped_column(
+        JSONB, nullable=True
+    )
     package_version: Mapped[str | None] = mapped_column(Text, nullable=True)
-    started_at: Mapped[datetime | None] = mapped_column(
+    started_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    stats: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
+    stats: Mapped[dict | list[dict] | list[Any] | Json | None] = mapped_column(
+        JSONB, nullable=True
+    )
 
     # Relationships
     trials: Mapped[list[Trial]] = relationship("Trial", back_populates="jobs")
@@ -485,7 +508,7 @@ class ModelInsert(Base):
     provider: Mapped[str] = mapped_column(Text)
 
     # Columns
-    created_at: Mapped[datetime | None] = mapped_column(
+    created_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     cents_per_million_input_tokens: Mapped[int | None] = mapped_column(
@@ -495,6 +518,8 @@ class ModelInsert(Base):
         Integer, nullable=True
     )
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    display_name: Mapped[str | None] = mapped_column(Text, nullable=True)
+    org_display_name: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     # Relationships
     trialmodels: Mapped[list[TrialModel]] = relationship(
@@ -516,7 +541,7 @@ class TaskInsert(Base):
 
     # Columns
     agent_timeout_sec: Mapped[Decimal] = mapped_column(Numeric)
-    created_at: Mapped[datetime | None] = mapped_column(
+    created_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     instruction: Mapped[str] = mapped_column(Text)
@@ -525,7 +550,9 @@ class TaskInsert(Base):
     verifier_timeout_sec: Mapped[Decimal] = mapped_column(Numeric)
     git_commit_id: Mapped[str | None] = mapped_column(Text, nullable=True)
     git_url: Mapped[str | None] = mapped_column(Text, nullable=True)
-    metadata: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
+    metadata: Mapped[dict | list[dict] | list[Any] | Json | None] = mapped_column(
+        JSONB, nullable=True
+    )
     source: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     # Relationships
@@ -550,45 +577,49 @@ class TrialInsert(Base):
     # Columns
     agent_name: Mapped[str] = mapped_column(Text)
     agent_version: Mapped[str] = mapped_column(Text)
-    config: Mapped[dict | Json] = mapped_column(JSONB)
-    created_at: Mapped[datetime | None] = mapped_column(
+    config: Mapped[dict | list[dict] | list[Any] | Json] = mapped_column(JSONB)
+    created_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     task_checksum: Mapped[str] = mapped_column(Text)
     trial_name: Mapped[str] = mapped_column(Text)
-    agent_execution_ended_at: Mapped[datetime | None] = mapped_column(
+    agent_execution_ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    agent_execution_started_at: Mapped[datetime | None] = mapped_column(
+    agent_execution_started_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    agent_metadata: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
-    agent_setup_ended_at: Mapped[datetime | None] = mapped_column(
+    agent_metadata: Mapped[dict | list[dict] | list[Any] | Json | None] = mapped_column(
+        JSONB, nullable=True
+    )
+    agent_setup_ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    agent_setup_started_at: Mapped[datetime | None] = mapped_column(
+    agent_setup_started_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    ended_at: Mapped[datetime | None] = mapped_column(
+    ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    environment_setup_ended_at: Mapped[datetime | None] = mapped_column(
+    environment_setup_ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    environment_setup_started_at: Mapped[datetime | None] = mapped_column(
+    environment_setup_started_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    exception_info: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
+    exception_info: Mapped[dict | list[dict] | list[Any] | Json | None] = mapped_column(
+        JSONB, nullable=True
+    )
     job_id: Mapped[UUID4 | None] = mapped_column(UUID(as_uuid=True), nullable=True)
     reward: Mapped[Decimal | None] = mapped_column(Numeric, nullable=True)
-    started_at: Mapped[datetime | None] = mapped_column(
+    started_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     trial_uri: Mapped[str | None] = mapped_column(Text, nullable=True)
-    verifier_ended_at: Mapped[datetime | None] = mapped_column(
+    verifier_ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    verifier_started_at: Mapped[datetime | None] = mapped_column(
+    verifier_started_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
 
@@ -616,9 +647,10 @@ class TrialModelInsert(Base):
     trial_id: Mapped[UUID4] = mapped_column(UUID(as_uuid=True))
 
     # Columns
-    created_at: Mapped[datetime | None] = mapped_column(
+    created_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
+    n_cache_tokens: Mapped[int | None] = mapped_column(Integer, nullable=True)
     n_input_tokens: Mapped[int | None] = mapped_column(Integer, nullable=True)
     n_output_tokens: Mapped[int | None] = mapped_column(Integer, nullable=True)
 
@@ -646,10 +678,13 @@ class AgentUpdate(Base):
     version: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     # Columns
-    created_at: Mapped[datetime | None] = mapped_column(
+    created_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    display_name: Mapped[str | None] = mapped_column(Text, nullable=True)
+    org_display_name: Mapped[str | None] = mapped_column(Text, nullable=True)
+    url: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     # Relationships
     trials: Mapped[list[Trial]] = relationship("Trial", back_populates="agents")
@@ -668,7 +703,7 @@ class DatasetUpdate(Base):
     version: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     # Columns
-    created_at: Mapped[datetime | None] = mapped_column(
+    created_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
@@ -693,15 +728,15 @@ class DatasetTaskUpdate(Base):
     task_checksum: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     # Columns
-    created_at: Mapped[datetime | None] = mapped_column(
+    created_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
 
     # Relationships
+    tasks: Mapped[list[Task]] = relationship("Task", back_populates="datasettasks")
     datasets: Mapped[list[Dataset]] = relationship(
         "Dataset", back_populates="datasettasks"
     )
-    tasks: Mapped[list[Task]] = relationship("Task", back_populates="datasettasks")
 
 
 class JobUpdate(Base):
@@ -715,23 +750,29 @@ class JobUpdate(Base):
     id: Mapped[UUID4 | None] = mapped_column(UUID(as_uuid=True), nullable=True)
 
     # Columns
-    config: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
-    created_at: Mapped[datetime | None] = mapped_column(
+    config: Mapped[dict | list[dict] | list[Any] | Json | None] = mapped_column(
+        JSONB, nullable=True
+    )
+    created_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     job_name: Mapped[str | None] = mapped_column(Text, nullable=True)
     n_trials: Mapped[int | None] = mapped_column(Integer, nullable=True)
     username: Mapped[str | None] = mapped_column(Text, nullable=True)
-    ended_at: Mapped[datetime | None] = mapped_column(
+    ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     git_commit_id: Mapped[str | None] = mapped_column(Text, nullable=True)
-    metrics: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
+    metrics: Mapped[dict | list[dict] | list[Any] | Json | None] = mapped_column(
+        JSONB, nullable=True
+    )
     package_version: Mapped[str | None] = mapped_column(Text, nullable=True)
-    started_at: Mapped[datetime | None] = mapped_column(
+    started_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    stats: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
+    stats: Mapped[dict | list[dict] | list[Any] | Json | None] = mapped_column(
+        JSONB, nullable=True
+    )
 
     # Relationships
     trials: Mapped[list[Trial]] = relationship("Trial", back_populates="jobs")
@@ -749,7 +790,7 @@ class ModelUpdate(Base):
     provider: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     # Columns
-    created_at: Mapped[datetime | None] = mapped_column(
+    created_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     cents_per_million_input_tokens: Mapped[int | None] = mapped_column(
@@ -759,6 +800,8 @@ class ModelUpdate(Base):
         Integer, nullable=True
     )
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    display_name: Mapped[str | None] = mapped_column(Text, nullable=True)
+    org_display_name: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     # Relationships
     trialmodels: Mapped[list[TrialModel]] = relationship(
@@ -778,7 +821,7 @@ class TaskUpdate(Base):
 
     # Columns
     agent_timeout_sec: Mapped[Decimal | None] = mapped_column(Numeric, nullable=True)
-    created_at: Mapped[datetime | None] = mapped_column(
+    created_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     instruction: Mapped[str | None] = mapped_column(Text, nullable=True)
@@ -787,7 +830,9 @@ class TaskUpdate(Base):
     verifier_timeout_sec: Mapped[Decimal | None] = mapped_column(Numeric, nullable=True)
     git_commit_id: Mapped[str | None] = mapped_column(Text, nullable=True)
     git_url: Mapped[str | None] = mapped_column(Text, nullable=True)
-    metadata: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
+    metadata: Mapped[dict | list[dict] | list[Any] | Json | None] = mapped_column(
+        JSONB, nullable=True
+    )
     source: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     # Relationships
@@ -810,45 +855,51 @@ class TrialUpdate(Base):
     # Columns
     agent_name: Mapped[str | None] = mapped_column(Text, nullable=True)
     agent_version: Mapped[str | None] = mapped_column(Text, nullable=True)
-    config: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
-    created_at: Mapped[datetime | None] = mapped_column(
+    config: Mapped[dict | list[dict] | list[Any] | Json | None] = mapped_column(
+        JSONB, nullable=True
+    )
+    created_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     task_checksum: Mapped[str | None] = mapped_column(Text, nullable=True)
     trial_name: Mapped[str | None] = mapped_column(Text, nullable=True)
-    agent_execution_ended_at: Mapped[datetime | None] = mapped_column(
+    agent_execution_ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    agent_execution_started_at: Mapped[datetime | None] = mapped_column(
+    agent_execution_started_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    agent_metadata: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
-    agent_setup_ended_at: Mapped[datetime | None] = mapped_column(
+    agent_metadata: Mapped[dict | list[dict] | list[Any] | Json | None] = mapped_column(
+        JSONB, nullable=True
+    )
+    agent_setup_ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    agent_setup_started_at: Mapped[datetime | None] = mapped_column(
+    agent_setup_started_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    ended_at: Mapped[datetime | None] = mapped_column(
+    ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    environment_setup_ended_at: Mapped[datetime | None] = mapped_column(
+    environment_setup_ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    environment_setup_started_at: Mapped[datetime | None] = mapped_column(
+    environment_setup_started_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    exception_info: Mapped[dict | Json | None] = mapped_column(JSONB, nullable=True)
+    exception_info: Mapped[dict | list[dict] | list[Any] | Json | None] = mapped_column(
+        JSONB, nullable=True
+    )
     job_id: Mapped[UUID4 | None] = mapped_column(UUID(as_uuid=True), nullable=True)
     reward: Mapped[Decimal | None] = mapped_column(Numeric, nullable=True)
-    started_at: Mapped[datetime | None] = mapped_column(
+    started_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     trial_uri: Mapped[str | None] = mapped_column(Text, nullable=True)
-    verifier_ended_at: Mapped[datetime | None] = mapped_column(
+    verifier_ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    verifier_started_at: Mapped[datetime | None] = mapped_column(
+    verifier_started_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
 
@@ -874,9 +925,10 @@ class TrialModelUpdate(Base):
     trial_id: Mapped[UUID4 | None] = mapped_column(UUID(as_uuid=True), nullable=True)
 
     # Columns
-    created_at: Mapped[datetime | None] = mapped_column(
+    created_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
+    n_cache_tokens: Mapped[int | None] = mapped_column(Integer, nullable=True)
     n_input_tokens: Mapped[int | None] = mapped_column(Integer, nullable=True)
     n_output_tokens: Mapped[int | None] = mapped_column(Integer, nullable=True)
 

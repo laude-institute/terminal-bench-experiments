@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import datetime
 from decimal import Decimal
+from typing import Any
 
 from pydantic import UUID4, BaseModel, Field, Json
 
@@ -42,6 +43,9 @@ class AgentBaseSchema(CustomModel):
     # Columns
     created_at: datetime.datetime
     description: str | None = Field(default=None)
+    display_name: str | None = Field(default=None)
+    org_display_name: str | None = Field(default=None)
+    url: str | None = Field(default=None)
 
 
 class DatasetBaseSchema(CustomModel):
@@ -77,16 +81,16 @@ class JobBaseSchema(CustomModel):
     id: UUID4
 
     # Columns
-    config: dict | Json
+    config: dict | list[dict] | list[Any] | Json
     created_at: datetime.datetime
     ended_at: datetime.datetime | None = Field(default=None)
     git_commit_id: str | None = Field(default=None)
     job_name: str
-    metrics: dict | Json | None = Field(default=None)
+    metrics: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     n_trials: int
     package_version: str | None = Field(default=None)
     started_at: datetime.datetime | None = Field(default=None)
-    stats: dict | Json | None = Field(default=None)
+    stats: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     username: str
 
 
@@ -102,6 +106,8 @@ class ModelBaseSchema(CustomModel):
     cents_per_million_output_tokens: int | None = Field(default=None)
     created_at: datetime.datetime
     description: str | None = Field(default=None)
+    display_name: str | None = Field(default=None)
+    org_display_name: str | None = Field(default=None)
 
 
 class TaskBaseSchema(CustomModel):
@@ -116,7 +122,7 @@ class TaskBaseSchema(CustomModel):
     git_commit_id: str | None = Field(default=None)
     git_url: str | None = Field(default=None)
     instruction: str
-    metadata: dict | Json | None = Field(default=None)
+    metadata: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     name: str
     path: str
     source: str | None = Field(default=None)
@@ -132,17 +138,17 @@ class TrialBaseSchema(CustomModel):
     # Columns
     agent_execution_ended_at: datetime.datetime | None = Field(default=None)
     agent_execution_started_at: datetime.datetime | None = Field(default=None)
-    agent_metadata: dict | Json | None = Field(default=None)
+    agent_metadata: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     agent_name: str
     agent_setup_ended_at: datetime.datetime | None = Field(default=None)
     agent_setup_started_at: datetime.datetime | None = Field(default=None)
     agent_version: str
-    config: dict | Json
+    config: dict | list[dict] | list[Any] | Json
     created_at: datetime.datetime
     ended_at: datetime.datetime | None = Field(default=None)
     environment_setup_ended_at: datetime.datetime | None = Field(default=None)
     environment_setup_started_at: datetime.datetime | None = Field(default=None)
-    exception_info: dict | Json | None = Field(default=None)
+    exception_info: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     job_id: UUID4 | None = Field(default=None)
     reward: Decimal | None = Field(default=None)
     started_at: datetime.datetime | None = Field(default=None)
@@ -163,6 +169,7 @@ class TrialModelBaseSchema(CustomModel):
 
     # Columns
     created_at: datetime.datetime
+    n_cache_tokens: int | None = Field(default=None)
     n_input_tokens: int | None = Field(default=None)
     n_output_tokens: int | None = Field(default=None)
 
@@ -182,10 +189,16 @@ class AgentInsert(CustomModelInsert):
     # Field properties:
     # created_at: has default value
     # description: nullable
+    # display_name: nullable
+    # org_display_name: nullable
+    # url: nullable
 
     # Optional fields
     created_at: datetime.datetime | None = Field(default=None)
     description: str | None = Field(default=None)
+    display_name: str | None = Field(default=None)
+    org_display_name: str | None = Field(default=None)
+    url: str | None = Field(default=None)
 
 
 class DatasetInsert(CustomModelInsert):
@@ -237,7 +250,7 @@ class JobInsert(CustomModelInsert):
     # stats: nullable
 
     # Required fields
-    config: dict | Json
+    config: dict | list[dict] | list[Any] | Json
     job_name: str
     n_trials: int
     username: str
@@ -246,10 +259,10 @@ class JobInsert(CustomModelInsert):
     created_at: datetime.datetime | None = Field(default=None)
     ended_at: datetime.datetime | None = Field(default=None)
     git_commit_id: str | None = Field(default=None)
-    metrics: dict | Json | None = Field(default=None)
+    metrics: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     package_version: str | None = Field(default=None)
     started_at: datetime.datetime | None = Field(default=None)
-    stats: dict | Json | None = Field(default=None)
+    stats: dict | list[dict] | list[Any] | Json | None = Field(default=None)
 
 
 class ModelInsert(CustomModelInsert):
@@ -264,12 +277,16 @@ class ModelInsert(CustomModelInsert):
     # cents_per_million_output_tokens: nullable
     # created_at: has default value
     # description: nullable
+    # display_name: nullable
+    # org_display_name: nullable
 
     # Optional fields
     cents_per_million_input_tokens: int | None = Field(default=None)
     cents_per_million_output_tokens: int | None = Field(default=None)
     created_at: datetime.datetime | None = Field(default=None)
     description: str | None = Field(default=None)
+    display_name: str | None = Field(default=None)
+    org_display_name: str | None = Field(default=None)
 
 
 class TaskInsert(CustomModelInsert):
@@ -296,7 +313,7 @@ class TaskInsert(CustomModelInsert):
     created_at: datetime.datetime | None = Field(default=None)
     git_commit_id: str | None = Field(default=None)
     git_url: str | None = Field(default=None)
-    metadata: dict | Json | None = Field(default=None)
+    metadata: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     source: str | None = Field(default=None)
 
 
@@ -327,21 +344,21 @@ class TrialInsert(CustomModelInsert):
     # Required fields
     agent_name: str
     agent_version: str
-    config: dict | Json
+    config: dict | list[dict] | list[Any] | Json
     task_checksum: str
     trial_name: str
 
     # Optional fields
     agent_execution_ended_at: datetime.datetime | None = Field(default=None)
     agent_execution_started_at: datetime.datetime | None = Field(default=None)
-    agent_metadata: dict | Json | None = Field(default=None)
+    agent_metadata: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     agent_setup_ended_at: datetime.datetime | None = Field(default=None)
     agent_setup_started_at: datetime.datetime | None = Field(default=None)
     created_at: datetime.datetime | None = Field(default=None)
     ended_at: datetime.datetime | None = Field(default=None)
     environment_setup_ended_at: datetime.datetime | None = Field(default=None)
     environment_setup_started_at: datetime.datetime | None = Field(default=None)
-    exception_info: dict | Json | None = Field(default=None)
+    exception_info: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     job_id: UUID4 | None = Field(default=None)
     reward: Decimal | None = Field(default=None)
     started_at: datetime.datetime | None = Field(default=None)
@@ -360,11 +377,13 @@ class TrialModelInsert(CustomModelInsert):
 
     # Field properties:
     # created_at: has default value
+    # n_cache_tokens: nullable
     # n_input_tokens: nullable
     # n_output_tokens: nullable
 
     # Optional fields
     created_at: datetime.datetime | None = Field(default=None)
+    n_cache_tokens: int | None = Field(default=None)
     n_input_tokens: int | None = Field(default=None)
     n_output_tokens: int | None = Field(default=None)
 
@@ -383,10 +402,16 @@ class AgentUpdate(CustomModelUpdate):
     # Field properties:
     # created_at: has default value
     # description: nullable
+    # display_name: nullable
+    # org_display_name: nullable
+    # url: nullable
 
     # Optional fields
     created_at: datetime.datetime | None = Field(default=None)
     description: str | None = Field(default=None)
+    display_name: str | None = Field(default=None)
+    org_display_name: str | None = Field(default=None)
+    url: str | None = Field(default=None)
 
 
 class DatasetUpdate(CustomModelUpdate):
@@ -438,16 +463,16 @@ class JobUpdate(CustomModelUpdate):
     # stats: nullable
 
     # Optional fields
-    config: dict | Json | None = Field(default=None)
+    config: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     created_at: datetime.datetime | None = Field(default=None)
     ended_at: datetime.datetime | None = Field(default=None)
     git_commit_id: str | None = Field(default=None)
     job_name: str | None = Field(default=None)
-    metrics: dict | Json | None = Field(default=None)
+    metrics: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     n_trials: int | None = Field(default=None)
     package_version: str | None = Field(default=None)
     started_at: datetime.datetime | None = Field(default=None)
-    stats: dict | Json | None = Field(default=None)
+    stats: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     username: str | None = Field(default=None)
 
 
@@ -463,12 +488,16 @@ class ModelUpdate(CustomModelUpdate):
     # cents_per_million_output_tokens: nullable
     # created_at: has default value
     # description: nullable
+    # display_name: nullable
+    # org_display_name: nullable
 
     # Optional fields
     cents_per_million_input_tokens: int | None = Field(default=None)
     cents_per_million_output_tokens: int | None = Field(default=None)
     created_at: datetime.datetime | None = Field(default=None)
     description: str | None = Field(default=None)
+    display_name: str | None = Field(default=None)
+    org_display_name: str | None = Field(default=None)
 
 
 class TaskUpdate(CustomModelUpdate):
@@ -490,7 +519,7 @@ class TaskUpdate(CustomModelUpdate):
     git_commit_id: str | None = Field(default=None)
     git_url: str | None = Field(default=None)
     instruction: str | None = Field(default=None)
-    metadata: dict | Json | None = Field(default=None)
+    metadata: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     name: str | None = Field(default=None)
     path: str | None = Field(default=None)
     source: str | None = Field(default=None)
@@ -524,17 +553,17 @@ class TrialUpdate(CustomModelUpdate):
     # Optional fields
     agent_execution_ended_at: datetime.datetime | None = Field(default=None)
     agent_execution_started_at: datetime.datetime | None = Field(default=None)
-    agent_metadata: dict | Json | None = Field(default=None)
+    agent_metadata: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     agent_name: str | None = Field(default=None)
     agent_setup_ended_at: datetime.datetime | None = Field(default=None)
     agent_setup_started_at: datetime.datetime | None = Field(default=None)
     agent_version: str | None = Field(default=None)
-    config: dict | Json | None = Field(default=None)
+    config: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     created_at: datetime.datetime | None = Field(default=None)
     ended_at: datetime.datetime | None = Field(default=None)
     environment_setup_ended_at: datetime.datetime | None = Field(default=None)
     environment_setup_started_at: datetime.datetime | None = Field(default=None)
-    exception_info: dict | Json | None = Field(default=None)
+    exception_info: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     job_id: UUID4 | None = Field(default=None)
     reward: Decimal | None = Field(default=None)
     started_at: datetime.datetime | None = Field(default=None)
@@ -555,11 +584,13 @@ class TrialModelUpdate(CustomModelUpdate):
 
     # Field properties:
     # created_at: has default value
+    # n_cache_tokens: nullable
     # n_input_tokens: nullable
     # n_output_tokens: nullable
 
     # Optional fields
     created_at: datetime.datetime | None = Field(default=None)
+    n_cache_tokens: int | None = Field(default=None)
     n_input_tokens: int | None = Field(default=None)
     n_output_tokens: int | None = Field(default=None)
 
@@ -594,8 +625,8 @@ class DatasetTask(DatasetTaskBaseSchema):
     """
 
     # Foreign Keys
+    task: Task | None = Field(default=None)
     datasets: list[Dataset] | None = Field(default=None)
-    tasks: list[Task] | None = Field(default=None)
 
 
 class Job(JobBaseSchema):
@@ -637,8 +668,9 @@ class Trial(TrialBaseSchema):
 
     # Foreign Keys
     job: Job | None = Field(default=None)
-    tasks: list[Task] | None = Field(default=None)
+    task: Task | None = Field(default=None)
     agents: list[Agent] | None = Field(default=None)
+    agent: Agent | None = Field(default=None)
     trial_models: list[TrialModel] | None = Field(default=None)
 
 
