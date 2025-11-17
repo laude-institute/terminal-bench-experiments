@@ -85,6 +85,7 @@ class JobBaseSchema(CustomModel):
     created_at: datetime.datetime
     ended_at: datetime.datetime | None = Field(default=None)
     git_commit_id: str | None = Field(default=None)
+    include_on_leaderboard: bool
     job_name: str
     metrics: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     n_trials: int
@@ -244,6 +245,7 @@ class JobInsert(CustomModelInsert):
     # created_at: has default value
     # ended_at: nullable
     # git_commit_id: nullable
+    # include_on_leaderboard: has default value
     # metrics: nullable
     # package_version: nullable
     # started_at: nullable
@@ -259,6 +261,7 @@ class JobInsert(CustomModelInsert):
     created_at: datetime.datetime | None = Field(default=None)
     ended_at: datetime.datetime | None = Field(default=None)
     git_commit_id: str | None = Field(default=None)
+    include_on_leaderboard: bool | None = Field(default=None)
     metrics: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     package_version: str | None = Field(default=None)
     started_at: datetime.datetime | None = Field(default=None)
@@ -457,6 +460,7 @@ class JobUpdate(CustomModelUpdate):
     # created_at: has default value
     # ended_at: nullable
     # git_commit_id: nullable
+    # include_on_leaderboard: has default value
     # metrics: nullable
     # package_version: nullable
     # started_at: nullable
@@ -467,6 +471,7 @@ class JobUpdate(CustomModelUpdate):
     created_at: datetime.datetime | None = Field(default=None)
     ended_at: datetime.datetime | None = Field(default=None)
     git_commit_id: str | None = Field(default=None)
+    include_on_leaderboard: bool | None = Field(default=None)
     job_name: str | None = Field(default=None)
     metrics: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     n_trials: int | None = Field(default=None)

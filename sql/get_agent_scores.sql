@@ -39,7 +39,6 @@ with p_hats as (
         inner join job as j on j.id = t.job_id
     where dataset_name = 'terminal-bench'
         and dataset_version = '2.0'
-        and j.created_at >= '2025-09-17 01:13:33.950824+00'::timestamptz
         and (
             exception_info is null
             or exception_info->>'exception_type' in (
