@@ -6,6 +6,7 @@ from typing import Any
 
 from pydantic import UUID4, Json
 from sqlalchemy import (
+    Boolean,
     ForeignKey,
     Integer,
     Numeric,
@@ -153,6 +154,7 @@ class Job(Base):
     # Columns
     config: Mapped[dict | list[dict] | list[Any] | Json] = mapped_column(JSONB)
     created_at: Mapped[datetime.datetime] = mapped_column(TIMESTAMP(timezone=True))
+    include_on_leaderboard: Mapped[bool] = mapped_column(Boolean)
     job_name: Mapped[str] = mapped_column(Text)
     n_trials: Mapped[int] = mapped_column(Integer)
     username: Mapped[str] = mapped_column(Text)
@@ -472,6 +474,7 @@ class JobInsert(Base):
     created_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
+    include_on_leaderboard: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
     job_name: Mapped[str] = mapped_column(Text)
     n_trials: Mapped[int] = mapped_column(Integer)
     username: Mapped[str] = mapped_column(Text)
@@ -756,6 +759,7 @@ class JobUpdate(Base):
     created_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
+    include_on_leaderboard: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
     job_name: Mapped[str | None] = mapped_column(Text, nullable=True)
     n_trials: Mapped[int | None] = mapped_column(Integer, nullable=True)
     username: Mapped[str | None] = mapped_column(Text, nullable=True)

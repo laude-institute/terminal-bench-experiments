@@ -5,13 +5,16 @@ from decimal import Decimal
 from pathlib import Path
 from typing import Annotated
 
+import harbor
 import yaml
 from dotenv import load_dotenv
 from harbor.models.dataset_item import DownloadedDatasetItem
-from harbor.models.job.config import LocalDatasetConfig
+from harbor.models.job.config import JobConfig, LocalDatasetConfig
 from harbor.models.registry import Dataset, RegistryTaskId
 from harbor.models.task.task import Task
+from harbor.models.trial.result import TrialResult
 from harbor.registry.client import RegistryClient
+from litellm import model_cost
 from rich.console import Console
 from rich.progress import (
     BarColumn,
@@ -21,6 +24,7 @@ from rich.progress import (
     TextColumn,
 )
 from supabase import create_client
+from tenacity import retry, stop_after_attempt, wait_exponential
 from typer import Option, Typer
 
 load_dotenv()
@@ -378,3 +382,433 @@ def upload_dataset(
                 for error in errors[:5]:
                     console.print(f"  • {error}")
             raise
+
+
+@db_app.command()
+def import_jobs(
+    jobs_dir: Annotated[
+        Path, Option("--jobs-dir", help="Directory containing job subdirectories")
+    ],
+    job_path: Annotated[
+        list[Path] | None,
+        Option(
+            "--job-path",
+            help="Specific job directory path (can be specified multiple times)",
+        ),
+    ] = None,
+    job_id: Annotated[
+        list[str] | None,
+        Option(
+            "--job-id",
+            help="Specific job ID to import (can be specified multiple times, requires --jobs-dir)",
+        ),
+    ] = None,
+):
+    """
+    Import jobs and their trials from disk into the database.
+
+    Usage examples:
+      # Import all jobs from a directory
+      tbx db import-jobs --jobs-dir ./jobs
+
+      # Import specific job paths
+      tbx db import-jobs --jobs-dir ./jobs --job-path ./jobs/2025-09-06__19-58-44
+
+      # Import specific jobs by ID (requires finding them in jobs-dir)
+      tbx db import-jobs --jobs-dir ./jobs --job-id 6af21ded-0f2e-4878-8856-8a73dbe472cf
+    """
+    try:
+        from db.schema_public_latest import (
+            AgentInsert,
+            JobInsert,
+            ModelInsert,
+            TrialInsert,
+            TrialModelInsert,
+        )
+    except ImportError:
+        console.print(
+            "[yellow]Could not import schema_public_latest. Please run `tbx db "
+            "generate-schemas` to generate the schema."
+        )
+        raise
+
+    if not jobs_dir.exists():
+        console.print(f"[red]Jobs directory not found: {jobs_dir}")
+        raise FileNotFoundError(f"Jobs directory not found: {jobs_dir}")
+
+    # Validate that job_id can only be used with jobs_dir
+    if job_id and not jobs_dir:
+        console.print("[red]--job-id can only be used with --jobs-dir")
+        raise ValueError("--job-id can only be used with --jobs-dir")
+
+    client = create_client(
+        supabase_url=os.environ["SUPABASE_URL"],
+        supabase_key=os.environ["SUPABASE_SECRET_KEY"],
+    )
+
+    # Discover jobs to import
+    jobs_to_import: list[Path] = []
+
+    if job_path:
+        # Use specific job paths
+        jobs_to_import.extend(job_path)
+    elif job_id:
+        # Find jobs by ID within jobs_dir
+        for job_dir in jobs_dir.iterdir():
+            if not job_dir.is_dir():
+                continue
+            config_path = job_dir / "config.json"
+            if config_path.exists():
+                try:
+                    config = JobConfig.model_validate_json(config_path.read_text())
+                    # Check if this job's trials contain the requested job_id
+                    # The job_id is stored in trial configs
+                    for trial_dir in job_dir.iterdir():
+                        if not trial_dir.is_dir():
+                            continue
+                        trial_config_path = trial_dir / "config.json"
+                        if trial_config_path.exists():
+                            trial_config = yaml.safe_load(trial_config_path.read_text())
+                            if trial_config.get("job_id") in job_id:
+                                jobs_to_import.append(job_dir)
+                                break
+                except Exception as e:
+                    console.print(f"[yellow]Failed to read config from {job_dir}: {e}")
+                    continue
+    else:
+        # Import all jobs from jobs_dir
+        for job_dir in jobs_dir.iterdir():
+            if job_dir.is_dir() and (job_dir / "config.json").exists():
+                jobs_to_import.append(job_dir)
+
+    if not jobs_to_import:
+        console.print("[yellow]No jobs found to import")
+        return
+
+    console.print(f"[cyan]Found {len(jobs_to_import)} job(s) to import")
+
+    with Progress(
+        SpinnerColumn(),
+        TextColumn("[progress.description]{task.description}"),
+        BarColumn(),
+        TaskProgressColumn(),
+        console=console,
+    ) as progress:
+        job_task = progress.add_task(
+            "[cyan]Importing jobs...", total=len(jobs_to_import)
+        )
+
+        total_trials_imported = 0
+        total_jobs_imported = 0
+        errors = []
+
+        for job_dir in jobs_to_import:
+            try:
+                # Load job config
+                config_path = job_dir / "config.json"
+                if not config_path.exists():
+                    errors.append(f"No config.json found in {job_dir}")
+                    continue
+
+                config = JobConfig.model_validate_json(config_path.read_text())
+
+                # Find all trial directories
+                trial_dirs = [d for d in job_dir.iterdir() if d.is_dir()]
+
+                if not trial_dirs:
+                    errors.append(f"No trial directories found in {job_dir}")
+                    continue
+
+                progress.update(
+                    job_task,
+                    description=f"[cyan]Importing job {job_dir.name} ({len(trial_dirs)} trials)...",
+                )
+
+                # First, get or create the job_id from a trial config
+                job_id_val = None
+                for trial_dir in trial_dirs:
+                    trial_config_path = trial_dir / "config.json"
+                    if trial_config_path.exists():
+                        trial_config = yaml.safe_load(trial_config_path.read_text())
+                        job_id_val = trial_config.get("job_id")
+                        if job_id_val:
+                            break
+
+                if not job_id_val:
+                    errors.append(
+                        f"Could not find job_id in any trial config for {job_dir}"
+                    )
+                    continue
+
+                # Insert/update job
+                job_insert = JobInsert(
+                    id=job_id_val,
+                    config=config.model_dump(mode="json"),
+                    job_name=config.job_name,
+                    n_trials=len(trial_dirs),
+                    username=os.environ.get("USER", "unknown"),
+                    git_commit_id=(
+                        subprocess.check_output(
+                            ["git", "rev-parse", "HEAD"],
+                            cwd=Path(harbor.__file__).parent,
+                        )
+                        .decode("utf-8")
+                        .strip()
+                        if Path(harbor.__file__).parent.joinpath(".git").exists()
+                        else None
+                    ),
+                    package_version=harbor.__version__,
+                )
+
+                @retry(
+                    stop=stop_after_attempt(3),
+                    wait=wait_exponential(multiplier=1, min=2, max=10),
+                )
+                def insert_job():
+                    return (
+                        client.table("job")
+                        .upsert(
+                            job_insert.model_dump(
+                                mode="json", by_alias=True, exclude_none=True
+                            )
+                        )
+                        .execute()
+                    )
+
+                insert_job()
+                total_jobs_imported += 1
+
+                # Import trials
+                trial_progress = progress.add_task(
+                    f"[cyan]Importing trials from {job_dir.name}...",
+                    total=len(trial_dirs),
+                )
+
+                for trial_dir in trial_dirs:
+                    result_path = trial_dir / "result.json"
+                    if not result_path.exists():
+                        progress.update(trial_progress, advance=1)
+                        continue
+
+                    try:
+                        result = TrialResult.model_validate_json(
+                            result_path.read_text()
+                        )
+
+                        # Insert agent
+                        @retry(
+                            stop=stop_after_attempt(3),
+                            wait=wait_exponential(multiplier=1, min=2, max=10),
+                        )
+                        def insert_agent():
+                            agent_insert = AgentInsert(
+                                name=result.agent_info.name,
+                                version=result.agent_info.version,
+                            )
+                            return (
+                                client.table("agent")
+                                .upsert(
+                                    agent_insert.model_dump(
+                                        mode="json", by_alias=True, exclude_none=True
+                                    )
+                                )
+                                .execute()
+                            )
+
+                        insert_agent()
+
+                        # Insert trial
+                        @retry(
+                            stop=stop_after_attempt(3),
+                            wait=wait_exponential(multiplier=1, min=2, max=10),
+                        )
+                        def insert_trial():
+                            trial_insert = TrialInsert(
+                                id=result.id,
+                                agent_name=result.agent_info.name,
+                                agent_version=result.agent_info.version,
+                                config=result.config.model_dump(mode="json"),
+                                task_checksum=result.task_checksum,
+                                trial_name=result.trial_name,
+                                trial_uri=result.trial_uri,
+                                agent_execution_started_at=(
+                                    result.agent_execution.started_at
+                                    if result.agent_execution
+                                    else None
+                                ),
+                                agent_execution_ended_at=(
+                                    result.agent_execution.finished_at
+                                    if result.agent_execution
+                                    else None
+                                ),
+                                agent_setup_started_at=(
+                                    result.agent_setup.started_at
+                                    if result.agent_setup
+                                    else None
+                                ),
+                                agent_setup_ended_at=(
+                                    result.agent_setup.finished_at
+                                    if result.agent_setup
+                                    else None
+                                ),
+                                environment_setup_started_at=(
+                                    result.environment_setup.started_at
+                                    if result.environment_setup
+                                    else None
+                                ),
+                                environment_setup_ended_at=(
+                                    result.environment_setup.finished_at
+                                    if result.environment_setup
+                                    else None
+                                ),
+                                verifier_started_at=(
+                                    result.verifier.started_at
+                                    if result.verifier
+                                    else None
+                                ),
+                                verifier_ended_at=(
+                                    result.verifier.finished_at
+                                    if result.verifier
+                                    else None
+                                ),
+                                exception_info=(
+                                    result.exception_info.model_dump(mode="json")
+                                    if result.exception_info
+                                    else None
+                                ),
+                                job_id=result.config.job_id,
+                                reward=(
+                                    Decimal(
+                                        result.verifier_result.rewards.get("reward", 0)
+                                    )
+                                    if result.verifier_result
+                                    and result.verifier_result.rewards is not None
+                                    else None
+                                ),
+                                started_at=result.started_at,
+                                ended_at=result.finished_at,
+                                agent_metadata=(
+                                    result.agent_result.metadata
+                                    if result.agent_result
+                                    else None
+                                ),
+                            )
+                            return (
+                                client.table("trial")
+                                .upsert(
+                                    trial_insert.model_dump(
+                                        mode="json", by_alias=True, exclude_none=True
+                                    )
+                                )
+                                .execute()
+                            )
+
+                        insert_trial()
+
+                        # Insert model information if available
+                        if result.agent_info.model_info:
+                            name = result.agent_info.model_info.name
+                            provider = result.agent_info.model_info.provider
+
+                            key = f"{provider}/{name}"
+                            token_costs = model_cost.get(key) or model_cost.get(name)
+
+                            input_cost_per_token = (
+                                token_costs.get("input_cost_per_token")
+                                if token_costs
+                                else None
+                            )
+                            output_cost_per_token = (
+                                token_costs.get("output_cost_per_token")
+                                if token_costs
+                                else None
+                            )
+
+                            @retry(
+                                stop=stop_after_attempt(3),
+                                wait=wait_exponential(multiplier=1, min=2, max=10),
+                            )
+                            def insert_model():
+                                return (
+                                    client.table("model")
+                                    .upsert(
+                                        ModelInsert(
+                                            name=name,
+                                            provider=provider,
+                                            cents_per_million_input_tokens=(
+                                                round(input_cost_per_token * 1e8)
+                                                if input_cost_per_token
+                                                else None
+                                            ),
+                                            cents_per_million_output_tokens=(
+                                                round(output_cost_per_token * 1e8)
+                                                if output_cost_per_token
+                                                else None
+                                            ),
+                                        ).model_dump(
+                                            mode="json",
+                                            by_alias=True,
+                                            exclude_none=True,
+                                        )
+                                    )
+                                    .execute()
+                                )
+
+                            @retry(
+                                stop=stop_after_attempt(3),
+                                wait=wait_exponential(multiplier=1, min=2, max=10),
+                            )
+                            def insert_trial_model():
+                                return (
+                                    client.table("trial_model")
+                                    .upsert(
+                                        TrialModelInsert(
+                                            trial_id=result.id,
+                                            model_name=name,
+                                            model_provider=provider,
+                                            n_input_tokens=(
+                                                result.agent_result.n_input_tokens
+                                                if result.agent_result
+                                                else None
+                                            ),
+                                            n_output_tokens=(
+                                                result.agent_result.n_output_tokens
+                                                if result.agent_result
+                                                else None
+                                            ),
+                                        ).model_dump(
+                                            mode="json",
+                                            by_alias=True,
+                                            exclude_none=True,
+                                        )
+                                    )
+                                    .execute()
+                                )
+
+                            insert_model()
+                            insert_trial_model()
+
+                        total_trials_imported += 1
+
+                    except Exception as e:
+                        errors.append(f"Failed to import trial {trial_dir.name}: {e}")
+
+                    progress.update(trial_progress, advance=1)
+
+                progress.remove_task(trial_progress)
+
+            except Exception as e:
+                errors.append(f"Failed to import job {job_dir}: {e}")
+
+            progress.update(job_task, advance=1)
+
+    console.print("\n[bold green]Import complete!")
+    console.print(f"  • Jobs imported: {total_jobs_imported}")
+    console.print(f"  • Trials imported: {total_trials_imported}")
+
+    if errors:
+        console.print(f"\n[yellow]Encountered {len(errors)} error(s):")
+        for error in errors[:10]:
+            console.print(f"  • {error}")
+        if len(errors) > 10:
+            console.print(f"  ... and {len(errors) - 10} more")
