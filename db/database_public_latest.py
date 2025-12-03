@@ -83,7 +83,7 @@ class Dataset(Base):
 
     # Table Args
     __table_args__ = (
-        PrimaryKeyConstraint("name", "version", "registry_uri", name="dataset_pkey"),
+        PrimaryKeyConstraint("version", "registry_uri", "name", name="dataset_pkey"),
         {"schema": "public"},
     )
 
@@ -131,10 +131,10 @@ class DatasetTask(Base):
     # Table Args
     __table_args__ = (
         PrimaryKeyConstraint(
+            "task_checksum",
             "dataset_name",
             "dataset_version",
             "dataset_registry_uri",
-            "task_checksum",
             name="dataset_task_pkey",
         ),
         {"schema": "public"},
@@ -158,6 +158,7 @@ class Job(Base):
     job_name: Mapped[str] = mapped_column(Text)
     n_trials: Mapped[int] = mapped_column(Integer)
     username: Mapped[str] = mapped_column(Text)
+    verified: Mapped[bool] = mapped_column(Boolean)
     ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
@@ -478,6 +479,7 @@ class JobInsert(Base):
     job_name: Mapped[str] = mapped_column(Text)
     n_trials: Mapped[int] = mapped_column(Integer)
     username: Mapped[str] = mapped_column(Text)
+    verified: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
     ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
@@ -763,6 +765,7 @@ class JobUpdate(Base):
     job_name: Mapped[str | None] = mapped_column(Text, nullable=True)
     n_trials: Mapped[int | None] = mapped_column(Integer, nullable=True)
     username: Mapped[str | None] = mapped_column(Text, nullable=True)
+    verified: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
     ended_at: Mapped[datetime.datetime | None] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )

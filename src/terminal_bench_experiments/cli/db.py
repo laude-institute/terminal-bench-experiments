@@ -387,8 +387,9 @@ def upload_dataset(
 @db_app.command()
 def import_jobs(
     jobs_dir: Annotated[
-        Path, Option("--jobs-dir", help="Directory containing job subdirectories")
-    ],
+        Path | None,
+        Option("--jobs-dir", help="Directory containing job subdirectories"),
+    ] = None,
     job_path: Annotated[
         list[Path] | None,
         Option(
@@ -403,6 +404,22 @@ def import_jobs(
             help="Specific job ID to import (can be specified multiple times, requires --jobs-dir)",
         ),
     ] = None,
+    override_model_name: Annotated[
+        str | None,
+        Option(
+            "-m",
+            "--override-model-name",
+            help="Override the model name for all imported trials",
+        ),
+    ] = None,
+    override_model_provider: Annotated[
+        str | None,
+        Option(
+            "-p",
+            "--override-model-provider",
+            help="Override the model provider for all imported trials",
+        ),
+    ] = None,
 ):
     """
     Import jobs and their trials from disk into the database.
@@ -411,10 +428,13 @@ def import_jobs(
       # Import all jobs from a directory
       tbx db import-jobs --jobs-dir ./jobs
 
-      # Import specific job paths
-      tbx db import-jobs --jobs-dir ./jobs --job-path ./jobs/2025-09-06__19-58-44
+      # Import specific job paths (no jobs-dir needed)
+      tbx db import-jobs --job-path ./jobs/2025-09-06__19-58-44
 
-      # Import specific jobs by ID (requires finding them in jobs-dir)
+      # Import multiple specific job paths
+      tbx db import-jobs --job-path ./jobs/job1 --job-path ./jobs/job2
+
+      # Import specific jobs by ID (requires --jobs-dir)
       tbx db import-jobs --jobs-dir ./jobs --job-id 6af21ded-0f2e-4878-8856-8a73dbe472cf
     """
     try:
@@ -432,14 +452,18 @@ def import_jobs(
         )
         raise
 
-    if not jobs_dir.exists():
-        console.print(f"[red]Jobs directory not found: {jobs_dir}")
-        raise FileNotFoundError(f"Jobs directory not found: {jobs_dir}")
+    # Validate parameter combinations
+    if not jobs_dir and not job_path:
+        console.print("[red]Either --jobs-dir or --job-path must be provided")
+        raise ValueError("Either --jobs-dir or --job-path must be provided")
 
-    # Validate that job_id can only be used with jobs_dir
     if job_id and not jobs_dir:
         console.print("[red]--job-id can only be used with --jobs-dir")
         raise ValueError("--job-id can only be used with --jobs-dir")
+
+    if jobs_dir and not jobs_dir.exists():
+        console.print(f"[red]Jobs directory not found: {jobs_dir}")
+        raise FileNotFoundError(f"Jobs directory not found: {jobs_dir}")
 
     client = create_client(
         supabase_url=os.environ["SUPABASE_URL"],
@@ -452,7 +476,7 @@ def import_jobs(
     if job_path:
         # Use specific job paths
         jobs_to_import.extend(job_path)
-    elif job_id:
+    elif job_id and jobs_dir:
         # Find jobs by ID within jobs_dir
         for job_dir in jobs_dir.iterdir():
             if not job_dir.is_dir():
@@ -475,7 +499,7 @@ def import_jobs(
                 except Exception as e:
                     console.print(f"[yellow]Failed to read config from {job_dir}: {e}")
                     continue
-    else:
+    elif jobs_dir:
         # Import all jobs from jobs_dir
         for job_dir in jobs_dir.iterdir():
             if job_dir.is_dir() and (job_dir / "config.json").exists():
@@ -705,11 +729,16 @@ def import_jobs(
 
                         insert_trial()
 
-                        # Insert model information if available
-                        if result.agent_info.model_info:
-                            name = result.agent_info.model_info.name
-                            provider = result.agent_info.model_info.provider
+                        # Insert model information if available or overrides provided
+                        model_info = result.agent_info.model_info
+                        name = override_model_name or (
+                            model_info.name if model_info else None
+                        )
+                        provider = override_model_provider or (
+                            model_info.provider if model_info else None
+                        )
 
+                        if name and provider:
                             key = f"{provider}/{name}"
                             token_costs = model_cost.get(key) or model_cost.get(name)
 
