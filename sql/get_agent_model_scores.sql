@@ -28,7 +28,6 @@ with
     where
       dataset_name = 'terminal-bench'
       and dataset_version = '2.0'
-      and j.created_at >= '2025-09-17 01:13:33.950824+00'::timestamptz
       and j.job_name like 'reliability%'
       and agent_name = 'terminus-2'
       and t.config -> 'environment' ->> 'type' in ('docker', 'daytona')
