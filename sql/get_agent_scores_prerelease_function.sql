@@ -1,5 +1,5 @@
-DROP FUNCTION IF EXISTS get_agent_scores_v4(TEXT, TEXT);
-CREATE OR REPLACE FUNCTION get_agent_scores_v4(
+DROP FUNCTION IF EXISTS get_agent_scores_prerelease(TEXT, TEXT);
+CREATE OR REPLACE FUNCTION get_agent_scores_prerelease(
         p_dataset_name TEXT,
         p_dataset_version TEXT
     ) RETURNS TABLE (
@@ -95,7 +95,6 @@ CREATE OR REPLACE FUNCTION get_agent_scores_v4(
             AND ag.version = t.agent_version
         WHERE dt.dataset_name = p_dataset_name
             AND dt.dataset_version = p_dataset_version
-            AND j.include_on_leaderboard IS TRUE
             AND (
                 t.exception_info IS NULL
                 OR t.exception_info->>'exception_type' IN (
@@ -219,5 +218,3 @@ FROM aggregated_scores a
 ORDER BY a.accuracy DESC;
 END;
 $$ LANGUAGE plpgsql;
-select *
-from get_agent_scores_v4('terminal-bench', '2.0');
