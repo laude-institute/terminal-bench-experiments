@@ -19,8 +19,8 @@ from harbor.models.trial.paths import TrialPaths
 from harbor.models.trial.result import TrialResult
 from harbor.orchestrators.base import OrchestratorEvent
 from litellm import model_cost
-from supabase import create_client
-from tenacity import retry, stop_after_attempt, wait_exponential
+from supabase import acreate_client
+from tenacity import AsyncRetrying, stop_after_attempt, wait_exponential
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
@@ -33,7 +33,7 @@ from db.schema_public_latest import (
 )
 
 
-def upload_trial_to_storage(result: TrialResult) -> str | None:
+async def upload_trial_to_storage(result: TrialResult) -> str | None:
     """
     Upload trial directory as a tar.gz archive to Supabase storage and return public URL.
     Also uploads trajectory.json if it exists.
@@ -47,7 +47,7 @@ def upload_trial_to_storage(result: TrialResult) -> str | None:
         print(f"Trial directory not found: {trial_path}")
         return None
 
-    client = create_client(
+    client = await acreate_client(
         supabase_url=os.environ["SUPABASE_URL"],
         supabase_key=os.environ["SUPABASE_SECRET_KEY"],
     )
@@ -69,21 +69,22 @@ def upload_trial_to_storage(result: TrialResult) -> str | None:
         print(f"Archive created: {archive_size / (1024 * 1024):.2f} MB")
 
         # Upload the archive with retry logic
-        @retry(
-            stop=stop_after_attempt(3),
-            wait=wait_exponential(multiplier=1, min=2, max=10),
-            reraise=True,
-        )
-        def upload_archive():
+        async def upload_archive():
             """Upload the tar.gz file with retry logic."""
-            with open(tmp_path, "rb") as f:
-                storage_path = f"{trial_id}.tar.gz"
-                response = client.storage.from_(bucket_name).upload(
-                    file=f, path=storage_path, file_options={"upsert": "true"}
-                )
-            return response
+            async for attempt in AsyncRetrying(
+                stop=stop_after_attempt(3),
+                wait=wait_exponential(multiplier=1, min=2, max=10),
+                reraise=True,
+            ):
+                with attempt:
+                    with open(tmp_path, "rb") as f:
+                        storage_path = f"{trial_id}.tar.gz"
+                        response = await client.storage.from_(bucket_name).upload(
+                            file=f, path=storage_path, file_options={"upsert": "true"}
+                        )
+                    return response
 
-        upload_archive()
+        await upload_archive()
         print(f"Successfully uploaded {trial_id}.tar.gz")
 
         # Upload trajectory.json if it exists
@@ -91,28 +92,31 @@ def upload_trial_to_storage(result: TrialResult) -> str | None:
         if trajectory_path.exists():
             print(f"Found trajectory.json for trial {trial_id}, uploading...")
 
-            @retry(
-                stop=stop_after_attempt(3),
-                wait=wait_exponential(multiplier=1, min=2, max=10),
-                reraise=True,
-            )
-            def upload_trajectory():
+            async def upload_trajectory():
                 """Upload the trajectory.json file with retry logic."""
-                with open(trajectory_path, "rb") as f:
-                    storage_path = f"{trial_id}-traj.json"
-                    response = client.storage.from_(bucket_name).upload(
-                        file=f, path=storage_path, file_options={"upsert": "true"}
-                    )
-                return response
+                async for attempt in AsyncRetrying(
+                    stop=stop_after_attempt(3),
+                    wait=wait_exponential(multiplier=1, min=2, max=10),
+                    reraise=True,
+                ):
+                    with attempt:
+                        with open(trajectory_path, "rb") as f:
+                            storage_path = f"{trial_id}-traj.json"
+                            response = await client.storage.from_(bucket_name).upload(
+                                file=f,
+                                path=storage_path,
+                                file_options={"upsert": "true"},
+                            )
+                        return response
 
             try:
-                upload_trajectory()
+                await upload_trajectory()
                 print(f"Successfully uploaded {trial_id}-traj.json")
             except Exception as e:
                 print(f"Failed to upload trajectory.json for trial {trial_id}: {e}")
 
         # Get the public URL for the archive
-        public_url = client.storage.from_(bucket_name).get_public_url(
+        public_url = await client.storage.from_(bucket_name).get_public_url(
             f"{trial_id}.tar.gz"
         )
 
@@ -128,8 +132,8 @@ def upload_trial_to_storage(result: TrialResult) -> str | None:
             tmp_path.unlink()
 
 
-def insert_trial_into_db(result: TrialResult):
-    storage_url = upload_trial_to_storage(result)
+async def insert_trial_into_db(result: TrialResult):
+    storage_url = await upload_trial_to_storage(result)
 
     trial_uri = storage_url
     if storage_url:
@@ -137,48 +141,48 @@ def insert_trial_into_db(result: TrialResult):
     else:
         print("Upload failed - trial_uri will be null")
 
-    client = create_client(
+    client = await acreate_client(
         supabase_url=os.environ["SUPABASE_URL"],
         supabase_key=os.environ["SUPABASE_SECRET_KEY"],
     )
 
-    @retry(
-        stop=stop_after_attempt(3),
-        wait=wait_exponential(multiplier=1, min=2, max=10),
-    )
-    def insert_agent():
+    async def insert_agent():
         agent_insert = AgentInsert(
             name=result.agent_info.name,
             version=result.agent_info.version,
         )
-        return (
-            client.table("agent")
-            .upsert(
-                agent_insert.model_dump(mode="json", by_alias=True, exclude_none=True)
-            )
-            .execute()
-        )
+        async for attempt in AsyncRetrying(
+            stop=stop_after_attempt(3),
+            wait=wait_exponential(multiplier=1, min=2, max=10),
+        ):
+            with attempt:
+                return await (
+                    client.table("agent")
+                    .upsert(
+                        agent_insert.model_dump(
+                            mode="json", by_alias=True, exclude_none=True
+                        )
+                    )
+                    .execute()
+                )
 
-    @retry(
-        stop=stop_after_attempt(3),
-        wait=wait_exponential(multiplier=1, min=2, max=10),
-    )
-    def get_dataset_task():
-        return (
-            client.table("dataset_task")
-            .select("*, task!inner(name)")
-            .eq("dataset_name", "terminal-bench")
-            .eq("dataset_version", "2.0")
-            .eq("task.name", result.task_name)
-            .single()
-            .execute()
-        )
+    async def get_dataset_task():
+        async for attempt in AsyncRetrying(
+            stop=stop_after_attempt(3),
+            wait=wait_exponential(multiplier=1, min=2, max=10),
+        ):
+            with attempt:
+                return await (
+                    client.table("dataset_task")
+                    .select("*, task!inner(name)")
+                    .eq("dataset_name", "terminal-bench")
+                    .eq("dataset_version", "2.0")
+                    .eq("task.name", result.task_name)
+                    .single()
+                    .execute()
+                )
 
-    @retry(
-        stop=stop_after_attempt(3),
-        wait=wait_exponential(multiplier=1, min=2, max=10),
-    )
-    def insert_trial():
+    async def insert_trial():
         trial_insert = TrialInsert(
             id=result.id,
             agent_name=result.agent_info.name,
@@ -228,70 +232,79 @@ def insert_trial_into_db(result: TrialResult):
                 result.agent_result.metadata if result.agent_result else None
             ),
         )
-        return (
-            client.table("trial")
-            .insert(
-                trial_insert.model_dump(mode="json", by_alias=True, exclude_none=True)
-            )
-            .execute()
-        )
+        async for attempt in AsyncRetrying(
+            stop=stop_after_attempt(3),
+            wait=wait_exponential(multiplier=1, min=2, max=10),
+        ):
+            with attempt:
+                return await (
+                    client.table("trial")
+                    .insert(
+                        trial_insert.model_dump(
+                            mode="json", by_alias=True, exclude_none=True
+                        )
+                    )
+                    .execute()
+                )
 
-    @retry(
-        stop=stop_after_attempt(3),
-        wait=wait_exponential(multiplier=1, min=2, max=10),
-    )
-    def insert_model(name, provider, input_cost_per_token, output_cost_per_token):
-        return (
-            client.table("model")
-            .upsert(
-                ModelInsert(
-                    name=name,
-                    provider=provider,
-                    cents_per_million_input_tokens=(
-                        round(input_cost_per_token * 1e8)
-                        if input_cost_per_token
-                        else None
-                    ),
-                    cents_per_million_output_tokens=(
-                        round(output_cost_per_token * 1e8)
-                        if output_cost_per_token
-                        else None
-                    ),
-                ).model_dump(mode="json", by_alias=True, exclude_none=True)
-            )
-            .execute()
-        )
+    async def insert_model(name, provider, input_cost_per_token, output_cost_per_token):
+        async for attempt in AsyncRetrying(
+            stop=stop_after_attempt(3),
+            wait=wait_exponential(multiplier=1, min=2, max=10),
+        ):
+            with attempt:
+                return await (
+                    client.table("model")
+                    .upsert(
+                        ModelInsert(
+                            name=name,
+                            provider=provider,
+                            cents_per_million_input_tokens=(
+                                round(input_cost_per_token * 1e8)
+                                if input_cost_per_token
+                                else None
+                            ),
+                            cents_per_million_output_tokens=(
+                                round(output_cost_per_token * 1e8)
+                                if output_cost_per_token
+                                else None
+                            ),
+                        ).model_dump(mode="json", by_alias=True, exclude_none=True)
+                    )
+                    .execute()
+                )
 
-    @retry(
-        stop=stop_after_attempt(3),
-        wait=wait_exponential(multiplier=1, min=2, max=10),
-    )
-    def insert_trial_model(name, provider):
-        return (
-            client.table("trial_model")
-            .insert(
-                TrialModelInsert(
-                    trial_id=result.id,
-                    model_name=name,  # type: ignore
-                    model_provider=provider,  # type: ignore
-                    n_input_tokens=(
-                        result.agent_result.n_input_tokens
-                        if result.agent_result
-                        else None
-                    ),
-                    n_output_tokens=(
-                        result.agent_result.n_output_tokens
-                        if result.agent_result
-                        else None
-                    ),
-                ).model_dump(mode="json", by_alias=True, exclude_none=True)
-            )
-            .execute()
-        )
+    async def insert_trial_model(name, provider):
+        async for attempt in AsyncRetrying(
+            stop=stop_after_attempt(3),
+            wait=wait_exponential(multiplier=1, min=2, max=10),
+        ):
+            with attempt:
+                return await (
+                    client.table("trial_model")
+                    .insert(
+                        TrialModelInsert(
+                            trial_id=result.id,
+                            model_name=name,  # type: ignore
+                            model_provider=provider,  # type: ignore
+                            n_input_tokens=(
+                                result.agent_result.n_input_tokens
+                                if result.agent_result
+                                else None
+                            ),
+                            n_output_tokens=(
+                                result.agent_result.n_output_tokens
+                                if result.agent_result
+                                else None
+                            ),
+                        ).model_dump(mode="json", by_alias=True, exclude_none=True)
+                    )
+                    .execute()
+                )
 
     try:
-        insert_agent()
-        insert_trial()
+        await insert_agent()
+        await insert_trial()
 
         if result.agent_info.model_info:
             name = result.agent_info.model_info.name
@@ -310,8 +323,10 @@ def insert_trial_into_db(result: TrialResult):
             if input_cost_per_token is None or output_cost_per_token is None:
                 print(f"Could not find token costs for model: {key} or {name}")
 
-            insert_model(name, provider, input_cost_per_token, output_cost_per_token)
-            insert_trial_model(name, provider)
+            await insert_model(
+                name, provider, input_cost_per_token, output_cost_per_token
+            )
+            await insert_trial_model(name, provider)
 
     except Exception as e:
         print(
@@ -320,27 +335,30 @@ def insert_trial_into_db(result: TrialResult):
         return
 
 
-def insert_job_into_db(job_insert: JobInsert):
-    client = create_client(
+async def insert_job_into_db(job_insert: JobInsert):
+    client = await acreate_client(
         supabase_url=os.environ["SUPABASE_URL"],
         supabase_key=os.environ["SUPABASE_SECRET_KEY"],
     )
 
-    @retry(
-        stop=stop_after_attempt(3),
-        wait=wait_exponential(multiplier=1, min=2, max=10),
-    )
-    def insert_job():
-        return (
-            client.table("job")
-            .upsert(
-                job_insert.model_dump(mode="json", by_alias=True, exclude_none=True)
-            )
-            .execute()
-        )
+    async def insert_job():
+        async for attempt in AsyncRetrying(
+            stop=stop_after_attempt(3),
+            wait=wait_exponential(multiplier=1, min=2, max=10),
+        ):
+            with attempt:
+                return await (
+                    client.table("job")
+                    .upsert(
+                        job_insert.model_dump(
+                            mode="json", by_alias=True, exclude_none=True
+                        )
+                    )
+                    .execute()
+                )
 
     try:
-        insert_job()
+        await insert_job()
     except Exception as e:
         print(
             f"Failed to insert job {getattr(job_insert, 'job_name', 'unknown')} into database after 3 retries: {e}"
@@ -348,7 +366,7 @@ def insert_job_into_db(job_insert: JobInsert):
         return
 
 
-def main():
+async def main():
     parser = argparse.ArgumentParser(
         description="Run a job with configurable job config"
     )
@@ -417,9 +435,8 @@ def main():
                 and trial_result.exception_info.exception_type in filter_error_types_set
             ):
                 print(
-                    f"Removing trial directory with {
-                        trial_result.exception_info.exception_type
-                    }: {trial_dir.name}"
+                    f"Removing trial directory with "
+                    f"{trial_result.exception_info.exception_type}: {trial_dir.name}"
                 )
                 shutil.rmtree(trial_dir)
 
@@ -443,14 +460,14 @@ def main():
     )
 
     if not job.is_resuming:
-        insert_job_into_db(job_insert)
+        await insert_job_into_db(job_insert)
 
     job._orchestrator.add_hook(
         event=OrchestratorEvent.TRIAL_COMPLETED,
-        hook=lambda result: insert_trial_into_db(result),
+        hook=insert_trial_into_db,
     )
 
-    result = asyncio.run(job.run())
+    result = await job.run()
 
     job_insert.started_at = result.started_at
     job_insert.ended_at = result.finished_at
@@ -458,8 +475,8 @@ def main():
         mode="json", by_alias=True, exclude_none=True
     )
 
-    insert_job_into_db(job_insert)
+    await insert_job_into_db(job_insert)
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
