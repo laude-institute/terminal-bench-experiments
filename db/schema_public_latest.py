@@ -93,6 +93,7 @@ class JobBaseSchema(CustomModel):
     started_at: datetime.datetime | None = Field(default=None)
     stats: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     username: str
+    verified: bool
 
 
 class ModelBaseSchema(CustomModel):
@@ -250,6 +251,7 @@ class JobInsert(CustomModelInsert):
     # package_version: nullable
     # started_at: nullable
     # stats: nullable
+    # verified: has default value
 
     # Required fields
     config: dict | list[dict] | list[Any] | Json
@@ -266,6 +268,7 @@ class JobInsert(CustomModelInsert):
     package_version: str | None = Field(default=None)
     started_at: datetime.datetime | None = Field(default=None)
     stats: dict | list[dict] | list[Any] | Json | None = Field(default=None)
+    verified: bool | None = Field(default=None)
 
 
 class ModelInsert(CustomModelInsert):
@@ -465,6 +468,7 @@ class JobUpdate(CustomModelUpdate):
     # package_version: nullable
     # started_at: nullable
     # stats: nullable
+    # verified: has default value
 
     # Optional fields
     config: dict | list[dict] | list[Any] | Json | None = Field(default=None)
@@ -479,6 +483,7 @@ class JobUpdate(CustomModelUpdate):
     started_at: datetime.datetime | None = Field(default=None)
     stats: dict | list[dict] | list[Any] | Json | None = Field(default=None)
     username: str | None = Field(default=None)
+    verified: bool | None = Field(default=None)
 
 
 class ModelUpdate(CustomModelUpdate):
