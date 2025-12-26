@@ -45,37 +45,25 @@ CREATE OR REPLACE FUNCTION get_agent_scores_prerelease(
                 tm.n_input_tokens / 1000000.0 * m.cents_per_million_input_tokens + tm.n_output_tokens / 1000000.0 * m.cents_per_million_output_tokens
             ) AS total_cost_cents,
             COALESCE(
-                array_agg(
-                    DISTINCT tm.model_name
-                    ORDER BY tm.model_name
-                ) FILTER (
+                array_agg(tm.model_name ORDER BY tm.model_name, tm.model_provider) FILTER (
                     WHERE tm.model_name IS NOT NULL
                 ),
                 ARRAY []::TEXT []
             ) AS model_names,
             COALESCE(
-                array_agg(
-                    DISTINCT tm.model_provider
-                    ORDER BY tm.model_provider
-                ) FILTER (
+                array_agg(tm.model_provider ORDER BY tm.model_name, tm.model_provider) FILTER (
                     WHERE tm.model_provider IS NOT NULL
                 ),
                 ARRAY []::TEXT []
             ) AS model_providers,
             COALESCE(
-                array_agg(
-                    DISTINCT m.display_name
-                    ORDER BY m.display_name
-                ) FILTER (
+                array_agg(m.display_name ORDER BY tm.model_name, tm.model_provider) FILTER (
                     WHERE m.display_name IS NOT NULL
                 ),
                 ARRAY []::TEXT []
             ) AS model_display_names,
             COALESCE(
-                array_agg(
-                    DISTINCT m.org_display_name
-                    ORDER BY m.org_display_name
-                ) FILTER (
+                array_agg(m.org_display_name ORDER BY tm.model_name, tm.model_provider) FILTER (
                     WHERE m.org_display_name IS NOT NULL
                 ),
                 ARRAY []::TEXT []
@@ -100,7 +88,8 @@ CREATE OR REPLACE FUNCTION get_agent_scores_prerelease(
                 OR t.exception_info->>'exception_type' IN (
                     'AgentTimeoutError',
                     'VerifierTimeoutError',
-                    'PermissionError'
+                    'PermissionError',
+                    'RewardFileNotFoundError'
                 )
             )
         GROUP BY t.id,
