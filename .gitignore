@@ -210,3 +210,5 @@ jobs
 .DS_Store
 
 submissions/
+ignore/
+notebooks/**/*.pdf
