@@ -212,3 +212,6 @@ jobs
 submissions/
 ignore/
 notebooks/**/*.pdf
+hf/
+.mcp.json
+outputs/
