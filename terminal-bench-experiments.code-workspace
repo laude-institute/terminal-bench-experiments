@@ -5,22 +5,38 @@
 			"path": "."
 		},
 		{
-			"name": "sandboxes",
-			"path": "../sandboxes"
+			"name": "harbor",
+			"path": "../harbor"
 		},
 		{
 			"name": "jobs",
 			"path": "jobs"
 		},
 		{
-			"name": "tb-2",
-			"path": "../sandboxes/tasks/tb-2"
+			"name": "importer",
+			"path": "hf/terminal-bench-importer"
+		},
+		{
+			"name": "leaderboard",
+			"path": "hf/terminal-bench-2-leaderboard"
 		}
 	],
 	"settings": {
 		"python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
 		"files.watcherExclude": {
 			"jobs/**": true
-		}
+		},
+		"sqltools.connections": [
+			{
+				"ssh": "Disabled",
+				"previewLimit": 50,
+				"server": "db.jccajjvblmajkbwqsmaz.supabase.co",
+				"port": 5432,
+				"driver": "PostgreSQL",
+				"name": "Supabase Experiments",
+				"database": "postgres",
+				"username": "postgres"
+			}
+		]
 	}
 }
