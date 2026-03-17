@@ -215,3 +215,7 @@ notebooks/**/*.pdf
 hf/
 .mcp.json
 outputs/
+node_modules/
+db/supabase/
+/package.json
+/package-lock.json

@@ -1,0 +1,32 @@
+job_name: terminus-2__minimax-m2.5__test-example
+jobs_dir: jobs
+n_attempts: 1
+timeout_multiplier: 1.0
+orchestrator:
+  type: local
+  n_concurrent_trials: 1
+  quiet: false
+  retry:
+    max_retries: 3
+    exclude_exceptions:
+      - BadRequestError
+      - RateLimitError
+      - AgentTimeoutError
+      - VerifierTimeoutError
+      - RewardFileNotFoundError
+    wait_multiplier: 1.0
+    min_wait_sec: 1.0
+    max_wait_sec: 60.0
+environment:
+  type: daytona
+  force_build: false
+  delete: true
+agents:
+  - name: terminus-2
+    model_name: openai/MiniMax-M2.5
+datasets:
+  - registry:
+      name: local
+      path: ./adapter_experiments/registries/test-example.json
+    name: test-example
+    version: "1.0"

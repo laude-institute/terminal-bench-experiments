@@ -10,10 +10,10 @@ import yaml
 from dotenv import load_dotenv
 from harbor.models.dataset_item import DownloadedDatasetItem
 from harbor.models.job.config import JobConfig, LocalDatasetConfig
-from harbor.models.registry import Dataset, RegistryTaskId
+from harbor.models.registry import DatasetSpec, RegistryTaskId
 from harbor.models.task.task import Task
 from harbor.models.trial.result import TrialResult
-from harbor.registry.client import RegistryClient
+from harbor.registry.client.json import JsonRegistryClient
 from litellm import model_cost
 from rich.console import Console
 from rich.progress import (
@@ -272,19 +272,19 @@ def upload_dataset(
 
             progress.update(main_task, advance=1)
 
-            dataset: Dataset | None = None
+            dataset: DatasetSpec | None = None
 
             if dataset_path is None:
                 progress.update(
                     main_task, description="[yellow]Connecting to registry..."
                 )
-                registry_client = RegistryClient(
+                registry_client = JsonRegistryClient(
                     url=registry_url,
                     path=registry_path,
                 )
 
                 try:
-                    dataset = registry_client.datasets[name][version]
+                    dataset = registry_client.dataset_specs[name][version]
                 except KeyError:
                     progress.update(main_task, description="[red]✗ Dataset not found")
                     raise ValueError(

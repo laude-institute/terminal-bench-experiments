@@ -13,11 +13,12 @@ from urllib.parse import urlparse
 
 import harbor
 import yaml
+from dotenv import load_dotenv
 from harbor.job import Job
 from harbor.models.job.config import JobConfig
 from harbor.models.trial.paths import TrialPaths
 from harbor.models.trial.result import TrialResult
-from harbor.orchestrators.base import OrchestratorEvent
+from harbor.trial.hooks import TrialEvent, TrialHookEvent
 from litellm import model_cost
 from supabase import acreate_client
 from tenacity import AsyncRetrying, stop_after_attempt, wait_exponential
@@ -31,6 +32,8 @@ from db.schema_public_latest import (
     TrialInsert,
     TrialModelInsert,
 )
+
+load_dotenv()
 
 
 async def upload_trial_to_storage(result: TrialResult) -> str | None:
@@ -132,7 +135,8 @@ async def upload_trial_to_storage(result: TrialResult) -> str | None:
             tmp_path.unlink()
 
 
-async def insert_trial_into_db(result: TrialResult):
+async def insert_trial_into_db(event: TrialHookEvent):
+    result = event.result
     storage_url = await upload_trial_to_storage(result)
 
     trial_uri = storage_url
@@ -463,7 +467,7 @@ async def main():
         await insert_job_into_db(job_insert)
 
     job._orchestrator.add_hook(
-        event=OrchestratorEvent.TRIAL_COMPLETED,
+        event=TrialEvent.END,
         hook=insert_trial_into_db,
     )
 
