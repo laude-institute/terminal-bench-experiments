@@ -1,0 +1,141 @@
+[
+  {
+    "name": "adapter-experiments-0321-batch1-special-phase2",
+    "version": "1.0",
+    "description": "Batch 1 adapters for special paper experiments\n\nGenerated adapter experiment sample with seed=20260321. Source datasets: algotune@1.0:154, swe-lancer-diamond@all:200, bfcl@1.0:123, bixbench@1.5:50, financeagent@public:50, crustbench@1.0:100, sldbench@1.0:8, swtbench-verified@1.0:50, medagentbench@1.0:100, simpleqa@1.0:200, gaia@1.0:165, aider-polyglot@1.0:225, livecodebench@6.0:100, replicationbench@1.0:90, mlgym-bench@1.0:12.\n\nProgressive subset derived from 0321_batch1_special_full.lock.json with 1% per source dataset (rounding=ceil, minimum_tasks_per_source=1). Selected tasks: algotune@1.0:2/154, swe-lancer-diamond@all:2/200, bfcl@1.0:2/123, bixbench@1.5:1/50, financeagent@public:1/50, crustbench@1.0:1/100, sldbench@1.0:1/8, swtbench-verified@1.0:1/50, medagentbench@1.0:1/100, simpleqa@1.0:2/200, gaia@1.0:2/165, aider-polyglot@1.0:3/225, livecodebench@6.0:1/100, replicationbench@1.0:1/90, mlgym-bench@1.0:1/12.",
+    "tasks": [
+      {
+        "name": "algotune-max-clique-cpsat",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "479f07ddc302ea18ea05f03954effdb07411688b",
+        "path": "datasets/algotune/algotune-max-clique-cpsat"
+      },
+      {
+        "name": "algotune-procrustes",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "479f07ddc302ea18ea05f03954effdb07411688b",
+        "path": "datasets/algotune/algotune-procrustes"
+      },
+      {
+        "name": "46344_753",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "HEAD",
+        "path": "datasets/swe-lancer/46344_753"
+      },
+      {
+        "name": "50163_1076",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "HEAD",
+        "path": "datasets/swe-lancer/50163_1076"
+      },
+      {
+        "name": "bfcl-live-irrelevance-414-93-1",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "6bedd7878dc5d6f3456b4d80b781eb3c2d84f262",
+        "path": "datasets/bfcl/bfcl-live-irrelevance-414-93-1"
+      },
+      {
+        "name": "bfcl-live-multiple-671-162-13",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "6bedd7878dc5d6f3456b4d80b781eb3c2d84f262",
+        "path": "datasets/bfcl/bfcl-live-multiple-671-162-13"
+      },
+      {
+        "name": "bix-56-q1",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "HEAD",
+        "path": "datasets/bixbench/bix-56-q1"
+      },
+      {
+        "name": "financeagent-18",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
+        "path": "datasets/financeagent/financeagent-18"
+      },
+      {
+        "name": "crustbench-avalanche",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "9b0578096b9e5775dc5bf3d0611a6c9b01ba2951",
+        "path": "datasets/crustbench/crustbench-avalanche"
+      },
+      {
+        "name": "easy_question_scaling_law",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "af3281ad0e924ebdb5d4828832a5212b548c08ff",
+        "path": "datasets/sldbench/easy_question_scaling_law"
+      },
+      {
+        "name": "sympy__sympy-23534",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "e39578f9f952caa51cd6c0de04f125254102994a",
+        "path": "datasets/swtbench-verified/sympy__sympy-23534"
+      },
+      {
+        "name": "task6_8",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "9a7e5aea093bfdeeccc4ea319140f8ce351d2b63",
+        "path": "datasets/medagentbench/task6_8"
+      },
+      {
+        "name": "simpleqa-1483",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "b8f0fa93eb74773bcf06b157140bfe309286f57a",
+        "path": "datasets/simpleqa/simpleqa-1483"
+      },
+      {
+        "name": "simpleqa-2419",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "b8f0fa93eb74773bcf06b157140bfe309286f57a",
+        "path": "datasets/simpleqa/simpleqa-2419"
+      },
+      {
+        "name": "a56f1527-3abf-41d6-91f8-7296d6336c3f",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "004eaeda9ac5017a1d51e09bc19914d994f878b6",
+        "path": "datasets/gaia/a56f1527-3abf-41d6-91f8-7296d6336c3f"
+      },
+      {
+        "name": "dc28cf18-6431-458b-83ef-64b3ce566c10",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "004eaeda9ac5017a1d51e09bc19914d994f878b6",
+        "path": "datasets/gaia/dc28cf18-6431-458b-83ef-64b3ce566c10"
+      },
+      {
+        "name": "polyglot_java_simple-linked-list",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_java_simple-linked-list"
+      },
+      {
+        "name": "polyglot_javascript_rational-numbers",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_javascript_rational-numbers"
+      },
+      {
+        "name": "polyglot_javascript_triangle",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_javascript_triangle"
+      },
+      {
+        "name": "3034",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "cfad8d97c75fb9e28c7b6b74b7fadb23dae57ab6",
+        "path": "datasets/livecodebench/release_v6/3034"
+      },
+      {
+        "name": "eht_resolve__eht_reconstruction",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f0afc88503af5e7146c79e5ce82af24ade7232a4",
+        "path": "datasets/replicationbench/eht_resolve__eht_reconstruction"
+      },
+      {
+        "name": "mlgym-image-classification-cifar10-l1",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "325a5c554cb1ff28856c9e7c0e407a74e72a61d2",
+        "path": "datasets/mlgym-bench/mlgym-image-classification-cifar10-l1"
+      }
+    ]
+  }
+]

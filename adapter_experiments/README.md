@@ -22,6 +22,49 @@ uv run python adapter_experiments/scripts/sample_registry.py \
 Use `--dry-run` to validate the manifest and inspect the resolved sample
 without writing files.
 
+## Create progressive subsets
+
+Use `subset_registry.py` to split a flattened full registry into deterministic
+phase registries while keeping reproducibility in the generated lock files:
+
+```bash
+uv run python adapter_experiments/scripts/subset_registry.py \
+  --source-registry adapter_experiments/registries/0321_batch1_full.json \
+  --source-lock adapter_experiments/registries/0321_batch1_full.lock.json \
+  --output-registry adapter_experiments/registries/batch1_subsets/phase2.json \
+  --percent 1 \
+  --dataset-name adapter-experiments-0321-batch1-phase2
+```
+
+To build later phases without reusing earlier tasks, pass earlier lock files
+with `--exclude-lock`:
+
+```bash
+uv run python adapter_experiments/scripts/subset_registry.py \
+  --source-registry adapter_experiments/registries/0321_batch1_full.json \
+  --source-lock adapter_experiments/registries/0321_batch1_full.lock.json \
+  --exclude-lock adapter_experiments/registries/batch1_subsets/phase2.lock.json \
+  --output-registry adapter_experiments/registries/batch1_subsets/phase3.json \
+  --percent 10 \
+  --dataset-name adapter-experiments-0321-batch1-phase3
+```
+
+Typical progressive setup:
+
+- `phase2`: `--percent 1`
+- `phase3`: `--percent 10 --exclude-lock phase2.lock.json`
+- `phase4`: `--percent 100 --exclude-lock phase2.lock.json --exclude-lock phase3.lock.json`
+
+Notes:
+
+- Selection is deterministic from the full registry lock file, using the stored
+  per-source sample ranks instead of resampling.
+- Percentages are applied per source dataset, with `ceil` rounding by default.
+- `phase3` is the cumulative 10% slice minus `phase2`.
+- `phase4` is the remaining full set after subtracting both `phase2` and
+  `phase3`.
+- Use `--dry-run` to inspect counts before writing output files.
+
 ## Manifest format
 
 ```yaml

@@ -1,0 +1,71 @@
+source_registry: ../../../harbor/registry.json
+seed: 20260321
+output:
+  dataset_name: adapter-experiments-0321-batch1-clean-full
+  dataset_version: "1.0"
+  description: Batch 1 adapters for clean paper experiments
+  registry_path: ../registries/0321_batch1_clean_full.json
+sources:
+  - name: aime
+    version: "1.0"
+    sample_size: 60
+  - name: arc_agi_2
+    version: "1.0"
+    sample_size: 100
+  - name: compilebench
+    version: "1.0"
+    sample_size: 15
+  - name: gpqa-diamond
+    version: "1.0"
+    sample_size: 198
+  - name: humanevalfix
+    version: "1.0"
+    sample_size: 164
+  - name: ineqmath
+    version: "1.0"
+    sample_size: 100
+  - name: labbench
+    version: "1.0"
+    sample_size: 181
+  - name: mmau
+    version: "1.0"
+    sample_size: 1000
+  - name: qcircuitbench
+    version: "1.0"
+    sample_size: 28
+  - name: reasoning-gym-easy
+    version: parity
+    sample_size: 288
+  - name: reasoning-gym-hard
+    version: parity
+    sample_size: 288
+  - name: spider2-dbt
+    version: "1.0"
+    sample_size: 64
+  - name: strongreject
+    version: parity
+    sample_size: 150
+  - name: swebenchpro
+    version: "1.0"
+    sample_size: 100
+  - name: swesmith
+    version: "1.0"
+    sample_size: 100
+  - name: mmmlu
+    version: parity
+    sample_size: 150
+  - name: usaco
+    version: "2.0"
+    sample_size: 100
+  - name: lawbench
+    version: "1.0"
+    sample_size: 181
+  - name: kumo
+    version: "1.0"
+    sample_size: 212
+  - name: swebench-verified
+    version: "1.0"
+    sample_size: 100
+  - name: codepde
+    version: "1.0"
+    sample_size: 5

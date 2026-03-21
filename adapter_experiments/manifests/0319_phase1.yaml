@@ -1,0 +1,116 @@
+source_registry: ../../../harbor/registry.json
+seed: 20260319
+output:
+  dataset_name: adapter-experiments-0319-phase1
+  dataset_version: "1.0"
+  description: Phase 1 sample of paper-included Harbor-merged adapters for timing, cost, and bug debugging.
+  registry_path: ../registries/0319_phase1.json
+sources:
+  - name: aime
+    version: "1.0"
+    sample_size: 5
+  - name: algotune
+    version: "1.0"
+    sample_size: 5
+  - name: swe-lancer-diamond
+    version: all
+    sample_size: 5
+  - name: arc_agi_2
+    version: "1.0"
+    sample_size: 5
+  - name: bfcl
+    version: "1.0"
+    sample_size: 5
+  - name: bixbench
+    version: "1.5"
+    sample_size: 5
+  - name: compilebench
+    version: "1.0"
+    sample_size: 5
+  - name: financeagent
+    version: public
+    sample_size: 5
+  - name: gpqa-diamond
+    version: "1.0"
+    sample_size: 5
+  - name: humanevalfix
+    version: "1.0"
+    sample_size: 5
+  - name: ineqmath
+    version: "1.0"
+    sample_size: 5
+  - name: labbench
+    version: "1.0"
+    sample_size: 5
+  - name: mmau
+    version: "1.0"
+    sample_size: 5
+  - name: qcircuitbench
+    version: "1.0"
+    sample_size: 5
+  - name: reasoning-gym-easy
+    version: parity
+    sample_size: 5
+  - name: reasoning-gym-hard
+    version: parity
+    sample_size: 5
+  - name: crustbench
+    version: "1.0"
+    sample_size: 5
+  - name: sldbench
+    version: "1.0"
+    sample_size: 5
+  - name: spider2-dbt
+    version: "1.0"
+    sample_size: 5
+  - name: strongreject
+    version: parity
+    sample_size: 5
+  - name: swebenchpro
+    version: "1.0"
+    sample_size: 5
+  - name: swesmith
+    version: "1.0"
+    sample_size: 5
+  - name: mmmlu
+    version: parity
+    sample_size: 5
+  - name: swtbench-verified
+    version: "1.0"
+    sample_size: 5
+  - name: usaco
+    version: "2.0"
+    sample_size: 5
+  - name: lawbench
+    version: "1.0"
+    sample_size: 5
+  - name: kumo
+    version: "1.0"
+    sample_size: 5
+  - name: medagentbench
+    version: "1.0"
+    sample_size: 5
+  - name: simpleqa
+    version: "1.0"
+    sample_size: 5
+  - name: gaia
+    version: "1.0"
+    sample_size: 5
+  - name: swebench-verified
+    version: "1.0"
+    sample_size: 5
+  - name: aider-polyglot
+    version: "1.0"
+    sample_size: 5
+  - name: livecodebench
+    version: "6.0"
+    sample_size: 5
+  - name: codepde
+    version: "1.0"
+    sample_size: 5
+  - name: replicationbench
+    version: "1.0"
+    sample_size: 5
+  - name: mlgym-bench
+    version: "1.0"
+    sample_size: 5

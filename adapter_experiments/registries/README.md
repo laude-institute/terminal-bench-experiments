@@ -2,5 +2,6 @@
 
 Generated adapter-experiment registries and lock files live here.
 
-JSON outputs are ignored by git so repeated local sampling runs do not create
-workspace noise.
+Registry `.json` outputs are visible to git so curated generated registries can
+be reviewed and committed. Reproducibility `.lock.json` files stay ignored to
+avoid lockfile churn from local sampling runs.
