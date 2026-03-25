@@ -558,7 +558,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         '--codex-version',
         type=str,
-        default='0.53.0',
+        default='0.116.0',
         help='Codex CLI version pin for generated codex adapters.',
     )
     parser.add_argument(
