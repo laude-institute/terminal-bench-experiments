@@ -64,7 +64,7 @@ uv run python adapter_experiments/scripts/coordination.py contributor   --manife
    running jobs:
 
 ```bash
-uv run tbx upload-dataset   -n adapter-experiments-batch1-phase2   -v 1.0   --registry-path outputs/adapter_experiments/batch1/phases/phase2/registry.json
+uv run tbx upload-dataset   -n adapter-experiments-batch1-phase2   -v 1.0   --registry-path outputs/adapter_experiments/batch1/contributors/Haowei/phase2/registries/aider-polyglot.json  # and other adapters
 ```
 
 6. Run the generated configs:
