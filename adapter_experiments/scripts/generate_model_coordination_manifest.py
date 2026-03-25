@@ -558,19 +558,19 @@ def _build_argument_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         '--codex-version',
         type=str,
-        default='0.116.0',
+        default='0.115.0',
         help='Codex CLI version pin for generated codex adapters.',
     )
     parser.add_argument(
         '--gemini-cli-version',
         type=str,
-        default='0.11.3',
+        default='0.34.0',
         help='Gemini CLI version pin for generated gemini-cli adapters.',
     )
     parser.add_argument(
         '--claude-code-version',
         type=str,
-        default='2.0.31',
+        default='2.1.81',
         help='Claude Code version pin for generated claude-code adapters.',
     )
     return parser

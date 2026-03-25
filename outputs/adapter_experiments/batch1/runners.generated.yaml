@@ -166,7 +166,7 @@ adapters:
       name: codex
       model_name: openai/gpt-5.4
       kwargs:
-        version: 0.116.0
+        version: 0.115.0
     metadata:
       display_name: Codex / GPT-5.4
       runner: codex
@@ -179,7 +179,7 @@ adapters:
       name: codex
       model_name: openai/gpt-5-mini
       kwargs:
-        version: 0.116.0
+        version: 0.115.0
     metadata:
       display_name: Codex / GPT-5 Mini
       runner: codex
@@ -192,7 +192,7 @@ adapters:
       name: codex
       model_name: openai/gpt-5-nano
       kwargs:
-        version: 0.116.0
+        version: 0.115.0
     metadata:
       display_name: Codex / GPT-5 Nano
       runner: codex
@@ -205,7 +205,7 @@ adapters:
       name: gemini-cli
       model_name: gemini/gemini-3.1-pro-preview
       kwargs:
-        version: 0.11.3
+        version: 0.34.0
     metadata:
       display_name: Gemini CLI / Gemini 3.1 Pro Preview
       runner: gemini-cli
@@ -218,7 +218,7 @@ adapters:
       name: gemini-cli
       model_name: gemini/gemini-3-flash-preview
       kwargs:
-        version: 0.11.3
+        version: 0.34.0
     metadata:
       display_name: Gemini CLI / Gemini 3 Flash Preview
       runner: gemini-cli
@@ -231,7 +231,7 @@ adapters:
       name: claude-code
       model_name: anthropic/glm-5
       kwargs:
-        version: 2.0.31
+        version: 2.1.81
       env:
         ANTHROPIC_AUTH_TOKEN: ANTHROPIC_AUTH_TOKEN_PLACEHOLDER
         ANTHROPIC_BASE_URL: https://api.z.ai/api/anthropic
@@ -253,7 +253,7 @@ adapters:
       name: claude-code
       model_name: anthropic/deepseek-chat
       kwargs:
-        version: 2.0.31
+        version: 2.1.81
       env:
         ANTHROPIC_AUTH_TOKEN: ANTHROPIC_AUTH_TOKEN_PLACEHOLDER
         ANTHROPIC_BASE_URL: https://api.deepseek.com/anthropic
@@ -275,7 +275,7 @@ adapters:
       name: claude-code
       model_name: anthropic/MiniMax-M2.5
       kwargs:
-        version: 2.0.31
+        version: 2.1.81
       env:
         ANTHROPIC_AUTH_TOKEN: ANTHROPIC_AUTH_TOKEN_PLACEHOLDER
         ANTHROPIC_BASE_URL: https://api.minimaxi.com/anthropic
@@ -297,7 +297,7 @@ adapters:
       name: claude-code
       model_name: anthropic/kimi-k2.5
       kwargs:
-        version: 2.0.31
+        version: 2.1.81
       env:
         ANTHROPIC_AUTH_TOKEN: ANTHROPIC_AUTH_TOKEN_PLACEHOLDER
         ANTHROPIC_BASE_URL: https://api.moonshot.ai/anthropic
@@ -320,7 +320,7 @@ adapters:
       name: claude-code
       model_name: anthropic/mimo-v2-pro
       kwargs:
-        version: 2.0.31
+        version: 2.1.81
       env:
         ANTHROPIC_AUTH_TOKEN: ANTHROPIC_AUTH_TOKEN_PLACEHOLDER
         ANTHROPIC_BASE_URL: https://api.xiaomimimo.com/anthropic

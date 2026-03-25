@@ -214,7 +214,7 @@ ignore/
 notebooks/**/*.pdf
 hf/
 .mcp.json
-outputs/
+outputs/adapter_experiments/batch1/contributors
 node_modules/
 db/supabase/
 /package.json
