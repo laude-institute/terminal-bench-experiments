@@ -1,0 +1,362 @@
+experiment:
+  name: batch1-runners
+  output_root: .
+  registry_name: local
+task_set:
+  registry_path: ../../../adapter_experiments/registries/batch1_all.json
+  lock_path: ../../../adapter_experiments/registries/batch1_all.lock.json
+phases:
+  phase2:
+    percent: 1
+    dataset_name: adapter-experiments-batch1-runners-phase2
+    dataset_version: '1.0'
+    description: adapter-experiments-batch1-runners phase2 (1%).
+  phase3:
+    percent: 10
+    dataset_name: adapter-experiments-batch1-runners-phase3
+    dataset_version: '1.0'
+    description: adapter-experiments-batch1-runners phase3 (10% cumulative minus earlier
+      phases).
+  phase4:
+    percent: 100
+    dataset_name: adapter-experiments-batch1-runners-phase4
+    dataset_version: '1.0'
+    description: adapter-experiments-batch1-runners phase4 (remaining full set after
+      earlier phases).
+job_template:
+  jobs_dir: jobs
+  n_attempts: 5
+  timeout_multiplier: 1.0
+  orchestrator:
+    type: local
+    n_concurrent_trials: 32
+    quiet: false
+    retry:
+      max_retries: 3
+      exclude_exceptions:
+      - BadRequestError
+      - RateLimitError
+      - AgentTimeoutError
+      - VerifierTimeoutError
+      - RewardFileNotFoundError
+      wait_multiplier: 1.0
+      min_wait_sec: 1.0
+      max_wait_sec: 60.0
+  environment:
+    type: daytona
+    force_build: false
+    delete: true
+adapters:
+  terminus-2__glm-5:
+    agent:
+      name: terminus-2
+      model_name: zai/glm-5
+    metadata:
+      display_name: Terminus 2 / GLM-5
+      runner: terminus-2
+      family: terminus-2
+      model_name: zai/glm-5
+      generated_by: generate_model_coordination_manifest.py
+      provider: zai
+  terminus-2__deepseek-reasoner:
+    agent:
+      name: terminus-2
+      model_name: deepseek/deepseek-reasoner
+    metadata:
+      display_name: Terminus 2 / DeepSeek Reasoner
+      runner: terminus-2
+      family: terminus-2
+      model_name: deepseek/deepseek-reasoner
+      generated_by: generate_model_coordination_manifest.py
+      provider: deepseek
+  terminus-2__minimax-m2.5:
+    agent:
+      name: terminus-2
+      model_name: minimax/MiniMax-M2.5
+      kwargs:
+        api_base: https://api.minimax.chat/v1
+    metadata:
+      display_name: Terminus 2 / MiniMax M2.5
+      runner: terminus-2
+      family: terminus-2
+      model_name: minimax/MiniMax-M2.5
+      generated_by: generate_model_coordination_manifest.py
+      provider: minimax
+  terminus-2__kimi-k2.5:
+    agent:
+      name: terminus-2
+      model_name: moonshot/kimi-k2.5
+      kwargs:
+        temperature: 1
+    metadata:
+      display_name: Terminus 2 / Kimi K2.5
+      runner: terminus-2
+      family: terminus-2
+      model_name: moonshot/kimi-k2.5
+      generated_by: generate_model_coordination_manifest.py
+      provider: moonshot
+  terminus-2__mimo-v2-pro:
+    agent:
+      name: terminus-2
+      model_name: xiaomi_mimo/mimo-v2-pro
+    metadata:
+      display_name: Terminus 2 / Xiaomi Mimo v2 Pro
+      runner: terminus-2
+      family: terminus-2
+      model_name: xiaomi_mimo/mimo-v2-pro
+      generated_by: generate_model_coordination_manifest.py
+      provider: xiaomi_mimo
+  terminus-2__gpt-5.4:
+    agent:
+      name: terminus-2
+      model_name: openai/gpt-5.4
+    metadata:
+      display_name: Terminus 2 / GPT-5.4
+      runner: terminus-2
+      family: terminus-2
+      model_name: openai/gpt-5.4
+      generated_by: generate_model_coordination_manifest.py
+      provider: openai
+  terminus-2__gpt-5-mini:
+    agent:
+      name: terminus-2
+      model_name: openai/gpt-5-mini
+    metadata:
+      display_name: Terminus 2 / GPT-5 Mini
+      runner: terminus-2
+      family: terminus-2
+      model_name: openai/gpt-5-mini
+      generated_by: generate_model_coordination_manifest.py
+      provider: openai
+  terminus-2__gpt-5-nano:
+    agent:
+      name: terminus-2
+      model_name: openai/gpt-5-nano
+    metadata:
+      display_name: Terminus 2 / GPT-5 Nano
+      runner: terminus-2
+      family: terminus-2
+      model_name: openai/gpt-5-nano
+      generated_by: generate_model_coordination_manifest.py
+      provider: openai
+  terminus-2__gemini-3.1-pro-preview:
+    agent:
+      name: terminus-2
+      model_name: gemini/gemini-3.1-pro-preview
+    metadata:
+      display_name: Terminus 2 / Gemini 3.1 Pro Preview
+      runner: terminus-2
+      family: terminus-2
+      model_name: gemini/gemini-3.1-pro-preview
+      generated_by: generate_model_coordination_manifest.py
+      provider: gemini
+  terminus-2__gemini-3-flash-preview:
+    agent:
+      name: terminus-2
+      model_name: gemini/gemini-3-flash-preview
+    metadata:
+      display_name: Terminus 2 / Gemini 3 Flash Preview
+      runner: terminus-2
+      family: terminus-2
+      model_name: gemini/gemini-3-flash-preview
+      generated_by: generate_model_coordination_manifest.py
+      provider: gemini
+  codex__gpt-5.4:
+    agent:
+      name: codex
+      model_name: openai/gpt-5.4
+      kwargs:
+        version: 0.116.0
+    metadata:
+      display_name: Codex / GPT-5.4
+      runner: codex
+      family: codex
+      model_name: openai/gpt-5.4
+      generated_by: generate_model_coordination_manifest.py
+      provider: openai
+  codex__gpt-5-mini:
+    agent:
+      name: codex
+      model_name: openai/gpt-5-mini
+      kwargs:
+        version: 0.116.0
+    metadata:
+      display_name: Codex / GPT-5 Mini
+      runner: codex
+      family: codex
+      model_name: openai/gpt-5-mini
+      generated_by: generate_model_coordination_manifest.py
+      provider: openai
+  codex__gpt-5-nano:
+    agent:
+      name: codex
+      model_name: openai/gpt-5-nano
+      kwargs:
+        version: 0.116.0
+    metadata:
+      display_name: Codex / GPT-5 Nano
+      runner: codex
+      family: codex
+      model_name: openai/gpt-5-nano
+      generated_by: generate_model_coordination_manifest.py
+      provider: openai
+  gemini-cli__gemini-3.1-pro-preview:
+    agent:
+      name: gemini-cli
+      model_name: gemini/gemini-3.1-pro-preview
+      kwargs:
+        version: 0.11.3
+    metadata:
+      display_name: Gemini CLI / Gemini 3.1 Pro Preview
+      runner: gemini-cli
+      family: gemini-cli
+      model_name: gemini/gemini-3.1-pro-preview
+      generated_by: generate_model_coordination_manifest.py
+      provider: gemini
+  gemini-cli__gemini-3-flash-preview:
+    agent:
+      name: gemini-cli
+      model_name: gemini/gemini-3-flash-preview
+      kwargs:
+        version: 0.11.3
+    metadata:
+      display_name: Gemini CLI / Gemini 3 Flash Preview
+      runner: gemini-cli
+      family: gemini-cli
+      model_name: gemini/gemini-3-flash-preview
+      generated_by: generate_model_coordination_manifest.py
+      provider: gemini
+  claude-code__glm-5:
+    agent:
+      name: claude-code
+      model_name: anthropic/glm-5
+      kwargs:
+        version: 2.0.31
+      env:
+        ANTHROPIC_AUTH_TOKEN: ANTHROPIC_AUTH_TOKEN_PLACEHOLDER
+        ANTHROPIC_BASE_URL: https://api.z.ai/api/anthropic
+        ANTHROPIC_MODEL: glm-5
+        ANTHROPIC_DEFAULT_SONNET_MODEL: glm-5
+        ANTHROPIC_DEFAULT_OPUS_MODEL: glm-5
+        ANTHROPIC_DEFAULT_HAIKU_MODEL: glm-5
+        CLAUDE_CODE_SUBAGENT_MODEL: glm-5
+        API_TIMEOUT_MS: '3000000'
+    metadata:
+      display_name: Claude Code / GLM-5
+      runner: claude-code
+      family: claude-code
+      model_name: anthropic/glm-5
+      generated_by: generate_model_coordination_manifest.py
+      provider: zai
+  claude-code__deepseek-chat:
+    agent:
+      name: claude-code
+      model_name: anthropic/deepseek-chat
+      kwargs:
+        version: 2.0.31
+      env:
+        ANTHROPIC_AUTH_TOKEN: ANTHROPIC_AUTH_TOKEN_PLACEHOLDER
+        ANTHROPIC_BASE_URL: https://api.deepseek.com/anthropic
+        ANTHROPIC_MODEL: deepseek-chat
+        ANTHROPIC_DEFAULT_SONNET_MODEL: deepseek-chat
+        ANTHROPIC_DEFAULT_OPUS_MODEL: deepseek-chat
+        ANTHROPIC_DEFAULT_HAIKU_MODEL: deepseek-chat
+        CLAUDE_CODE_SUBAGENT_MODEL: deepseek-chat
+        API_TIMEOUT_MS: '600000'
+    metadata:
+      display_name: Claude Code / DeepSeek Chat
+      runner: claude-code
+      family: claude-code
+      model_name: anthropic/deepseek-chat
+      generated_by: generate_model_coordination_manifest.py
+      provider: deepseek
+  claude-code__minimax-m2.5:
+    agent:
+      name: claude-code
+      model_name: anthropic/MiniMax-M2.5
+      kwargs:
+        version: 2.0.31
+      env:
+        ANTHROPIC_AUTH_TOKEN: ANTHROPIC_AUTH_TOKEN_PLACEHOLDER
+        ANTHROPIC_BASE_URL: https://api.minimaxi.com/anthropic
+        ANTHROPIC_MODEL: MiniMax-M2.5
+        ANTHROPIC_DEFAULT_SONNET_MODEL: MiniMax-M2.5
+        ANTHROPIC_DEFAULT_OPUS_MODEL: MiniMax-M2.5
+        ANTHROPIC_DEFAULT_HAIKU_MODEL: MiniMax-M2.5
+        CLAUDE_CODE_SUBAGENT_MODEL: MiniMax-M2.5
+        API_TIMEOUT_MS: '3000000'
+    metadata:
+      display_name: Claude Code / MiniMax M2.5
+      runner: claude-code
+      family: claude-code
+      model_name: anthropic/MiniMax-M2.5
+      generated_by: generate_model_coordination_manifest.py
+      provider: minimax
+  claude-code__kimi-k2.5:
+    agent:
+      name: claude-code
+      model_name: anthropic/kimi-k2.5
+      kwargs:
+        version: 2.0.31
+      env:
+        ANTHROPIC_AUTH_TOKEN: ANTHROPIC_AUTH_TOKEN_PLACEHOLDER
+        ANTHROPIC_BASE_URL: https://api.moonshot.ai/anthropic
+        ANTHROPIC_MODEL: kimi-k2.5
+        ANTHROPIC_DEFAULT_SONNET_MODEL: kimi-k2.5
+        ANTHROPIC_DEFAULT_OPUS_MODEL: kimi-k2.5
+        ANTHROPIC_DEFAULT_HAIKU_MODEL: kimi-k2.5
+        CLAUDE_CODE_SUBAGENT_MODEL: kimi-k2.5
+        ENABLE_TOOL_SEARCH: 'false'
+        API_TIMEOUT_MS: '3000000'
+    metadata:
+      display_name: Claude Code / Kimi K2.5
+      runner: claude-code
+      family: claude-code
+      model_name: anthropic/kimi-k2.5
+      generated_by: generate_model_coordination_manifest.py
+      provider: moonshot
+  claude-code__mimo-v2-pro:
+    agent:
+      name: claude-code
+      model_name: anthropic/mimo-v2-pro
+      kwargs:
+        version: 2.0.31
+      env:
+        ANTHROPIC_AUTH_TOKEN: ANTHROPIC_AUTH_TOKEN_PLACEHOLDER
+        ANTHROPIC_BASE_URL: https://api.xiaomimimo.com/anthropic
+        ANTHROPIC_MODEL: mimo-v2-pro
+        ANTHROPIC_DEFAULT_SONNET_MODEL: mimo-v2-pro
+        ANTHROPIC_DEFAULT_OPUS_MODEL: mimo-v2-pro
+        ANTHROPIC_DEFAULT_HAIKU_MODEL: mimo-v2-pro
+        CLAUDE_CODE_SUBAGENT_MODEL: mimo-v2-pro
+        API_TIMEOUT_MS: '3000000'
+    metadata:
+      display_name: Claude Code / Xiaomi Mimo v2 Pro
+      runner: claude-code
+      family: claude-code
+      model_name: anthropic/mimo-v2-pro
+      generated_by: generate_model_coordination_manifest.py
+      provider: xiaomi_mimo
+contributors:
+  local:
+    adapters:
+    - terminus-2__glm-5
+    - terminus-2__deepseek-reasoner
+    - terminus-2__minimax-m2.5
+    - terminus-2__kimi-k2.5
+    - terminus-2__mimo-v2-pro
+    - terminus-2__gpt-5.4
+    - terminus-2__gpt-5-mini
+    - terminus-2__gpt-5-nano
+    - terminus-2__gemini-3.1-pro-preview
+    - terminus-2__gemini-3-flash-preview
+    - codex__gpt-5.4
+    - codex__gpt-5-mini
+    - codex__gpt-5-nano
+    - gemini-cli__gemini-3.1-pro-preview
+    - gemini-cli__gemini-3-flash-preview
+    - claude-code__glm-5
+    - claude-code__deepseek-chat
+    - claude-code__minimax-m2.5
+    - claude-code__kimi-k2.5
+    - claude-code__mimo-v2-pro
