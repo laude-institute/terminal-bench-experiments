@@ -291,6 +291,11 @@ async def insert_trial_into_db(event: TrialHookEvent):
                             trial_id=result.id,
                             model_name=name,  # type: ignore
                             model_provider=provider,  # type: ignore
+                            n_cache_tokens=(
+                                result.agent_result.n_cache_tokens
+                                if result.agent_result
+                                else None
+                            ),
                             n_input_tokens=(
                                 result.agent_result.n_input_tokens
                                 if result.agent_result
