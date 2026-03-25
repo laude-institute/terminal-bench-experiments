@@ -1,0 +1,591 @@
+experiment:
+  name: batch1
+  output_root: ../../outputs/adapter_experiments/batch1
+
+task_set:
+  registry_path: ../registries/batch1_all.json
+  lock_path: ../registries/batch1_all.lock.json
+
+phases:
+  phase2:
+    percent: 1
+    dataset_name: adapter-experiments-batch1-phase2
+    dataset_version: "1.0"
+    description: Batch1 coordinated experiments phase2 (1%).
+  phase3:
+    percent: 10
+    dataset_name: adapter-experiments-batch1-phase3
+    dataset_version: "1.0"
+    description: Batch1 coordinated experiments phase3 (10% cumulative minus earlier phases).
+  phase4:
+    percent: 100
+    dataset_name: adapter-experiments-batch1-phase4
+    dataset_version: "1.0"
+    description: Batch1 coordinated experiments phase4 (remaining full set after earlier phases).
+
+adapters:
+  aime:
+    metadata:
+      display_name: AIME
+      owner: Xiangning
+      owner_email: rosielin.xl@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 60
+      paper_task_count: 60
+      source_datasets:
+        - name: aime
+          version: "1.0"
+          sample_size: 60
+  algotune:
+    metadata:
+      display_name: AlgoTune
+      owner: Haowei
+      owner_email: linhaowei2001@gmail.com
+      adapter_type: standard
+      environment: docker
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 154
+      paper_task_count: 154
+      source_datasets:
+        - name: algotune
+          version: "1.0"
+          sample_size: 154
+  swe-lancer:
+    metadata:
+      display_name: SWE-Lancer
+      owner: Xiangning
+      owner_email: rosielin.xl@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 463
+      paper_task_count: 200
+      source_datasets:
+        - name: swe-lancer-diamond
+          version: all
+          sample_size: 200
+  arc-agi-2:
+    metadata:
+      display_name: ARC-AGI-2
+      owner: Xiangning
+      owner_email: rosielin.xl@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 167
+      paper_task_count: 100
+      source_datasets:
+        - name: arc_agi_2
+          version: "1.0"
+          sample_size: 100
+  bfcl:
+    metadata:
+      display_name: Berkeley Function Calling Leaderboard (BFCL)
+      owner: Haowei
+      owner_email: linhaowei2001@gmail.com
+      adapter_type: standard
+      environment: docker
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 3641
+      paper_task_count: 123
+      source_datasets:
+        - name: bfcl_parity
+          version: "1.0"
+          sample_size: 123
+  bixbench:
+    metadata:
+      display_name: BIX-Bench
+      owner: Zoe
+      owner_email: ch272h@gmail.com
+      adapter_type: llm_judge
+      environment: docker
+      experiment_status: Need to fix
+      batch: Batch1
+      original_task_count: 205
+      paper_task_count: 50
+      source_datasets:
+        - name: bixbench
+          version: "1.5"
+          sample_size: 50
+  compilebench:
+    metadata:
+      display_name: CompileBench
+      owner: Xiangning
+      owner_email: rosielin.xl@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 15
+      paper_task_count: 15
+      source_datasets:
+        - name: compilebench
+          version: "1.0"
+          sample_size: 15
+  financeagent:
+    metadata:
+      display_name: FinanceAgent
+      owner: Haowei
+      owner_email: linhaowei2001@gmail.com
+      adapter_type: llm_judge
+      environment: docker
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 50
+      paper_task_count: 50
+      source_datasets:
+        - name: financeagent
+          version: public
+          sample_size: 50
+  gpqa-diamond:
+    metadata:
+      display_name: GPQA Diamond
+      owner: Xiangning
+      owner_email: rosielin.xl@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 198
+      paper_task_count: 198
+      source_datasets:
+        - name: gpqa-diamond
+          version: "1.0"
+          sample_size: 198
+  humanevalfix:
+    metadata:
+      display_name: HumanEvalFix
+      owner: Xiangning
+      owner_email: rosielin.xl@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 164
+      paper_task_count: 164
+      source_datasets:
+        - name: humanevalfix
+          version: "1.0"
+          sample_size: 164
+  ineqmath:
+    metadata:
+      display_name: IneqMath
+      owner: Xiangning
+      owner_email: rosielin.xl@gmail.com
+      adapter_type: llm_judge
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 100
+      paper_task_count: 100
+      source_datasets:
+        - name: ineqmath
+          version: "1.0"
+          sample_size: 100
+  labbench:
+    metadata:
+      display_name: LAB-Bench
+      owner: Xiangning
+      owner_email: rosielin.xl@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 181
+      paper_task_count: 181
+      source_datasets:
+        - name: labbench
+          version: "1.0"
+          sample_size: 181
+  mmau:
+    metadata:
+      display_name: MMAU
+      owner: Xiangning
+      owner_email: rosielin.xl@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 1000
+      paper_task_count: 1000
+      source_datasets:
+        - name: mmau
+          version: "1.0"
+          sample_size: 1000
+  qcircuitbench:
+    metadata:
+      display_name: QCircuitBench
+      owner: Xiangning
+      owner_email: rosielin.xl@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 28
+      paper_task_count: 28
+      source_datasets:
+        - name: qcircuitbench
+          version: "1.0"
+          sample_size: 28
+  reasoning-gym:
+    metadata:
+      display_name: Reasoning Gym
+      owner: Han
+      owner_email: workhanxu@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 576
+      paper_task_count: 576
+      source_datasets:
+        - name: reasoning-gym-easy
+          version: parity
+          sample_size: 288
+        - name: reasoning-gym-hard
+          version: parity
+          sample_size: 288
+  crustbench:
+    metadata:
+      display_name: CRUST-Bench
+      owner: Haowei
+      owner_email: linhaowei2001@gmail.com
+      adapter_type: standard
+      environment: docker
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 100
+      paper_task_count: 100
+      source_datasets:
+        - name: crustbench
+          version: "1.0"
+          sample_size: 100
+  sldbench:
+    metadata:
+      display_name: SLDBench
+      owner: Han
+      owner_email: workhanxu@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 8
+      paper_task_count: 8
+      source_datasets:
+        - name: sldbench
+          version: "1.0"
+          sample_size: 8
+  spider2:
+    metadata:
+      display_name: Spider 2
+      owner: Han
+      owner_email: workhanxu@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 68
+      paper_task_count: 64
+      source_datasets:
+        - name: spider2-dbt
+          version: "1.0"
+          sample_size: 64
+  strongreject:
+    metadata:
+      display_name: StrongReject
+      owner: Han
+      owner_email: workhanxu@gmail.com
+      adapter_type: llm_judge
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 12207
+      paper_task_count: 150
+      source_datasets:
+        - name: strongreject
+          version: parity
+          sample_size: 150
+  swebenchpro:
+    metadata:
+      display_name: SWE-Bench Pro
+      owner: Han
+      owner_email: workhanxu@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 730
+      paper_task_count: 100
+      source_datasets:
+        - name: swebenchpro
+          version: "1.0"
+          sample_size: 100
+  swesmith:
+    metadata:
+      display_name: SWE-smith
+      owner: Han
+      owner_email: workhanxu@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 59136
+      paper_task_count: 100
+      source_datasets:
+        - name: swesmith
+          version: "1.0"
+          sample_size: 100
+  mmmlu:
+    metadata:
+      display_name: MMMLU
+      owner: Han
+      owner_email: workhanxu@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 210630
+      paper_task_count: 150
+      source_datasets:
+        - name: mmmlu
+          version: parity
+          sample_size: 150
+  swtbench:
+    metadata:
+      display_name: SWT Bench
+      owner: Haowei
+      owner_email: linhaowei2001@gmail.com
+      adapter_type: standard
+      environment: docker
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 433
+      paper_task_count: 50
+      source_datasets:
+        - name: swtbench-verified
+          version: "1.0"
+          sample_size: 50
+  usaco:
+    metadata:
+      display_name: USACO
+      owner: Han
+      owner_email: workhanxu@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 307
+      paper_task_count: 100
+      source_datasets:
+        - name: usaco
+          version: "2.0"
+          sample_size: 100
+  lawbench:
+    metadata:
+      display_name: LawBench
+      owner: Han
+      owner_email: workhanxu@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 1000
+      paper_task_count: 181
+      source_datasets:
+        - name: lawbench
+          version: "1.0"
+          sample_size: 181
+  kumo:
+    metadata:
+      display_name: KUMO
+      owner: Han
+      owner_email: workhanxu@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 5300
+      paper_task_count: 212
+      source_datasets:
+        - name: kumo
+          version: parity
+          sample_size: 212
+  medagentbench:
+    metadata:
+      display_name: MedAgentBench
+      owner: Zoe
+      owner_email: ch272h@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 300
+      paper_task_count: 100
+      source_datasets:
+        - name: medagentbench
+          version: "1.0"
+          sample_size: 100
+  simpleqa:
+    metadata:
+      display_name: SimpleQA
+      owner: Zoe
+      owner_email: ch272h@gmail.com
+      adapter_type: llm_judge
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 1000
+      paper_task_count: 200
+      source_datasets:
+        - name: simpleqa
+          version: "1.0"
+          sample_size: 200
+  gaia:
+    metadata:
+      display_name: GAIA
+      owner: Haowei
+      owner_email: linhaowei2001@gmail.com
+      adapter_type: standard
+      environment: docker
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 165
+      paper_task_count: 165
+      source_datasets:
+        - name: gaia
+          version: "1.0"
+          sample_size: 165
+  swebench-verified:
+    metadata:
+      display_name: SWE-bench-verified
+      owner: Zoe
+      owner_email: ch272h@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 500
+      paper_task_count: 100
+      source_datasets:
+        - name: swebench-verified
+          version: "1.0"
+          sample_size: 100
+  aider-polyglot:
+    metadata:
+      display_name: Aider Polyglot
+      owner: Haowei
+      owner_email: linhaowei2001@gmail.com
+      adapter_type: standard
+      environment: docker
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 225
+      paper_task_count: 225
+      source_datasets:
+        - name: aider-polyglot
+          version: "1.0"
+          sample_size: 225
+  livecodebench:
+    metadata:
+      display_name: LiveCodeBench
+      owner: Zoe
+      owner_email: ch272h@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 1055
+      paper_task_count: 100
+      source_datasets:
+        - name: livecodebench
+          version: "6.0"
+          sample_size: 100
+  codepde:
+    metadata:
+      display_name: CodePDE
+      owner: Zoe
+      owner_email: ch272h@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 5
+      paper_task_count: 5
+      source_datasets:
+        - name: codepde
+          version: "1.0"
+          sample_size: 5
+  replicationbench:
+    metadata:
+      display_name: ReplicationBench
+      owner: Zoe
+      owner_email: ch272h@gmail.com
+      adapter_type: standard
+      environment: daytona
+      experiment_status: Phase1 passed
+      batch: Batch1
+      original_task_count: 111
+      paper_task_count: 90
+      source_datasets:
+        - name: replicationbench
+          version: "1.0"
+          sample_size: 90
+
+contributors:
+  Zoe:
+    metadata:
+      email: ch272h@gmail.com
+    adapters:
+      - bixbench
+      - medagentbench
+      - simpleqa
+      - swebench-verified
+      - livecodebench
+      - codepde
+      - replicationbench
+  Xiangning:
+    metadata:
+      email: rosielin.xl@gmail.com
+    adapters:
+      - aime
+      - swe-lancer
+      - arc-agi-2
+      - compilebench
+      - gpqa-diamond
+      - humanevalfix
+      - ineqmath
+      - labbench
+      - mmau
+      - qcircuitbench
+  Han:
+    metadata:
+      email: workhanxu@gmail.com
+    adapters:
+      - reasoning-gym
+      - sldbench
+      - spider2
+      - strongreject
+      - swebenchpro
+      - swesmith
+      - mmmlu
+      - usaco
+      - lawbench
+      - kumo
+  Haowei:
+    metadata:
+      email: linhaowei2001@gmail.com
+    adapters:
+      - algotune
+      - bfcl
+      - financeagent
+      - crustbench
+      - swtbench
+      - gaia
+      - aider-polyglot

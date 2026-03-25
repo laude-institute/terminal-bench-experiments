@@ -466,9 +466,9 @@ async def main():
     if not job.is_resuming:
         await insert_job_into_db(job_insert)
 
-    job._orchestrator.add_hook(
+    job.add_hook(
         event=TrialEvent.END,
-        hook=insert_trial_into_db,
+        callback=insert_trial_into_db,
     )
 
     result = await job.run()

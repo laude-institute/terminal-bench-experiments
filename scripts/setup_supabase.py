@@ -11,6 +11,10 @@ from supabase import create_client
 load_dotenv()
 
 MANAGEMENT_API_BASE = "https://api.supabase.com/v1"
+# Cloudflare can reject urllib's default client signature for this endpoint
+# with a 1010 "browser signature" block, while the equivalent curl request
+# succeeds. Send curl-like headers to match the documented manual check path.
+MANAGEMENT_API_USER_AGENT = "curl/8.5.0"
 
 
 def require_env(name: str) -> str:
@@ -20,25 +24,64 @@ def require_env(name: str) -> str:
     return value
 
 
+def build_management_headers(access_token: str) -> dict[str, str]:
+    return {
+        "Authorization": f"Bearer {access_token}",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "User-Agent": MANAGEMENT_API_USER_AGENT,
+    }
+
+
+def sanitize_schema_sql(sql: str) -> tuple[str, list[str]]:
+    removed_meta_commands: list[str] = []
+    cleaned_lines: list[str] = []
+
+    for line in sql.splitlines():
+        if line.startswith("\\"):
+            removed_meta_commands.append(line)
+            continue
+        if line == "CREATE SCHEMA public;":
+            cleaned_lines.append("CREATE SCHEMA IF NOT EXISTS public;")
+            continue
+        cleaned_lines.append(line)
+
+    return "\n".join(cleaned_lines) + "\n", removed_meta_commands
+
+
 def run_schema_query(project_ref: str, schema_path: Path) -> None:
     access_token = require_env("SUPABASE_ACCESS_TOKEN")
-    sql = schema_path.read_text(encoding="utf-8")
+    sql, removed_meta_commands = sanitize_schema_sql(
+        schema_path.read_text(encoding="utf-8")
+    )
 
     request = urllib.request.Request(
         url=f"{MANAGEMENT_API_BASE}/projects/{project_ref}/database/query",
         data=json.dumps({"query": sql}).encode("utf-8"),
-        headers={
-            "Authorization": f"Bearer {access_token}",
-            "Content-Type": "application/json",
-        },
+        headers=build_management_headers(access_token),
         method="POST",
     )
+
+    if removed_meta_commands:
+        print("Skipping psql meta-commands not supported by the Supabase Management API:")
+        for command in removed_meta_commands:
+            print(f"  {command}")
 
     try:
         with urllib.request.urlopen(request) as response:
             body = response.read().decode("utf-8")
     except urllib.error.HTTPError as exc:
         error_body = exc.read().decode("utf-8", errors="replace")
+        if exc.code == 403 and "1010" in error_body:
+            error_body = (
+                f"{error_body}\n"
+                "Cloudflare rejected the request based on the client's browser "
+                "signature before it reached Supabase. This is usually caused "
+                "by bot protection rather than invalid SQL. The script now "
+                "sends curl-style headers; if the error persists, retry the "
+                "equivalent curl command from the same machine or apply the "
+                "schema through the Supabase SQL Editor."
+            )
         raise RuntimeError(
             f"Failed to apply schema via Management API ({exc.code}): {error_body}"
         ) from exc
