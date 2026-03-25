@@ -942,6 +942,11 @@ def import_jobs(
                                     trial_id=result.id,
                                     model_name=name,
                                     model_provider=provider,
+                                    n_cache_tokens=(
+                                        result.agent_result.n_cache_tokens
+                                        if result.agent_result
+                                        else None
+                                    ),
                                     n_input_tokens=(
                                         result.agent_result.n_input_tokens
                                         if result.agent_result
