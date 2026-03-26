@@ -468,7 +468,7 @@ adapters:
       owner: Haowei
       owner_email: linhaowei2001@gmail.com
       adapter_type: standard
-      environment: docker
+      environment: daytona
       experiment_status: Phase1 passed
       batch: Batch1
       original_task_count: 225
