@@ -1,15 +1,15 @@
 {
   "source_registry": {
-    "path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/adapter_experiments/registries/batch1_all.json",
+    "path": "./adapter_experiments/registries/batch1_all.json",
     "sha256": "a33f305f742ff447aaa68ac94f8f9c03bf9446fa949a0aa1e073a0d36663e51d"
   },
   "source_lock": {
-    "path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/adapter_experiments/registries/batch1_all.lock.json",
+    "path": "./adapter_experiments/registries/batch1_all.lock.json",
     "sha256": "ba838d37324c20871a3aa1a2f97d69945832c96d2d89e2b8192f2461c22ddf2f"
   },
   "exclude_locks": [
     {
-      "path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/outputs/adapter_experiments/batch1/phases/phase2/registry.lock.json",
+      "path": "./outputs/adapter_experiments/batch1/phases/phase2/registry.lock.json",
       "sha256": "565ec8c7395ca12e0cd34fd4567f0a2289ef0437dffd89eed2d6fc1c99e09f8e"
     }
   ],
@@ -23,8 +23,8 @@
     "dataset_name": "adapter-experiments-batch1-phase3",
     "dataset_version": "1.0",
     "description": "Batch1 coordinated experiments phase3 (10% cumulative minus earlier phases).\n\nProgressive subset derived from batch1_all.lock.json with 10% per source dataset (rounding=ceil, minimum_tasks_per_source=1). Excluding tasks from: registry.lock.json. Selected tasks: aime@1.0:5/60, algotune@1.0:14/154, swe-lancer-diamond@all:18/200, arc_agi_2@1.0:9/100, bfcl_parity@1.0:11/123, bixbench@1.5:4/50, compilebench@1.0:1/15, gpqa-diamond@1.0:18/198, humanevalfix@1.0:15/164, ineqmath@1.0:9/100, labbench@1.0:17/181, mmau@1.0:90/1000, qcircuitbench@1.0:2/28, reasoning-gym-easy@parity:26/288, reasoning-gym-hard@parity:26/288, crustbench@1.0:9/100, sldbench@1.0:0/8, spider2-dbt@1.0:6/64, strongreject@parity:13/150, swebenchpro@1.0:9/100, swesmith@1.0:9/100, mmmlu@parity:13/150, swtbench-verified@1.0:4/50, usaco@2.0:9/100, lawbench@1.0:17/181, kumo@parity:19/212, medagentbench@1.0:9/100, simpleqa@1.0:18/200, gaia@1.0:15/165, swebench-verified@1.0:9/100, aider-polyglot@1.0:20/225, livecodebench@6.0:9/100, codepde@1.0:0/5, replicationbench@1.0:8/90.",
-    "registry_path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/outputs/adapter_experiments/batch1/phases/phase3/registry.json",
-    "lock_path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/outputs/adapter_experiments/batch1/phases/phase3/registry.lock.json"
+    "registry_path": "./outputs/adapter_experiments/batch1/phases/phase3/registry.json",
+    "lock_path": "./outputs/adapter_experiments/batch1/phases/phase3/registry.lock.json"
   },
   "summary": {
     "source_dataset_count": 34,
