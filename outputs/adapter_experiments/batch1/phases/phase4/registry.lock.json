@@ -1,19 +1,19 @@
 {
   "source_registry": {
-    "path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/adapter_experiments/registries/batch1_all.json",
+    "path": "./adapter_experiments/registries/batch1_all.json",
     "sha256": "a33f305f742ff447aaa68ac94f8f9c03bf9446fa949a0aa1e073a0d36663e51d"
   },
   "source_lock": {
-    "path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/adapter_experiments/registries/batch1_all.lock.json",
+    "path": "./adapter_experiments/registries/batch1_all.lock.json",
     "sha256": "e0368d6d08e00dbce8a8a8eed42daa1c5f0a01ccdb49e1a3bcd063bdaf9d5c39"
   },
   "exclude_locks": [
     {
-      "path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/outputs/adapter_experiments/batch1/phases/phase2/registry.lock.json",
+      "path": "./outputs/adapter_experiments/batch1/phases/phase2/registry.lock.json",
       "sha256": "15559697e22e2368c529a2d888d2e37720beef181666f1d5c4cc766e916f8e06"
     },
     {
-      "path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/outputs/adapter_experiments/batch1/phases/phase3/registry.lock.json",
+      "path": "./outputs/adapter_experiments/batch1/phases/phase3/registry.lock.json",
       "sha256": "c5db888ec45742000693a556f8a8f906440cbec78133c0bdca42514f2d31c038"
     }
   ],
@@ -27,8 +27,8 @@
     "dataset_name": "adapter-experiments-batch1-phase4",
     "dataset_version": "1.0",
     "description": "Batch1 coordinated experiments phase4 (remaining full set after earlier phases).\n\nProgressive subset derived from batch1_all.lock.json with 100% per source dataset (rounding=ceil, minimum_tasks_per_source=1). Excluding tasks from: registry.lock.json, registry.lock.json. Selected tasks: aime@1.0:54/60, algotune@1.0:138/154, swe-lancer-diamond@all:180/200, arc_agi_2@1.0:90/100, bfcl_parity@1.0:110/123, bixbench@1.5:45/50, compilebench@1.0:13/15, gpqa-diamond@1.0:178/198, humanevalfix@1.0:147/164, ineqmath@1.0:90/100, labbench@1.0:162/181, mmau@1.0:900/1000, qcircuitbench@1.0:25/28, reasoning-gym-easy@parity:259/288, reasoning-gym-hard@parity:259/288, crustbench@1.0:90/100, sldbench@1.0:7/8, spider2-dbt@1.0:57/64, strongreject@parity:135/150, swebenchpro@1.0:90/100, swesmith@1.0:90/100, mmmlu@parity:135/150, swtbench-verified@1.0:45/50, usaco@2.0:90/100, lawbench@1.0:162/181, kumo@parity:190/212, medagentbench@1.0:90/100, simpleqa@1.0:180/200, gaia@1.0:148/165, swebench-verified@1.0:90/100, aider-polyglot@1.0:202/225, livecodebench@6.0:90/100, codepde@1.0:4/5, replicationbench@1.0:81/90.",
-    "registry_path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/outputs/adapter_experiments/batch1/phases/phase4/registry.json",
-    "lock_path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/outputs/adapter_experiments/batch1/phases/phase4/registry.lock.json"
+    "registry_path": "./outputs/adapter_experiments/batch1/phases/phase4/registry.json",
+    "lock_path": "./outputs/adapter_experiments/batch1/phases/phase4/registry.lock.json"
   },
   "summary": {
     "source_dataset_count": 34,

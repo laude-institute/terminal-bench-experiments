@@ -1,7 +1,7 @@
 {
-  "manifest_path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/adapter_experiments/manifests/batch1_all.yaml",
+  "manifest_path": "../terminal-bench-experiments/adapter_experiments/manifests/batch1_all.yaml",
   "source_registry": {
-    "path": "/WillDevExt/linhaoweiShare/code/harbor/registry.json",
+    "path": "../harbor/registry.json",
     "sha256": "73f334f4b94ada4f5e1c7f9c436faaaa37eecaab9b57e4f54f90462c5f6d9df7"
   },
   "seed": "20260325-batch1",
@@ -9,8 +9,8 @@
     "dataset_name": "adapter-experiments-batch1",
     "dataset_version": "1.0",
     "description": "Unified Batch1 adapter task set for coordinated phased experiments.\n\nGenerated adapter experiment sample with seed=20260325-batch1. Source datasets: aime@1.0:60, algotune@1.0:154, swe-lancer-diamond@all:200, arc_agi_2@1.0:100, bfcl_parity@1.0:123, bixbench@1.5:50, compilebench@1.0:15, gpqa-diamond@1.0:198, humanevalfix@1.0:164, ineqmath@1.0:100, labbench@1.0:181, mmau@1.0:1000, qcircuitbench@1.0:28, reasoning-gym-easy@parity:288, reasoning-gym-hard@parity:288, crustbench@1.0:100, sldbench@1.0:8, spider2-dbt@1.0:64, strongreject@parity:150, swebenchpro@1.0:100, swesmith@1.0:100, mmmlu@parity:150, swtbench-verified@1.0:50, usaco@2.0:100, lawbench@1.0:181, kumo@parity:212, medagentbench@1.0:100, simpleqa@1.0:200, gaia@1.0:165, swebench-verified@1.0:100, aider-polyglot@1.0:225, livecodebench@6.0:100, codepde@1.0:5, replicationbench@1.0:90.",
-    "registry_path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/adapter_experiments/registries/batch1_all.json",
-    "lock_path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/adapter_experiments/registries/batch1_all.lock.json"
+    "registry_path": "../terminal-bench-experiments/adapter_experiments/registries/batch1_all.json",
+    "lock_path": "../terminal-bench-experiments/adapter_experiments/registries/batch1_all.lock.json"
   },
   "summary": {
     "source_dataset_count": 34,

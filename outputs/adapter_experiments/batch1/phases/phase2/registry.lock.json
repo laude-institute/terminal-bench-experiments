@@ -1,11 +1,11 @@
 {
   "source_registry": {
-    "path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/adapter_experiments/registries/batch1_all.json",
+    "path": "./adapter_experiments/registries/batch1_all.json",
     "sha256": "a33f305f742ff447aaa68ac94f8f9c03bf9446fa949a0aa1e073a0d36663e51d"
   },
   "source_lock": {
-    "path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/adapter_experiments/registries/batch1_all.lock.json",
-    "sha256": "e0368d6d08e00dbce8a8a8eed42daa1c5f0a01ccdb49e1a3bcd063bdaf9d5c39"
+    "path": "./adapter_experiments/registries/batch1_all.lock.json",
+    "sha256": "ba838d37324c20871a3aa1a2f97d69945832c96d2d89e2b8192f2461c22ddf2f"
   },
   "exclude_locks": [],
   "selection": {
@@ -18,8 +18,8 @@
     "dataset_name": "adapter-experiments-batch1-phase2",
     "dataset_version": "1.0",
     "description": "Batch1 coordinated experiments phase2 (1%).\n\nProgressive subset derived from batch1_all.lock.json with 1% per source dataset (rounding=ceil, minimum_tasks_per_source=1). Selected tasks: aime@1.0:1/60, algotune@1.0:2/154, swe-lancer-diamond@all:2/200, arc_agi_2@1.0:1/100, bfcl_parity@1.0:2/123, bixbench@1.5:1/50, compilebench@1.0:1/15, gpqa-diamond@1.0:2/198, humanevalfix@1.0:2/164, ineqmath@1.0:1/100, labbench@1.0:2/181, mmau@1.0:10/1000, qcircuitbench@1.0:1/28, reasoning-gym-easy@parity:3/288, reasoning-gym-hard@parity:3/288, crustbench@1.0:1/100, sldbench@1.0:1/8, spider2-dbt@1.0:1/64, strongreject@parity:2/150, swebenchpro@1.0:1/100, swesmith@1.0:1/100, mmmlu@parity:2/150, swtbench-verified@1.0:1/50, usaco@2.0:1/100, lawbench@1.0:2/181, kumo@parity:3/212, medagentbench@1.0:1/100, simpleqa@1.0:2/200, gaia@1.0:2/165, swebench-verified@1.0:1/100, aider-polyglot@1.0:3/225, livecodebench@6.0:1/100, codepde@1.0:1/5, replicationbench@1.0:1/90.",
-    "registry_path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/outputs/adapter_experiments/batch1/phases/phase2/registry.json",
-    "lock_path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/outputs/adapter_experiments/batch1/phases/phase2/registry.lock.json"
+    "registry_path": "./outputs/adapter_experiments/batch1/phases/phase2/registry.json",
+    "lock_path": "./outputs/adapter_experiments/batch1/phases/phase2/registry.lock.json"
   },
   "summary": {
     "source_dataset_count": 34,
