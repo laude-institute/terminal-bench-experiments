@@ -27,9 +27,6 @@ sources:
   - name: compilebench
     version: "1.0"
     sample_size: 15
-  - name: financeagent
-    version: public
-    sample_size: 50
   - name: gpqa-diamond
     version: "1.0"
     sample_size: 198

@@ -1,11 +1,11 @@
 {
   "source_registry": {
     "path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/adapter_experiments/registries/batch1_all.json",
-    "sha256": "7d9b8d53add0216e7d451540f935f5c762895e4cc01235d7976a2b9f328cae61"
+    "sha256": "a33f305f742ff447aaa68ac94f8f9c03bf9446fa949a0aa1e073a0d36663e51d"
   },
   "source_lock": {
     "path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/adapter_experiments/registries/batch1_all.lock.json",
-    "sha256": "d68f59615f33be32252d94f05f18dcc0c13d4fe7d4aa499acd5b0a20f9a5367d"
+    "sha256": "e0368d6d08e00dbce8a8a8eed42daa1c5f0a01ccdb49e1a3bcd063bdaf9d5c39"
   },
   "exclude_locks": [],
   "selection": {
@@ -17,13 +17,13 @@
   "output": {
     "dataset_name": "adapter-experiments-batch1-phase2",
     "dataset_version": "1.0",
-    "description": "Batch1 coordinated experiments phase2 (1%).\n\nProgressive subset derived from batch1_all.lock.json with 1% per source dataset (rounding=ceil, minimum_tasks_per_source=1). Selected tasks: aime@1.0:1/60, algotune@1.0:2/154, swe-lancer-diamond@all:2/200, arc_agi_2@1.0:1/100, bfcl_parity@1.0:2/123, bixbench@1.5:1/50, compilebench@1.0:1/15, financeagent@public:1/50, gpqa-diamond@1.0:2/198, humanevalfix@1.0:2/164, ineqmath@1.0:1/100, labbench@1.0:2/181, mmau@1.0:10/1000, qcircuitbench@1.0:1/28, reasoning-gym-easy@parity:3/288, reasoning-gym-hard@parity:3/288, crustbench@1.0:1/100, sldbench@1.0:1/8, spider2-dbt@1.0:1/64, strongreject@parity:2/150, swebenchpro@1.0:1/100, swesmith@1.0:1/100, mmmlu@parity:2/150, swtbench-verified@1.0:1/50, usaco@2.0:1/100, lawbench@1.0:2/181, kumo@parity:3/212, medagentbench@1.0:1/100, simpleqa@1.0:2/200, gaia@1.0:2/165, swebench-verified@1.0:1/100, aider-polyglot@1.0:3/225, livecodebench@6.0:1/100, codepde@1.0:1/5, replicationbench@1.0:1/90.",
+    "description": "Batch1 coordinated experiments phase2 (1%).\n\nProgressive subset derived from batch1_all.lock.json with 1% per source dataset (rounding=ceil, minimum_tasks_per_source=1). Selected tasks: aime@1.0:1/60, algotune@1.0:2/154, swe-lancer-diamond@all:2/200, arc_agi_2@1.0:1/100, bfcl_parity@1.0:2/123, bixbench@1.5:1/50, compilebench@1.0:1/15, gpqa-diamond@1.0:2/198, humanevalfix@1.0:2/164, ineqmath@1.0:1/100, labbench@1.0:2/181, mmau@1.0:10/1000, qcircuitbench@1.0:1/28, reasoning-gym-easy@parity:3/288, reasoning-gym-hard@parity:3/288, crustbench@1.0:1/100, sldbench@1.0:1/8, spider2-dbt@1.0:1/64, strongreject@parity:2/150, swebenchpro@1.0:1/100, swesmith@1.0:1/100, mmmlu@parity:2/150, swtbench-verified@1.0:1/50, usaco@2.0:1/100, lawbench@1.0:2/181, kumo@parity:3/212, medagentbench@1.0:1/100, simpleqa@1.0:2/200, gaia@1.0:2/165, swebench-verified@1.0:1/100, aider-polyglot@1.0:3/225, livecodebench@6.0:1/100, codepde@1.0:1/5, replicationbench@1.0:1/90.",
     "registry_path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/outputs/adapter_experiments/batch1/phases/phase2/registry.json",
     "lock_path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/outputs/adapter_experiments/batch1/phases/phase2/registry.lock.json"
   },
   "summary": {
-    "source_dataset_count": 35,
-    "selected_task_count": 63
+    "source_dataset_count": 34,
+    "selected_task_count": 62
   },
   "sources": [
     {
@@ -166,23 +166,6 @@
           "path": "datasets/compilebench/jq",
           "fingerprint": "768fce92ae0f412bc6ace575fbe1ca0f49d8452f49b52fc97c628e72b8021328",
           "sample_rank": "057139b64c44193b6e8cb751dd9b5f12c7000438c18eaa736470de027bd97325"
-        }
-      ]
-    },
-    {
-      "name": "financeagent",
-      "version": "public",
-      "full_sample_size": 50,
-      "available_task_count": 50,
-      "selected_subset_size": 1,
-      "selected_tasks": [
-        {
-          "name": "financeagent-37",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-37",
-          "fingerprint": "e1f3da023a557c79a0b57b5a1f0a1f6ddc5402fc3910d049c27cff0d2f9ffd33",
-          "sample_rank": "009c689cd67eb977ea8b7bd0265d3f3637869808d42ec6885a46dc2176e4ae6e"
         }
       ]
     },

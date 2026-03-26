@@ -129,21 +129,6 @@ adapters:
         - name: compilebench
           version: "1.0"
           sample_size: 15
-  financeagent:
-    metadata:
-      display_name: FinanceAgent
-      owner: Haowei
-      owner_email: linhaowei2001@gmail.com
-      adapter_type: llm_judge
-      environment: docker
-      experiment_status: Phase1 passed
-      batch: Batch1
-      original_task_count: 50
-      paper_task_count: 50
-      source_datasets:
-        - name: financeagent
-          version: public
-          sample_size: 50
   gpqa-diamond:
     metadata:
       display_name: GPQA Diamond
@@ -584,7 +569,6 @@ contributors:
     adapters:
       - algotune
       - bfcl
-      - financeagent
       - crustbench
       - swtbench
       - gaia

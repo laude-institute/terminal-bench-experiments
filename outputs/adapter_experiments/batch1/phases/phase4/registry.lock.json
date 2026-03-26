@@ -1,20 +1,20 @@
 {
   "source_registry": {
     "path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/adapter_experiments/registries/batch1_all.json",
-    "sha256": "7d9b8d53add0216e7d451540f935f5c762895e4cc01235d7976a2b9f328cae61"
+    "sha256": "a33f305f742ff447aaa68ac94f8f9c03bf9446fa949a0aa1e073a0d36663e51d"
   },
   "source_lock": {
     "path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/adapter_experiments/registries/batch1_all.lock.json",
-    "sha256": "d68f59615f33be32252d94f05f18dcc0c13d4fe7d4aa499acd5b0a20f9a5367d"
+    "sha256": "e0368d6d08e00dbce8a8a8eed42daa1c5f0a01ccdb49e1a3bcd063bdaf9d5c39"
   },
   "exclude_locks": [
     {
       "path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/outputs/adapter_experiments/batch1/phases/phase2/registry.lock.json",
-      "sha256": "2b355398409cf2bda701eede74fa284e29fc486870a1448824375a3afa7bc697"
+      "sha256": "15559697e22e2368c529a2d888d2e37720beef181666f1d5c4cc766e916f8e06"
     },
     {
       "path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/outputs/adapter_experiments/batch1/phases/phase3/registry.lock.json",
-      "sha256": "3f9b691d219f1231c567b8e145f4dd2e870ab0b02624e464dcb12b85fd1aec6a"
+      "sha256": "c5db888ec45742000693a556f8a8f906440cbec78133c0bdca42514f2d31c038"
     }
   ],
   "selection": {
@@ -26,13 +26,13 @@
   "output": {
     "dataset_name": "adapter-experiments-batch1-phase4",
     "dataset_version": "1.0",
-    "description": "Batch1 coordinated experiments phase4 (remaining full set after earlier phases).\n\nProgressive subset derived from batch1_all.lock.json with 100% per source dataset (rounding=ceil, minimum_tasks_per_source=1). Excluding tasks from: registry.lock.json, registry.lock.json. Selected tasks: aime@1.0:54/60, algotune@1.0:138/154, swe-lancer-diamond@all:180/200, arc_agi_2@1.0:90/100, bfcl_parity@1.0:110/123, bixbench@1.5:45/50, compilebench@1.0:13/15, financeagent@public:45/50, gpqa-diamond@1.0:178/198, humanevalfix@1.0:147/164, ineqmath@1.0:90/100, labbench@1.0:162/181, mmau@1.0:900/1000, qcircuitbench@1.0:25/28, reasoning-gym-easy@parity:259/288, reasoning-gym-hard@parity:259/288, crustbench@1.0:90/100, sldbench@1.0:7/8, spider2-dbt@1.0:57/64, strongreject@parity:135/150, swebenchpro@1.0:90/100, swesmith@1.0:90/100, mmmlu@parity:135/150, swtbench-verified@1.0:45/50, usaco@2.0:90/100, lawbench@1.0:162/181, kumo@parity:190/212, medagentbench@1.0:90/100, simpleqa@1.0:180/200, gaia@1.0:148/165, swebench-verified@1.0:90/100, aider-polyglot@1.0:202/225, livecodebench@6.0:90/100, codepde@1.0:4/5, replicationbench@1.0:81/90.",
+    "description": "Batch1 coordinated experiments phase4 (remaining full set after earlier phases).\n\nProgressive subset derived from batch1_all.lock.json with 100% per source dataset (rounding=ceil, minimum_tasks_per_source=1). Excluding tasks from: registry.lock.json, registry.lock.json. Selected tasks: aime@1.0:54/60, algotune@1.0:138/154, swe-lancer-diamond@all:180/200, arc_agi_2@1.0:90/100, bfcl_parity@1.0:110/123, bixbench@1.5:45/50, compilebench@1.0:13/15, gpqa-diamond@1.0:178/198, humanevalfix@1.0:147/164, ineqmath@1.0:90/100, labbench@1.0:162/181, mmau@1.0:900/1000, qcircuitbench@1.0:25/28, reasoning-gym-easy@parity:259/288, reasoning-gym-hard@parity:259/288, crustbench@1.0:90/100, sldbench@1.0:7/8, spider2-dbt@1.0:57/64, strongreject@parity:135/150, swebenchpro@1.0:90/100, swesmith@1.0:90/100, mmmlu@parity:135/150, swtbench-verified@1.0:45/50, usaco@2.0:90/100, lawbench@1.0:162/181, kumo@parity:190/212, medagentbench@1.0:90/100, simpleqa@1.0:180/200, gaia@1.0:148/165, swebench-verified@1.0:90/100, aider-polyglot@1.0:202/225, livecodebench@6.0:90/100, codepde@1.0:4/5, replicationbench@1.0:81/90.",
     "registry_path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/outputs/adapter_experiments/batch1/phases/phase4/registry.json",
     "lock_path": "/WillDevExt/linhaoweiShare/code/terminal-bench-experiments/outputs/adapter_experiments/batch1/phases/phase4/registry.lock.json"
   },
   "summary": {
-    "source_dataset_count": 35,
-    "selected_task_count": 4671
+    "source_dataset_count": 34,
+    "selected_task_count": 4626
   },
   "sources": [
     {
@@ -5135,375 +5135,6 @@
           "path": "datasets/compilebench/jq-windows2",
           "fingerprint": "c0213586f9bf39f67089734497cc6c9d53b69e97686d9211b55a064c3265030b",
           "sample_rank": "10cf529924a33c48126a3951008fb3b24b99014f51172ea5bdafce339cfedbb8"
-        }
-      ]
-    },
-    {
-      "name": "financeagent",
-      "version": "public",
-      "full_sample_size": 50,
-      "available_task_count": 50,
-      "selected_subset_size": 45,
-      "selected_tasks": [
-        {
-          "name": "financeagent-0",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-0",
-          "fingerprint": "8eff12d139eb68b7804cc4ac92268881f4c89944f69104b0c3edae0a773ff118",
-          "sample_rank": "e8abf0eadc4c86761a18c2cd33598a92f29eef86d1ec0c0987acad144871e31c"
-        },
-        {
-          "name": "financeagent-1",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-1",
-          "fingerprint": "c2de50346f1279b298a7ef5640cfed1904e02bfe263b5015132f7c93d93b560a",
-          "sample_rank": "5530f3118aec287b2a28bc0f7444aa31c90c9817db85d322e2f5c6e8785ca7f7"
-        },
-        {
-          "name": "financeagent-10",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-10",
-          "fingerprint": "e6da87206876da169c1bed82b09239331e0a358019f915ea95405ace7afd4cd0",
-          "sample_rank": "8b6a5c3d76dfafed641536ab15959179afd25a46aa810f467a885c72457f0875"
-        },
-        {
-          "name": "financeagent-11",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-11",
-          "fingerprint": "9b99c3395e6afc0468358ff289cd7d0ffd68fd2f643ca54a0fb4f67d4673e86a",
-          "sample_rank": "3d67918f0c57be470a5224142adaa89fa7720af69d99d3c193998cf473e39a9d"
-        },
-        {
-          "name": "financeagent-12",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-12",
-          "fingerprint": "62d88772949b66c672e376df921c3b76cedd29ad25c5b1dd1f235f17910fd5f5",
-          "sample_rank": "3d7fbae9e66c5fa9ad3b7d8d3b9ac692d45c0c9ea60b66fb3d017dac52529a7a"
-        },
-        {
-          "name": "financeagent-14",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-14",
-          "fingerprint": "cb49084b37fa2183de877bf238daec775bd23e392a816fc74e19f34ff7e8577b",
-          "sample_rank": "80a46ddea70feacbe14fb555c8eca4b2cf5f20bb86a8c98b583e3f27d33828ea"
-        },
-        {
-          "name": "financeagent-15",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-15",
-          "fingerprint": "9c18e779c9a32c5a28dd0cfbf7c0313f6a521e304f4a46856ac61e4bf89f04e2",
-          "sample_rank": "bbcfd99d81963e64593b882de112747ed7cbcae504d12189caad5849f1f8d31c"
-        },
-        {
-          "name": "financeagent-16",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-16",
-          "fingerprint": "5aed8d3d4a69402fc539c3018637a91ae5d0c5276e97ca4fcc97037ba0552cab",
-          "sample_rank": "ff9e582e9866b51dbccfbcef37aa91523e47ae3d4abb0e54b3ef77fe80d58c01"
-        },
-        {
-          "name": "financeagent-17",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-17",
-          "fingerprint": "bb54f1febd27e7602eb2310e9364be75a7a6e99131b9a505d3166764d5b616e1",
-          "sample_rank": "6614be40a10e39923414c973e0edf5ed63713950aac78a31d8d5487dae35d778"
-        },
-        {
-          "name": "financeagent-18",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-18",
-          "fingerprint": "90f3dbcead0406b15d1e78dfdf483fe794ada78504595c1ac57226bee317d6b3",
-          "sample_rank": "df5616c3e630d9bbaa3ff2d533de566eab0519abf7dad092d588069e1dbc8adc"
-        },
-        {
-          "name": "financeagent-19",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-19",
-          "fingerprint": "762c085eca4857fa14d31de77cbf1f2aeb86718517be457c7f1cd7e85e0af581",
-          "sample_rank": "b142986b455c1242ff20395a631812e2d6538130c23b0221b198d9bec8b6418b"
-        },
-        {
-          "name": "financeagent-2",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-2",
-          "fingerprint": "7e7fe4f00d927b7ab05ba0acfd2ae252cc3b69a53c0213181ff21d3e9033c8d6",
-          "sample_rank": "8dbed4b37baf08a383298b36d7fb1afea4c305b540bc7094f58574b7a7920fbf"
-        },
-        {
-          "name": "financeagent-20",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-20",
-          "fingerprint": "a4420e35e0790928d7e155ef859e13e6def409fcd3cc27701fd944a73f062baf",
-          "sample_rank": "ab2e1f254a8869485064e50e4ca81068f5ebb9afa45c379902146f90bcce18ae"
-        },
-        {
-          "name": "financeagent-21",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-21",
-          "fingerprint": "35ba9d9899ece269037a4fca7755199c06083feeeae74b879bd4c736be3a7108",
-          "sample_rank": "ad4c9a0ef02810f323019fb67cb3cf6c88573c055b4d09c26adf34ba306b5d03"
-        },
-        {
-          "name": "financeagent-22",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-22",
-          "fingerprint": "26454c446f69a40784247b54d0bbfab99d05d5bec6fd39715645b10a2b4ec8b4",
-          "sample_rank": "63da7bc4e45cdccaa5cdca73649ba3fce093c45bf72c43a0b99b771a870a2e3a"
-        },
-        {
-          "name": "financeagent-23",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-23",
-          "fingerprint": "ceec7bc841fa59be4a1da9e633fa10504209525e8cb677ac16adff2f9625da85",
-          "sample_rank": "fe90d36c3801d5a9f7f7f11160b77a30fc0e524f16883375aed9468ebc782c2a"
-        },
-        {
-          "name": "financeagent-24",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-24",
-          "fingerprint": "e696300096d8bfe3be73020c0b333a8006d3871e1492c636a9073982a0f735c3",
-          "sample_rank": "cda253d813e4d6e0d5b22948f5d1602cd776f49e5579df882cac998317f333ae"
-        },
-        {
-          "name": "financeagent-25",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-25",
-          "fingerprint": "aa114720a43f7c185b87d0e51815f834aa69f573606b3c2a4e73ebf4cfe8278f",
-          "sample_rank": "cc76de9fa42fc08f10f3099d98db9bfff727e1340ef5cdcb185b1701ca053f89"
-        },
-        {
-          "name": "financeagent-26",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-26",
-          "fingerprint": "f7a7489166bc1b156d29076cc6c1d2395be56341f20c53955f14e19a861b26d6",
-          "sample_rank": "59e65671364b2a4e24abc26e4ffc5a197d52df2d0feecfbd736829ac51b9fa3d"
-        },
-        {
-          "name": "financeagent-27",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-27",
-          "fingerprint": "594cffc71515b1d527c17e265b519774563651f2d6b9015c8f22980e715baab0",
-          "sample_rank": "3cac592d93579fe33dda4f1e0f5d7f79284d3e03666da972ebc22ac514071303"
-        },
-        {
-          "name": "financeagent-28",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-28",
-          "fingerprint": "30e90b3ac9f92f2d77b7e18fb32c46f267775eccc04e5f7d5e45664aab820682",
-          "sample_rank": "646a6e8876ff3d634c06d73515a67aebc659fd7eaf6ccddeec2ff9d6ccbca3fd"
-        },
-        {
-          "name": "financeagent-29",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-29",
-          "fingerprint": "e0f710c30c5cbcdf6117cdbe28941aa9cd92dfacb9fedd697ca84e09f8178f49",
-          "sample_rank": "663ad9493b4cec54fd37929a49fa3ee7d0662e087108b7a4da8d45ff2df70d45"
-        },
-        {
-          "name": "financeagent-3",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-3",
-          "fingerprint": "481a8a7381a9da193ac6ee3bb02525fa7f81eb61558d77856a33d69cf3ce065b",
-          "sample_rank": "755c6d600baac6b89910837f3c8549c75bab12ea7043c64e19b34848bc9f6ca5"
-        },
-        {
-          "name": "financeagent-30",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-30",
-          "fingerprint": "5c89675a0cb42b4d019703a98256232902bf6d944530f0d53fd43e623487521b",
-          "sample_rank": "9aaa9db31f771bb112b020baac7f6472dc866e1962e6def125917162957db11b"
-        },
-        {
-          "name": "financeagent-31",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-31",
-          "fingerprint": "8960ca88bda9009638c272020ca78c81d9a5a3857a5ac5699f0917c95e59eb36",
-          "sample_rank": "a263f0183e96a5e255da01b084d5c48d662a00952ec54dbd87f496ab35f6ba55"
-        },
-        {
-          "name": "financeagent-32",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-32",
-          "fingerprint": "5134a294d0a57462dc564099f5aab560500ad779480958fd9efe2443e03d5003",
-          "sample_rank": "7cdd9260e7acee2e40033c8c8ae0071c8cb728397c9453c4e798db0e26332e18"
-        },
-        {
-          "name": "financeagent-33",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-33",
-          "fingerprint": "53f8b7419134e8a9f2dc249e35aefd23cc5265a7ba4eca808e4a37a870bacc35",
-          "sample_rank": "9abf840712298910d3e62ab43f6b1983090a9888c7c198d570674460855c77cd"
-        },
-        {
-          "name": "financeagent-34",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-34",
-          "fingerprint": "3b09627df2eb2ee9b1b6d15a37a2c6d9805a3ed35feb507a690c9b55d09fb39f",
-          "sample_rank": "d78627f7a7d2398dbb99f49231697e675bff971f1706dc3c153685813928feb3"
-        },
-        {
-          "name": "financeagent-35",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-35",
-          "fingerprint": "256c5ae6494c335ac12bb5c58ee42d52fa77f5b67403f0bf3e5ecd56a5af125e",
-          "sample_rank": "fb5a93e06d75ceeb37de083be12a0a193026987cee523411610ee27eacd1fea6"
-        },
-        {
-          "name": "financeagent-36",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-36",
-          "fingerprint": "c149f04c09eb97e9cbd31c91d94b6ebb374eb417e424ffc6bac031c1134438d9",
-          "sample_rank": "dfe44978884c60dbc0deaa1977b9808af73c8c37f87ff33d97077072e23132b9"
-        },
-        {
-          "name": "financeagent-38",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-38",
-          "fingerprint": "1bd6632475218f78a15ede3f6d8404fceeb19f7c6acaf8404be6c58da28025a0",
-          "sample_rank": "59c40a79dac386d0495c1927f1f6ca19d43e09095220228097ded8f6ba2a2ffd"
-        },
-        {
-          "name": "financeagent-39",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-39",
-          "fingerprint": "09c114a917d3f7fa91d97975565d18d824a1a830b50514e0b80c3bea1d3f8534",
-          "sample_rank": "41222fcab689e186c1866f7f9ff02ed66398353995eabe77e106432db0eef42e"
-        },
-        {
-          "name": "financeagent-4",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-4",
-          "fingerprint": "5194c6f7a8bdb996321dc9044a8c509c1544f2a18d72c3903465ec946b155f46",
-          "sample_rank": "6770665dd2ecda1f2cb88f0117b34a93b9eb1ea84b015c8d01460769ca814f78"
-        },
-        {
-          "name": "financeagent-40",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-40",
-          "fingerprint": "1aaba5fe1538a09e34b1bcf20f575d40584ec9443d0acc92ee7a2893e3abf44b",
-          "sample_rank": "38d4bfdef8b1f352a7a37de9edaa13162c00dfbd58ca2e9765c387dbb2bce62e"
-        },
-        {
-          "name": "financeagent-41",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-41",
-          "fingerprint": "36d074d77289af9c67d3e5aed1a6d797a2a3b6e6f944684a75b6fef53f7b8091",
-          "sample_rank": "2d5d2cd7d6f418948a39f2f218a018db099454bd94aebf484d16cfffe4d405d2"
-        },
-        {
-          "name": "financeagent-42",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-42",
-          "fingerprint": "15f3eb0ae6011559d3c382caeab72d45dbb54760635b9e8cc1a275f9e65e82d0",
-          "sample_rank": "53344c29bd3eed1fe8c13019d87e627bb022900bf257ef85f6bbfac6d0168ff3"
-        },
-        {
-          "name": "financeagent-43",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-43",
-          "fingerprint": "89ae79a1f6616f2f8f401b9de66750f944c5e52544d2fe5f9068bb07821bef0c",
-          "sample_rank": "ee07e6ddf03238c496182fc1ad0aeba12195d96b6279bdbedd0b8a9dccfbdaa2"
-        },
-        {
-          "name": "financeagent-44",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-44",
-          "fingerprint": "413eb4b8c780f2f783ca6ff5417c119153b853ebf4de00c92749478a455bb972",
-          "sample_rank": "d5479811d1f969303237dd70a1ba2a6af51b57b77ef88f8678fce953d854242c"
-        },
-        {
-          "name": "financeagent-45",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-45",
-          "fingerprint": "d28c2102689d4f86500c94ab8bdf2362338cb1f95480601e7c876bcadc59db8f",
-          "sample_rank": "4e77ce2dff292d5e5386e7aa179dc5f06b544d036ab874b20c68bca3b978f44e"
-        },
-        {
-          "name": "financeagent-47",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-47",
-          "fingerprint": "4acd7806b765ead9bf963cfd00237634842ac71b8598084af2207c936825299e",
-          "sample_rank": "62bc8218f52266cedb2e8a3a86219c5527a055001af3766dd4b38f0e1656aed1"
-        },
-        {
-          "name": "financeagent-48",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-48",
-          "fingerprint": "a6436ef581117c002a1ad057564b903037db9eaf44f5fbc6f1f9797bcbe0c91f",
-          "sample_rank": "733840cde2b79d01c32f7a8788a9cd22e7de8fd58bf05f93925bb39a2ea77967"
-        },
-        {
-          "name": "financeagent-49",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-49",
-          "fingerprint": "a79c1873fd56a60c91a3c3d834ca09c7701e94b13134a286fba624d33a76fc6f",
-          "sample_rank": "9460ec39e3dcbdda3a9840b10010a05c8754b3194c6608e44206920d54391a9c"
-        },
-        {
-          "name": "financeagent-5",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-5",
-          "fingerprint": "c1771bb98f5823b5cf486349587658fe52ce65bc68aea4ce3ef04a9c57b5798e",
-          "sample_rank": "4ee6bcb5fc4d18870b4d7c06e6dada0bacaec2fdf624b31dddb59f06655c10bf"
-        },
-        {
-          "name": "financeagent-8",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-8",
-          "fingerprint": "3a8a828638dad586b01792a2b580c9c09fb1bb621293cbc39a0de63aa1410735",
-          "sample_rank": "d84f42bd39b47ef8680307c76a657d04e08adfad2597fac320c463d1b034c97e"
-        },
-        {
-          "name": "financeagent-9",
-          "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "8fc4deb9a7e799e6692be6a86bc048a44b940bea",
-          "path": "datasets/financeagent/financeagent-9",
-          "fingerprint": "9ccbe4a1ae3ab9ffbaf468122ac63e24d8f40b08a11cf47ce44bc33903d84f79",
-          "sample_rank": "a995b35b185708fec5503579399935dbf29a54cf80995cd3990107d712fdf337"
         }
       ]
     },
