@@ -1,11 +1,11 @@
 {
   "source_registry": {
     "path": "./adapter_experiments/registries/batch1_all.json",
-    "sha256": "a33f305f742ff447aaa68ac94f8f9c03bf9446fa949a0aa1e073a0d36663e51d"
+    "sha256": "65a2024c03837581e509c852efa69beadb6aa8908caf430a48410dd3d900e810"
   },
   "source_lock": {
     "path": "./adapter_experiments/registries/batch1_all.lock.json",
-    "sha256": "ba838d37324c20871a3aa1a2f97d69945832c96d2d89e2b8192f2461c22ddf2f"
+    "sha256": "8e7ccf8e14be9d2a230a84f7a3744be6b488402caadde4d9e06760d19fdf4186"
   },
   "exclude_locks": [],
   "selection": {
@@ -17,7 +17,7 @@
   "output": {
     "dataset_name": "adapter-experiments-batch1-phase2",
     "dataset_version": "1.0",
-    "description": "Batch1 coordinated experiments phase2 (1%).\n\nProgressive subset derived from batch1_all.lock.json with 1% per source dataset (rounding=ceil, minimum_tasks_per_source=1). Selected tasks: aime@1.0:1/60, algotune@1.0:2/154, swe-lancer-diamond@all:2/200, arc_agi_2@1.0:1/100, bfcl_parity@1.0:2/123, bixbench@1.5:1/50, compilebench@1.0:1/15, gpqa-diamond@1.0:2/198, humanevalfix@1.0:2/164, ineqmath@1.0:1/100, labbench@1.0:2/181, mmau@1.0:10/1000, qcircuitbench@1.0:1/28, reasoning-gym-easy@parity:3/288, reasoning-gym-hard@parity:3/288, crustbench@1.0:1/100, sldbench@1.0:1/8, spider2-dbt@1.0:1/64, strongreject@parity:2/150, swebenchpro@1.0:1/100, swesmith@1.0:1/100, mmmlu@parity:2/150, swtbench-verified@1.0:1/50, usaco@2.0:1/100, lawbench@1.0:2/181, kumo@parity:3/212, medagentbench@1.0:1/100, simpleqa@1.0:2/200, gaia@1.0:2/165, swebench-verified@1.0:1/100, aider-polyglot@1.0:3/225, livecodebench@6.0:1/100, codepde@1.0:1/5, replicationbench@1.0:1/90.",
+    "description": "Batch1 coordinated experiments phase2 (1%).\n\nProgressive subset derived from batch1_all.lock.json with 1% per source dataset (rounding=ceil, minimum_tasks_per_source=1). Selected tasks: aime@1.0:1/60, algotune@1.0:2/154, swe-lancer-diamond@all:2/200, arc_agi_2@1.0:1/100, bfcl_parity@1.0:2/123, bixbench-cli@1.5:1/50, compilebench@1.0:1/15, gpqa-diamond@1.0:2/198, humanevalfix@1.0:2/164, ineqmath@1.0:1/100, labbench@1.0:2/181, mmau@1.0:10/1000, qcircuitbench@1.0:1/28, reasoning-gym-easy@parity:3/288, reasoning-gym-hard@parity:3/288, crustbench@1.0:1/100, sldbench@1.0:1/8, spider2-dbt@1.0:1/64, strongreject@parity:2/150, swebenchpro@1.0:1/100, swesmith@1.0:1/100, mmmlu@parity:2/150, swtbench-verified@1.0:1/50, usaco@2.0:1/100, lawbench@1.0:2/181, kumo@parity:3/212, medagentbench@1.0:1/100, simpleqa@1.0:2/200, gaia@1.0:2/165, swebench-verified@1.0:1/100, aider-polyglot@1.0:3/225, livecodebench@6.0:1/100, codepde@1.0:1/5, replicationbench@1.0:1/90.",
     "registry_path": "./outputs/adapter_experiments/batch1/phases/phase2/registry.json",
     "lock_path": "./outputs/adapter_experiments/batch1/phases/phase2/registry.lock.json"
   },
@@ -136,19 +136,19 @@
       ]
     },
     {
-      "name": "bixbench",
+      "name": "bixbench-cli",
       "version": "1.5",
       "full_sample_size": 50,
       "available_task_count": 205,
       "selected_subset_size": 1,
       "selected_tasks": [
         {
-          "name": "bix-20-q1",
+          "name": "bix-9-q5",
           "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "HEAD",
-          "path": "datasets/bixbench/bix-20-q1",
-          "fingerprint": "f0e3ce5a48ea07207e8b002df7070b7b83ccdaa2c7df159d7104089e2a169ae8",
-          "sample_rank": "02bab727e97d1ffa9046f19479713793cc022e928b943f34daf6a16f1e126841"
+          "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+          "path": "datasets/bixbench-cli/bix-9-q5",
+          "fingerprint": "1ccacac19b5c14237ff1e35641eb9fd958543f74acf28649270f4fa2d491d03c",
+          "sample_rank": "0003f09a934746268b7342ffc54a8326ebf1877bfac9f68b5016130ec0d31360"
         }
       ]
     },
