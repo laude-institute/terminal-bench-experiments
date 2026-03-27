@@ -111,7 +111,7 @@ adapters:
       original_task_count: 205
       paper_task_count: 50
       source_datasets:
-        - name: bixbench
+        - name: bixbench-cli
           version: "1.5"
           sample_size: 50
   compilebench:
