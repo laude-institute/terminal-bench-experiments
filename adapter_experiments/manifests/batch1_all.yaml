@@ -21,7 +21,7 @@ sources:
   - name: bfcl_parity
     version: "1.0"
     sample_size: 123
-  - name: bixbench
+  - name: bixbench-cli
     version: "1.5"
     sample_size: 50
   - name: compilebench
