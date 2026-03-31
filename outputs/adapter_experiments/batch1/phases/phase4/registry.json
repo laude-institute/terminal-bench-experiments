@@ -2,7 +2,7 @@
   {
     "name": "adapter-experiments-batch1-phase4",
     "version": "1.0",
-    "description": "Batch1 coordinated experiments phase4 (remaining full set after earlier phases).\n\nProgressive subset derived from batch1_all.lock.json with 100% per source dataset (rounding=ceil, minimum_tasks_per_source=1). Excluding tasks from: registry.lock.json, registry.lock.json. Selected tasks: aime@1.0:54/60, algotune@1.0:138/154, swe-lancer-diamond@all:180/200, arc_agi_2@1.0:90/100, bfcl_parity@1.0:110/123, bixbench@1.5:45/50, compilebench@1.0:13/15, gpqa-diamond@1.0:178/198, humanevalfix@1.0:147/164, ineqmath@1.0:90/100, labbench@1.0:162/181, mmau@1.0:900/1000, qcircuitbench@1.0:25/28, reasoning-gym-easy@parity:259/288, reasoning-gym-hard@parity:259/288, crustbench@1.0:90/100, sldbench@1.0:7/8, spider2-dbt@1.0:57/64, strongreject@parity:135/150, swebenchpro@1.0:90/100, swesmith@1.0:90/100, mmmlu@parity:135/150, swtbench-verified@1.0:45/50, usaco@2.0:90/100, lawbench@1.0:162/181, kumo@parity:190/212, medagentbench@1.0:90/100, simpleqa@1.0:180/200, gaia@1.0:148/165, swebench-verified@1.0:90/100, aider-polyglot@1.0:202/225, livecodebench@6.0:90/100, codepde@1.0:4/5, replicationbench@1.0:81/90.",
+    "description": "Batch1 coordinated experiments phase4 (remaining full set after earlier phases).\n\nProgressive subset derived from batch1_all.lock.json with 100% per source dataset (rounding=ceil, minimum_tasks_per_source=1). Excluding tasks from: registry.lock.json, registry.lock.json. Selected tasks: aime@1.0:54/60, algotune@1.0:138/154, swe-lancer-diamond@all:180/200, arc_agi_2@1.0:90/100, bfcl_parity@1.0:110/123, bixbench-cli@1.5:45/50, compilebench@1.0:13/15, gpqa-diamond@1.0:178/198, humanevalfix@1.0:147/164, ineqmath@1.0:90/100, labbench@1.0:162/181, mmau@1.0:900/1000, qcircuitbench@1.0:25/28, reasoning-gym-easy@parity:259/288, reasoning-gym-hard@parity:259/288, crustbench@1.0:90/100, sldbench@1.0:7/8, spider2-dbt@1.0:57/64, strongreject@parity:135/150, swebenchpro@1.0:90/100, swesmith@1.0:90/100, mmmlu@parity:135/150, swtbench-verified@1.0:45/50, usaco@2.0:90/100, lawbench@1.0:162/181, kumo@parity:190/212, medagentbench@1.0:90/100, simpleqa@1.0:180/200, gaia@1.0:148/165, swebench-verified@1.0:90/100, aider-polyglot@1.0:202/225, livecodebench@6.0:90/100, codepde@1.0:4/5, replicationbench@1.0:81/90.",
     "tasks": [
       {
         "name": "aime_60",
@@ -3437,274 +3437,274 @@
         "path": "datasets/bfcl_parity/bfcl-simple-python-87"
       },
       {
-        "name": "bix-11-q2",
+        "name": "bix-1-q1",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-11-q2"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-1-q1"
       },
       {
-        "name": "bix-12-q2",
+        "name": "bix-10-q2",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-12-q2"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-10-q2"
+      },
+      {
+        "name": "bix-10-q5",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-10-q5"
+      },
+      {
+        "name": "bix-10-q7",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-10-q7"
       },
       {
         "name": "bix-12-q3",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-12-q3"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-12-q3"
       },
       {
-        "name": "bix-13-q3",
+        "name": "bix-12-q4",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-13-q3"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-12-q4"
       },
       {
-        "name": "bix-13-q4",
+        "name": "bix-12-q5",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-13-q4"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-12-q5"
       },
       {
-        "name": "bix-14-q1",
+        "name": "bix-13-q5",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-14-q1"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-13-q5"
       },
       {
-        "name": "bix-16-q2",
+        "name": "bix-16-q1",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-16-q2"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-16-q1"
       },
       {
-        "name": "bix-19-q2",
+        "name": "bix-16-q3",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-19-q2"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-16-q3"
       },
       {
-        "name": "bix-19-q5",
+        "name": "bix-17-q2",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-19-q5"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-17-q2"
+      },
+      {
+        "name": "bix-18-q2",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-18-q2"
+      },
+      {
+        "name": "bix-20-q2",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-20-q2"
       },
       {
         "name": "bix-20-q3",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-20-q3"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-20-q3"
       },
       {
-        "name": "bix-20-q4",
+        "name": "bix-22-q1",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-20-q4"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-22-q1"
       },
       {
-        "name": "bix-22-q2",
+        "name": "bix-22-q4",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-22-q2"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-22-q4"
       },
       {
-        "name": "bix-22-q3",
+        "name": "bix-24-q2",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-22-q3"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-24-q2"
       },
       {
-        "name": "bix-26-q4",
+        "name": "bix-24-q6",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-26-q4"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-24-q6"
       },
       {
-        "name": "bix-27-q2",
+        "name": "bix-25-q1",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-27-q2"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-25-q1"
       },
       {
-        "name": "bix-27-q4",
+        "name": "bix-27-q5",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-27-q4"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-27-q5"
       },
       {
-        "name": "bix-29-q1",
+        "name": "bix-28-q2",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-29-q1"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-28-q2"
+      },
+      {
+        "name": "bix-28-q3",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-28-q3"
+      },
+      {
+        "name": "bix-28-q6",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-28-q6"
       },
       {
         "name": "bix-29-q2",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-29-q2"
-      },
-      {
-        "name": "bix-3-q2",
-        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-3-q2"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-29-q2"
       },
       {
         "name": "bix-3-q5",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-3-q5"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-3-q5"
       },
       {
-        "name": "bix-31-q4",
+        "name": "bix-30-q1",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-31-q4"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-30-q1"
       },
       {
-        "name": "bix-32-q4",
+        "name": "bix-30-q3",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-32-q4"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-30-q3"
       },
       {
-        "name": "bix-34-q4",
+        "name": "bix-30-q5",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-34-q4"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-30-q5"
       },
       {
-        "name": "bix-35-q1",
+        "name": "bix-31-q3",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-35-q1"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-31-q3"
       },
       {
-        "name": "bix-37-q4",
+        "name": "bix-33-q6",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-37-q4"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-33-q6"
       },
       {
-        "name": "bix-4-q1",
+        "name": "bix-35-q4",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-4-q1"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-35-q4"
       },
       {
-        "name": "bix-4-q7",
+        "name": "bix-4-q3",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-4-q7"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-4-q3"
       },
       {
-        "name": "bix-43-q1",
+        "name": "bix-41-q4",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-43-q1"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-41-q4"
       },
       {
-        "name": "bix-43-q2",
+        "name": "bix-45-q6",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-43-q2"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-45-q6"
       },
       {
-        "name": "bix-43-q4",
+        "name": "bix-47-q2",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-43-q4"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-47-q2"
       },
       {
-        "name": "bix-46-q1",
+        "name": "bix-49-q1",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-46-q1"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-49-q1"
       },
       {
-        "name": "bix-5-q4",
+        "name": "bix-51-q1",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-5-q4"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-51-q1"
       },
       {
-        "name": "bix-51-q8",
+        "name": "bix-51-q2",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-51-q8"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-51-q2"
       },
       {
-        "name": "bix-52-q5",
+        "name": "bix-52-q2",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-52-q5"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-52-q2"
       },
       {
-        "name": "bix-52-q6",
+        "name": "bix-52-q3",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-52-q6"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-52-q3"
       },
       {
-        "name": "bix-52-q7",
+        "name": "bix-6-q1",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-52-q7"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-6-q1"
       },
       {
-        "name": "bix-54-q4",
+        "name": "bix-6-q4",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-54-q4"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-6-q4"
       },
       {
-        "name": "bix-56-q1",
+        "name": "bix-6-q5",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-56-q1"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-6-q5"
       },
       {
-        "name": "bix-6-q6",
+        "name": "bix-7-q2",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-6-q6"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-7-q2"
       },
       {
-        "name": "bix-60-q1",
+        "name": "bix-8-q3",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-60-q1"
-      },
-      {
-        "name": "bix-61-q4",
-        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-61-q4"
-      },
-      {
-        "name": "bix-61-q5",
-        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-61-q5"
-      },
-      {
-        "name": "bix-61-q6",
-        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-61-q6"
-      },
-      {
-        "name": "bix-9-q3",
-        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-9-q3"
-      },
-      {
-        "name": "bix-9-q4",
-        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-9-q4"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-8-q3"
       },
       {
         "name": "coreutils",

@@ -2,7 +2,7 @@
   {
     "name": "adapter-experiments-batch1-phase3",
     "version": "1.0",
-    "description": "Batch1 coordinated experiments phase3 (10% cumulative minus earlier phases).\n\nProgressive subset derived from batch1_all.lock.json with 10% per source dataset (rounding=ceil, minimum_tasks_per_source=1). Excluding tasks from: registry.lock.json. Selected tasks: aime@1.0:5/60, algotune@1.0:14/154, swe-lancer-diamond@all:18/200, arc_agi_2@1.0:9/100, bfcl_parity@1.0:11/123, bixbench@1.5:4/50, compilebench@1.0:1/15, gpqa-diamond@1.0:18/198, humanevalfix@1.0:15/164, ineqmath@1.0:9/100, labbench@1.0:17/181, mmau@1.0:90/1000, qcircuitbench@1.0:2/28, reasoning-gym-easy@parity:26/288, reasoning-gym-hard@parity:26/288, crustbench@1.0:9/100, sldbench@1.0:0/8, spider2-dbt@1.0:6/64, strongreject@parity:13/150, swebenchpro@1.0:9/100, swesmith@1.0:9/100, mmmlu@parity:13/150, swtbench-verified@1.0:4/50, usaco@2.0:9/100, lawbench@1.0:17/181, kumo@parity:19/212, medagentbench@1.0:9/100, simpleqa@1.0:18/200, gaia@1.0:15/165, swebench-verified@1.0:9/100, aider-polyglot@1.0:20/225, livecodebench@6.0:9/100, codepde@1.0:0/5, replicationbench@1.0:8/90.",
+    "description": "Batch1 coordinated experiments phase3 (10% cumulative minus earlier phases).\n\nProgressive subset derived from batch1_all.lock.json with 10% per source dataset (rounding=ceil, minimum_tasks_per_source=1). Excluding tasks from: registry.lock.json. Selected tasks: aime@1.0:5/60, algotune@1.0:14/154, swe-lancer-diamond@all:18/200, arc_agi_2@1.0:9/100, bfcl_parity@1.0:11/123, bixbench-cli@1.5:4/50, compilebench@1.0:1/15, gpqa-diamond@1.0:18/198, humanevalfix@1.0:15/164, ineqmath@1.0:9/100, labbench@1.0:17/181, mmau@1.0:90/1000, qcircuitbench@1.0:2/28, reasoning-gym-easy@parity:26/288, reasoning-gym-hard@parity:26/288, crustbench@1.0:9/100, sldbench@1.0:0/8, spider2-dbt@1.0:6/64, strongreject@parity:13/150, swebenchpro@1.0:9/100, swesmith@1.0:9/100, mmmlu@parity:13/150, swtbench-verified@1.0:4/50, usaco@2.0:9/100, lawbench@1.0:17/181, kumo@parity:19/212, medagentbench@1.0:9/100, simpleqa@1.0:18/200, gaia@1.0:15/165, swebench-verified@1.0:9/100, aider-polyglot@1.0:20/225, livecodebench@6.0:9/100, codepde@1.0:0/5, replicationbench@1.0:8/90.",
     "tasks": [
       {
         "name": "aime_66",
@@ -347,28 +347,28 @@
         "path": "datasets/bfcl_parity/bfcl-parallel-multiple-90"
       },
       {
-        "name": "bix-10-q3",
+        "name": "bix-36-q4",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-10-q3"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-36-q4"
       },
       {
-        "name": "bix-4-q4",
+        "name": "bix-61-q2",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-4-q4"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-61-q2"
       },
       {
-        "name": "bix-43-q3",
+        "name": "bix-61-q4",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-43-q3"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-61-q4"
       },
       {
-        "name": "bix-54-q3",
+        "name": "bix-8-q7",
         "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-        "git_commit_id": "HEAD",
-        "path": "datasets/bixbench/bix-54-q3"
+        "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+        "path": "datasets/bixbench-cli/bix-8-q7"
       },
       {
         "name": "curl-ssl",

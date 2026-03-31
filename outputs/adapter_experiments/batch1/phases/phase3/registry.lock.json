@@ -1,16 +1,16 @@
 {
   "source_registry": {
     "path": "./adapter_experiments/registries/batch1_all.json",
-    "sha256": "a33f305f742ff447aaa68ac94f8f9c03bf9446fa949a0aa1e073a0d36663e51d"
+    "sha256": "65a2024c03837581e509c852efa69beadb6aa8908caf430a48410dd3d900e810"
   },
   "source_lock": {
     "path": "./adapter_experiments/registries/batch1_all.lock.json",
-    "sha256": "ba838d37324c20871a3aa1a2f97d69945832c96d2d89e2b8192f2461c22ddf2f"
+    "sha256": "8e7ccf8e14be9d2a230a84f7a3744be6b488402caadde4d9e06760d19fdf4186"
   },
   "exclude_locks": [
     {
       "path": "./outputs/adapter_experiments/batch1/phases/phase2/registry.lock.json",
-      "sha256": "565ec8c7395ca12e0cd34fd4567f0a2289ef0437dffd89eed2d6fc1c99e09f8e"
+      "sha256": "4df7d78be20b84e21dbd4ff2f9dbee7377cff36c602152cc1930bad485f33540"
     }
   ],
   "selection": {
@@ -22,7 +22,7 @@
   "output": {
     "dataset_name": "adapter-experiments-batch1-phase3",
     "dataset_version": "1.0",
-    "description": "Batch1 coordinated experiments phase3 (10% cumulative minus earlier phases).\n\nProgressive subset derived from batch1_all.lock.json with 10% per source dataset (rounding=ceil, minimum_tasks_per_source=1). Excluding tasks from: registry.lock.json. Selected tasks: aime@1.0:5/60, algotune@1.0:14/154, swe-lancer-diamond@all:18/200, arc_agi_2@1.0:9/100, bfcl_parity@1.0:11/123, bixbench@1.5:4/50, compilebench@1.0:1/15, gpqa-diamond@1.0:18/198, humanevalfix@1.0:15/164, ineqmath@1.0:9/100, labbench@1.0:17/181, mmau@1.0:90/1000, qcircuitbench@1.0:2/28, reasoning-gym-easy@parity:26/288, reasoning-gym-hard@parity:26/288, crustbench@1.0:9/100, sldbench@1.0:0/8, spider2-dbt@1.0:6/64, strongreject@parity:13/150, swebenchpro@1.0:9/100, swesmith@1.0:9/100, mmmlu@parity:13/150, swtbench-verified@1.0:4/50, usaco@2.0:9/100, lawbench@1.0:17/181, kumo@parity:19/212, medagentbench@1.0:9/100, simpleqa@1.0:18/200, gaia@1.0:15/165, swebench-verified@1.0:9/100, aider-polyglot@1.0:20/225, livecodebench@6.0:9/100, codepde@1.0:0/5, replicationbench@1.0:8/90.",
+    "description": "Batch1 coordinated experiments phase3 (10% cumulative minus earlier phases).\n\nProgressive subset derived from batch1_all.lock.json with 10% per source dataset (rounding=ceil, minimum_tasks_per_source=1). Excluding tasks from: registry.lock.json. Selected tasks: aime@1.0:5/60, algotune@1.0:14/154, swe-lancer-diamond@all:18/200, arc_agi_2@1.0:9/100, bfcl_parity@1.0:11/123, bixbench-cli@1.5:4/50, compilebench@1.0:1/15, gpqa-diamond@1.0:18/198, humanevalfix@1.0:15/164, ineqmath@1.0:9/100, labbench@1.0:17/181, mmau@1.0:90/1000, qcircuitbench@1.0:2/28, reasoning-gym-easy@parity:26/288, reasoning-gym-hard@parity:26/288, crustbench@1.0:9/100, sldbench@1.0:0/8, spider2-dbt@1.0:6/64, strongreject@parity:13/150, swebenchpro@1.0:9/100, swesmith@1.0:9/100, mmmlu@parity:13/150, swtbench-verified@1.0:4/50, usaco@2.0:9/100, lawbench@1.0:17/181, kumo@parity:19/212, medagentbench@1.0:9/100, simpleqa@1.0:18/200, gaia@1.0:15/165, swebench-verified@1.0:9/100, aider-polyglot@1.0:20/225, livecodebench@6.0:9/100, codepde@1.0:0/5, replicationbench@1.0:8/90.",
     "registry_path": "./outputs/adapter_experiments/batch1/phases/phase3/registry.json",
     "lock_path": "./outputs/adapter_experiments/batch1/phases/phase3/registry.lock.json"
   },
@@ -533,43 +533,43 @@
       ]
     },
     {
-      "name": "bixbench",
+      "name": "bixbench-cli",
       "version": "1.5",
       "full_sample_size": 50,
       "available_task_count": 205,
       "selected_subset_size": 4,
       "selected_tasks": [
         {
-          "name": "bix-10-q3",
+          "name": "bix-36-q4",
           "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "HEAD",
-          "path": "datasets/bixbench/bix-10-q3",
-          "fingerprint": "3b229ecb496b1661b79a65fabf38a46a8a9eb651ef19426ca5d113b0283c7f75",
-          "sample_rank": "06aa21396a977ab08bcc26ebe27a7668172eea68782fc69379c9d884463fb781"
+          "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+          "path": "datasets/bixbench-cli/bix-36-q4",
+          "fingerprint": "5355d24e441d2a58a15ec1a70f5d243ebece5b14b7fcdc73abf04a85e608720f",
+          "sample_rank": "0606f252e6209a250f838e46c1710df27ad5468697e2a2b09d8f47faade901d1"
         },
         {
-          "name": "bix-4-q4",
+          "name": "bix-61-q2",
           "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "HEAD",
-          "path": "datasets/bixbench/bix-4-q4",
-          "fingerprint": "8143fd064871198967f08b4e49a6683e82ad298af97a80ce9d0effc271ace721",
-          "sample_rank": "065f7b56a5bdf75c5eccf04b4726ff258d8dd6cb13ccdbea7d42e56cf8f08ee0"
+          "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+          "path": "datasets/bixbench-cli/bix-61-q2",
+          "fingerprint": "53cd389c75dbb52ab167dc77b07cf0b618707f2847151a377b4662a2005041de",
+          "sample_rank": "00d414e448db896ea1e9485fcf080c8f59011a6848848cba085c620c3f5638f5"
         },
         {
-          "name": "bix-43-q3",
+          "name": "bix-61-q4",
           "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "HEAD",
-          "path": "datasets/bixbench/bix-43-q3",
-          "fingerprint": "f5a623d0397de6e5531c8692092f4eec5a52e9be1a1bf2e388072e212c852ac6",
-          "sample_rank": "06dcac54f06e7168079ecd4f5958509c53a8ee8f0980b36c71545f4e00814171"
+          "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+          "path": "datasets/bixbench-cli/bix-61-q4",
+          "fingerprint": "7ff67fab14592dcf6d92c55a3b6bddb2957255d23573a1e00e8f6ba5120c2d46",
+          "sample_rank": "08f8ff8fe7181e0ded21ea5e3f0b9eb590a9776ff61ab0c7f75640801d1efb35"
         },
         {
-          "name": "bix-54-q3",
+          "name": "bix-8-q7",
           "git_url": "https://github.com/laude-institute/harbor-datasets.git",
-          "git_commit_id": "HEAD",
-          "path": "datasets/bixbench/bix-54-q3",
-          "fingerprint": "9286a9f6fe8839f3afaf87a1a09ccd297058aacf35c18f9a6c92a3c8e3258c24",
-          "sample_rank": "0522e9479a511771ac53cb691a492f87f459eecdda01b8405f7fe963e3fdf483"
+          "git_commit_id": "711ff277ae6b9e3950d19b40bc3e5aeb96e62b73",
+          "path": "datasets/bixbench-cli/bix-8-q7",
+          "fingerprint": "136410c83549325721200e8ea03d103fc8fa506814dda9c1d616159dc6060789",
+          "sample_rank": "02e84f906da9a104adcbc04fd3ee8eaf9b368ffb665df01b16c3a3ddc13683fd"
         }
       ]
     },
