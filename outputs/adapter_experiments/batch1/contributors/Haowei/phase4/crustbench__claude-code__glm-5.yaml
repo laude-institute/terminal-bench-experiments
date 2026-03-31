@@ -1,0 +1,43 @@
+jobs_dir: jobs
+n_attempts: 5
+timeout_multiplier: 1.0
+orchestrator:
+  type: local
+  n_concurrent_trials: 4
+  quiet: false
+  retry:
+    max_retries: 3
+    exclude_exceptions:
+    - BadRequestError
+    - RateLimitError
+    - AgentTimeoutError
+    - VerifierTimeoutError
+    - RewardFileNotFoundError
+    wait_multiplier: 1.0
+    min_wait_sec: 1.0
+    max_wait_sec: 60.0
+environment:
+  type: docker
+  force_build: false
+  delete: true
+job_name: crustbench__claude-code__glm-5__batch1__phase4
+agents:
+- name: claude-code
+  model_name: anthropic/glm-5
+  kwargs:
+    version: 2.1.81
+  env:
+    ANTHROPIC_AUTH_TOKEN: ANTHROPIC_AUTH_TOKEN_PLACEHOLDER
+    ANTHROPIC_BASE_URL: https://api.z.ai/api/anthropic
+    ANTHROPIC_MODEL: glm-5
+    ANTHROPIC_DEFAULT_SONNET_MODEL: glm-5
+    ANTHROPIC_DEFAULT_OPUS_MODEL: glm-5
+    ANTHROPIC_DEFAULT_HAIKU_MODEL: glm-5
+    CLAUDE_CODE_SUBAGENT_MODEL: glm-5
+    API_TIMEOUT_MS: '3000000'
+datasets:
+- registry:
+    name: local
+    path: outputs/adapter_experiments/batch1/contributors/Haowei/phase4/registries/crustbench.json
+  name: adapter-experiments-batch1-phase4
+  version: '1.0'

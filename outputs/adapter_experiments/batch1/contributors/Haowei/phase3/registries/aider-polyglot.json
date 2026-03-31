@@ -1,0 +1,129 @@
+[
+  {
+    "name": "adapter-experiments-batch1-phase3",
+    "version": "1.0",
+    "description": "Batch1 coordinated experiments phase3 (10% cumulative minus earlier phases).\n\nProgressive subset derived from batch1_all.lock.json with 10% per source dataset (rounding=ceil, minimum_tasks_per_source=1). Excluding tasks from: registry.lock.json. Selected tasks: aime@1.0:5/60, algotune@1.0:14/154, swe-lancer-diamond@all:18/200, arc_agi_2@1.0:9/100, bfcl_parity@1.0:11/123, bixbench@1.5:4/50, compilebench@1.0:1/15, gpqa-diamond@1.0:18/198, humanevalfix@1.0:15/164, ineqmath@1.0:9/100, labbench@1.0:17/181, mmau@1.0:90/1000, qcircuitbench@1.0:2/28, reasoning-gym-easy@parity:26/288, reasoning-gym-hard@parity:26/288, crustbench@1.0:9/100, sldbench@1.0:0/8, spider2-dbt@1.0:6/64, strongreject@parity:13/150, swebenchpro@1.0:9/100, swesmith@1.0:9/100, mmmlu@parity:13/150, swtbench-verified@1.0:4/50, usaco@2.0:9/100, lawbench@1.0:17/181, kumo@parity:19/212, medagentbench@1.0:9/100, simpleqa@1.0:18/200, gaia@1.0:15/165, swebench-verified@1.0:9/100, aider-polyglot@1.0:20/225, livecodebench@6.0:9/100, codepde@1.0:0/5, replicationbench@1.0:8/90.",
+    "tasks": [
+      {
+        "name": "polyglot_cpp_gigasecond",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_cpp_gigasecond"
+      },
+      {
+        "name": "polyglot_cpp_meetup",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_cpp_meetup"
+      },
+      {
+        "name": "polyglot_go_counter",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_go_counter"
+      },
+      {
+        "name": "polyglot_go_simple-linked-list",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_go_simple-linked-list"
+      },
+      {
+        "name": "polyglot_go_word-search",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_go_word-search"
+      },
+      {
+        "name": "polyglot_java_book-store",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_java_book-store"
+      },
+      {
+        "name": "polyglot_java_palindrome-products",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_java_palindrome-products"
+      },
+      {
+        "name": "polyglot_java_protein-translation",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_java_protein-translation"
+      },
+      {
+        "name": "polyglot_javascript_killer-sudoku-helper",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_javascript_killer-sudoku-helper"
+      },
+      {
+        "name": "polyglot_javascript_palindrome-products",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_javascript_palindrome-products"
+      },
+      {
+        "name": "polyglot_javascript_poker",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_javascript_poker"
+      },
+      {
+        "name": "polyglot_javascript_promises",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_javascript_promises"
+      },
+      {
+        "name": "polyglot_python_grade-school",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_python_grade-school"
+      },
+      {
+        "name": "polyglot_python_poker",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_python_poker"
+      },
+      {
+        "name": "polyglot_python_simple-linked-list",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_python_simple-linked-list"
+      },
+      {
+        "name": "polyglot_python_transpose",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_python_transpose"
+      },
+      {
+        "name": "polyglot_python_zebra-puzzle",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_python_zebra-puzzle"
+      },
+      {
+        "name": "polyglot_rust_dot-dsl",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_rust_dot-dsl"
+      },
+      {
+        "name": "polyglot_rust_say",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_rust_say"
+      },
+      {
+        "name": "polyglot_rust_simple-cipher",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "f30b14415dd733c83627204bad0af69a89ceb46f",
+        "path": "datasets/aider_polyglot/polyglot_rust_simple-cipher"
+      }
+    ]
+  }
+]

@@ -1,0 +1,75 @@
+[
+  {
+    "name": "adapter-experiments-batch1-phase3",
+    "version": "1.0",
+    "description": "Batch1 coordinated experiments phase3 (10% cumulative minus earlier phases).\n\nProgressive subset derived from batch1_all.lock.json with 10% per source dataset (rounding=ceil, minimum_tasks_per_source=1). Excluding tasks from: registry.lock.json. Selected tasks: aime@1.0:5/60, algotune@1.0:14/154, swe-lancer-diamond@all:18/200, arc_agi_2@1.0:9/100, bfcl_parity@1.0:11/123, bixbench@1.5:4/50, compilebench@1.0:1/15, gpqa-diamond@1.0:18/198, humanevalfix@1.0:15/164, ineqmath@1.0:9/100, labbench@1.0:17/181, mmau@1.0:90/1000, qcircuitbench@1.0:2/28, reasoning-gym-easy@parity:26/288, reasoning-gym-hard@parity:26/288, crustbench@1.0:9/100, sldbench@1.0:0/8, spider2-dbt@1.0:6/64, strongreject@parity:13/150, swebenchpro@1.0:9/100, swesmith@1.0:9/100, mmmlu@parity:13/150, swtbench-verified@1.0:4/50, usaco@2.0:9/100, lawbench@1.0:17/181, kumo@parity:19/212, medagentbench@1.0:9/100, simpleqa@1.0:18/200, gaia@1.0:15/165, swebench-verified@1.0:9/100, aider-polyglot@1.0:20/225, livecodebench@6.0:9/100, codepde@1.0:0/5, replicationbench@1.0:8/90.",
+    "tasks": [
+      {
+        "name": "bfcl-live-irrelevance-281-63-0",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "6bedd7878dc5d6f3456b4d80b781eb3c2d84f262",
+        "path": "datasets/bfcl_parity/bfcl-live-irrelevance-281-63-0"
+      },
+      {
+        "name": "bfcl-live-irrelevance-488-141-1",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "6bedd7878dc5d6f3456b4d80b781eb3c2d84f262",
+        "path": "datasets/bfcl_parity/bfcl-live-irrelevance-488-141-1"
+      },
+      {
+        "name": "bfcl-live-irrelevance-745-256-0",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "6bedd7878dc5d6f3456b4d80b781eb3c2d84f262",
+        "path": "datasets/bfcl_parity/bfcl-live-irrelevance-745-256-0"
+      },
+      {
+        "name": "bfcl-live-irrelevance-778-287-0",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "6bedd7878dc5d6f3456b4d80b781eb3c2d84f262",
+        "path": "datasets/bfcl_parity/bfcl-live-irrelevance-778-287-0"
+      },
+      {
+        "name": "bfcl-live-irrelevance-844-334-0",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "6bedd7878dc5d6f3456b4d80b781eb3c2d84f262",
+        "path": "datasets/bfcl_parity/bfcl-live-irrelevance-844-334-0"
+      },
+      {
+        "name": "bfcl-live-multiple-134-51-0",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "6bedd7878dc5d6f3456b4d80b781eb3c2d84f262",
+        "path": "datasets/bfcl_parity/bfcl-live-multiple-134-51-0"
+      },
+      {
+        "name": "bfcl-live-multiple-712-164-28",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "6bedd7878dc5d6f3456b4d80b781eb3c2d84f262",
+        "path": "datasets/bfcl_parity/bfcl-live-multiple-712-164-28"
+      },
+      {
+        "name": "bfcl-live-simple-177-103-0",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "6bedd7878dc5d6f3456b4d80b781eb3c2d84f262",
+        "path": "datasets/bfcl_parity/bfcl-live-simple-177-103-0"
+      },
+      {
+        "name": "bfcl-live-simple-2-2-0",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "6bedd7878dc5d6f3456b4d80b781eb3c2d84f262",
+        "path": "datasets/bfcl_parity/bfcl-live-simple-2-2-0"
+      },
+      {
+        "name": "bfcl-parallel-multiple-130",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "6bedd7878dc5d6f3456b4d80b781eb3c2d84f262",
+        "path": "datasets/bfcl_parity/bfcl-parallel-multiple-130"
+      },
+      {
+        "name": "bfcl-parallel-multiple-90",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "6bedd7878dc5d6f3456b4d80b781eb3c2d84f262",
+        "path": "datasets/bfcl_parity/bfcl-parallel-multiple-90"
+      }
+    ]
+  }
+]

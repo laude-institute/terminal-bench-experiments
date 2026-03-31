@@ -1,0 +1,112 @@
+experiment: batch1
+phase: phase2
+dataset:
+  name: adapter-experiments-batch1-phase2
+  version: '1.0'
+  registry_name: local
+  registry_path: /WillDevExt/linhaoweiShare/code/terminal-bench-experiments/outputs/adapter_experiments/batch1/phases/phase2/registry.json
+contributor:
+  name: Haowei
+  metadata:
+    email: linhaowei2001@gmail.com
+job_configs:
+  mode: runner_manifest
+  runner_manifest: /WillDevExt/linhaoweiShare/code/terminal-bench-experiments/outputs/adapter_experiments/batch1/runners.generated.yaml
+  runner_contributor: local
+adapters:
+- adapter_id: algotune
+  metadata:
+    display_name: AlgoTune
+    owner: Haowei
+    owner_email: linhaowei2001@gmail.com
+    adapter_type: standard
+    environment: docker
+    experiment_status: Phase1 passed
+    batch: Batch1
+    original_task_count: 154
+    paper_task_count: 154
+    source_datasets:
+    - name: algotune
+      version: '1.0'
+      sample_size: 154
+  has_generated_job_config: true
+- adapter_id: bfcl
+  metadata:
+    display_name: Berkeley Function Calling Leaderboard (BFCL)
+    owner: Haowei
+    owner_email: linhaowei2001@gmail.com
+    adapter_type: standard
+    environment: docker
+    experiment_status: Phase1 passed
+    batch: Batch1
+    original_task_count: 3641
+    paper_task_count: 123
+    source_datasets:
+    - name: bfcl_parity
+      version: '1.0'
+      sample_size: 123
+  has_generated_job_config: true
+- adapter_id: crustbench
+  metadata:
+    display_name: CRUST-Bench
+    owner: Haowei
+    owner_email: linhaowei2001@gmail.com
+    adapter_type: standard
+    environment: docker
+    experiment_status: Phase1 passed
+    batch: Batch1
+    original_task_count: 100
+    paper_task_count: 100
+    source_datasets:
+    - name: crustbench
+      version: '1.0'
+      sample_size: 100
+  has_generated_job_config: true
+- adapter_id: swtbench
+  metadata:
+    display_name: SWT Bench
+    owner: Haowei
+    owner_email: linhaowei2001@gmail.com
+    adapter_type: standard
+    environment: docker
+    experiment_status: Phase1 passed
+    batch: Batch1
+    original_task_count: 433
+    paper_task_count: 50
+    source_datasets:
+    - name: swtbench-verified
+      version: '1.0'
+      sample_size: 50
+  has_generated_job_config: true
+- adapter_id: gaia
+  metadata:
+    display_name: GAIA
+    owner: Haowei
+    owner_email: linhaowei2001@gmail.com
+    adapter_type: standard
+    environment: docker
+    experiment_status: Phase1 passed
+    batch: Batch1
+    original_task_count: 165
+    paper_task_count: 165
+    source_datasets:
+    - name: gaia
+      version: '1.0'
+      sample_size: 165
+  has_generated_job_config: true
+- adapter_id: aider-polyglot
+  metadata:
+    display_name: Aider Polyglot
+    owner: Haowei
+    owner_email: linhaowei2001@gmail.com
+    adapter_type: standard
+    environment: docker
+    experiment_status: Phase1 passed
+    batch: Batch1
+    original_task_count: 225
+    paper_task_count: 225
+    source_datasets:
+    - name: aider-polyglot
+      version: '1.0'
+      sample_size: 225
+  has_generated_job_config: true

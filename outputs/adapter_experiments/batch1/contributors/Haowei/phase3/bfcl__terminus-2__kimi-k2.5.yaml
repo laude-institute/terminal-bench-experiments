@@ -1,0 +1,34 @@
+jobs_dir: jobs
+n_attempts: 5
+timeout_multiplier: 1.0
+orchestrator:
+  type: local
+  n_concurrent_trials: 4
+  quiet: false
+  retry:
+    max_retries: 3
+    exclude_exceptions:
+    - BadRequestError
+    - RateLimitError
+    - AgentTimeoutError
+    - VerifierTimeoutError
+    - RewardFileNotFoundError
+    wait_multiplier: 1.0
+    min_wait_sec: 1.0
+    max_wait_sec: 60.0
+environment:
+  type: docker
+  force_build: false
+  delete: true
+job_name: bfcl__terminus-2__kimi-k2.5__batch1__phase3
+agents:
+- name: terminus-2
+  model_name: moonshot/kimi-k2.5
+  kwargs:
+    temperature: 1
+datasets:
+- registry:
+    name: local
+    path: outputs/adapter_experiments/batch1/contributors/Haowei/phase3/registries/bfcl.json
+  name: adapter-experiments-batch1-phase3
+  version: '1.0'
